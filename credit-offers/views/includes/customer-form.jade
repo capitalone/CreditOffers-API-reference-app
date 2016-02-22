@@ -1,0 +1,120 @@
+//- Copyright 2016 Capital One Services, LLC
+//- 
+//- Licensed under the Apache License, Version 2.0 (the "License");
+//- you may not use this file except in compliance with the License.
+//- You may obtain a copy of the License at
+//- 
+//-     http://www.apache.org/licenses/LICENSE-2.0
+//- 
+//- Unless required by applicable law or agreed to in writing, software
+//- distributed under the License is distributed on an "AS IS" BASIS,
+//- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//- See the License for the specific language governing permissions and limitations under the License.
+
+//- A re-usable bootstrap text input
+mixin textinput(name, label, required)
+  div.form-group(class={required: required})
+    label(for=name)= label
+    input.form-control(type='text', name=name, placeholder=attributes.placeholder, required=required || false)
+
+mixin select(name, label, required)
+  div.form-group(class={required: required})
+    label(for=name)= label
+    select.form-control(name=name)
+      block
+
+mixin stateOptions()
+  option(value='AL') AL
+  option(value='AK') AK
+  option(value='AS') AS
+  option(value='AZ') AZ
+  option(value='AR') AR
+  option(value='CA') CA
+  option(value='CO') CO
+  option(value='CT') CT
+  option(value='DE') DE
+  option(value='DC') DC
+  option(value='FM') FM
+  option(value='FL') FL
+  option(value='GA') GA
+  option(value='GU') GU
+  option(value='HI') HI
+  option(value='ID') ID
+  option(value='IL') IL
+  option(value='IN') IN
+  option(value='IA') IA
+  option(value='KS') KS
+  option(value='KY') KY
+  option(value='LA') LA
+  option(value='ME') ME
+  option(value='MH') MH
+  option(value='MD') MD
+  option(value='MA') MA
+  option(value='MI') MI
+  option(value='MN') MN
+  option(value='MS') MS
+  option(value='MO') MO
+  option(value='MT') MT
+  option(value='NE') NE
+  option(value='NV') NV
+  option(value='NH') NH
+  option(value='NJ') NJ
+  option(value='NM') NM
+  option(value='NY') NY
+  option(value='NC') NC
+  option(value='ND') ND
+  option(value='MP') MP
+  option(value='OH') OH
+  option(value='OK') OK
+  option(value='OR') OR
+  option(value='PW') PW
+  option(value='PA') PA
+  option(value='PR') PR
+  option(value='RI') RI
+  option(value='SC') SC
+  option(value='SD') SD
+  option(value='TN') TN
+  option(value='TX') TX
+  option(value='UT') UT
+  option(value='VT') VT
+  option(value='VI') VI
+  option(value='VA') VA
+  option(value='WA') WA
+  option(value='WV') WV
+  option(value='WI') WI
+  option(value='WY') WY
+  option(value='DC') DC
+  option(value='AA') AA
+  option(value='AE') AE
+  option(value='AP') AP
+
++textinput('firstName', 'First Name', true)
++textinput('middleName', 'Middle Name')
++textinput('lastName', 'Last Name', true)
++textinput('nameSuffix', 'Suffix')(placeholder='E.g. Jr, Sr')
++textinput('addressLine1', 'Address Line 1', true)
++textinput('addressLine2', 'Address Line 2')
++textinput('city', 'City', true)
++select('stateCode', 'State', true)
+  +stateOptions()
++textinput('postalCode', 'Zip Code', true)
++textinput('taxId', 'Last Four Digits of SSN', true)
++textinput('dateOfBirth', 'Birth Date', true)(placeholder='YYYY-MM-DD')
+
+div.form-note The below information is optional but can be used to fine tune the offers returned
++textinput('emailAddress', 'Email Address')
++select('primaryBenefit', 'Most Desired Credit Card Benefit')
+  option(value='NotSure') Not sure
+  option(value='LowInterest') Low Interest Rate
+  option(value='TravelRewards') Travel Rewards
+  option(value='CashBack') Cash Back Rewards
++select('selfAssessedCreditRating', 'Credit Rating')
+  option(value='Excellent') Excellent
+  option(value='Average') Average
+  option(value='Rebuilding') Rebuilding
++textinput('annualIncome', 'Annual Income (dollars)')
++select('bankAccountSummary', 'Type of Bank Accounts')
+  option(value='CheckingAndSavings') Checking &amp; Savings
+  option(value='CheckingOnly') Checking Only
+  option(value='SavingsOnly') Savings Only
+  option(value='Neither', selected) Neither
