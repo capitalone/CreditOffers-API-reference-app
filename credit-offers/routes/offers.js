@@ -15,29 +15,29 @@ See the License for the specific language governing permissions and limitations 
 
 /* Defines routes related to finding and displaying credit offers */
 
-var express = require('express');
-var _ = require('lodash');
-var CreditOffersClient = require('../creditOffersClient');
+var express = require('express')
+var _ = require('lodash')
+var CreditOffersClient = require('../creditOffersClient')
 
-module.exports = function(options){
-  var router = express.Router();
-  var client = new CreditOffersClient(options);
+module.exports = function (options) {
+  var router = express.Router()
+  var client = new CreditOffersClient(options)
 
   // POST customer info to check for offers
-  router.post('/', function(req, res, next){
-    var customerInfo = req.body;
-    client.getTargetedProductsOffer(customerInfo, function(err, response){
-      if(err) { return next(err); }
+  router.post('/', function (req, res, next) {
+    var customerInfo = req.body
+    client.getTargetedProductsOffer(customerInfo, function (err, response) {
+      if (err) { return next(err); }
 
       var viewModel = {
         title: 'Credit Offers',
         isPrequalified: response.isPrequalified,
         products: response.products && _.sortBy(response.products, 'priority')
-      };
+      }
 
-      res.render('offers', viewModel);
-    });
-  });
+      res.render('offers', viewModel)
+    })
+  })
 
-  return router;
-};
+  return router
+}
