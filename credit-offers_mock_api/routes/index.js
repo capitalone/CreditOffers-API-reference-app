@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
 var fakeProducts = {
   'good_credit_1': {
@@ -107,35 +107,34 @@ var fakeProducts = {
       alternateText: 'Bronze Preferred Card'
     }
   }
-};
-
+}
 
 /* GET home page. */
-router.get('/credit-cards/targeted-products-offer', function(req, res, next) {
-  console.info(req.query);
-  var creditRating = req.query.selfAssessedCreditRating;
-  var response = {};
-  var status = 200;
-  console.info('Determining response based on credit rating (%s)', creditRating);
-  switch(creditRating) {
+router.get('/credit-cards/targeted-products-offer', function (req, res, next) {
+  console.info(req.query)
+  var creditRating = req.query.selfAssessedCreditRating
+  var response = {}
+  var status = 200
+  console.info('Determining response based on credit rating (%s)', creditRating)
+  switch (creditRating) {
     case 'Excellent':
       response = {
         isPrequalified: true,
         products: [ fakeProducts['good_credit_1'], fakeProducts['good_credit_2'] ]
       }
-      break;
+      break
     case 'Average':
       response = {
         isPrequalified: true,
         products: [ fakeProducts['average_credit_1'], fakeProducts['average_credit_2'] ]
       }
-      break;
+      break
     case 'Rebuilding':
       response = {
         isPrequalified: false,
         products: [ fakeProducts['bad_credit'] ]
       }
-      break;
+      break
     case null:
     case undefined:
     case '':
@@ -143,16 +142,17 @@ router.get('/credit-cards/targeted-products-offer', function(req, res, next) {
         isPrequalified: false,
         products: []
       }
+      break
     default:
-      status = 400;
+      status = 400
       response = {
         code: 999,
         description: 'Unknown credit rating: ' + creditRating
       }
-      break;
+      break
   }
-  res.status(status);
-  res.json(response);
-});
+  res.status(status)
+  res.json(response)
+})
 
-module.exports = router;
+module.exports = router

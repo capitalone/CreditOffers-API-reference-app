@@ -22,4 +22,4 @@ module.exports = {
     clientID: 'COF_CLIENT_ID',
     clientSecret: 'COF_CLIENT_SECRET'
   }
-};
+}

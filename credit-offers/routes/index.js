@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Credit Offers Sample' });
-});
+router.get('/', function (req, res, next) {
+  res.render('index', { title: 'Credit Offers Sample' })
+})
 
-module.exports = router;
+module.exports = router
