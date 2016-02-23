@@ -8,6 +8,11 @@ This is version 1.0 of the Credit Offers API Reference Application Code. For sof
 This reference app illustrates the use of the Credit Offers API to collect customer information and retrieve a list of targeted product offers for display. If you encounter any issues using this reference code, please submit them in the form of GitHub issues.
 
 ## Build/Install Instructions
+### Dependencies
+* [Node.js](https://nodejs.org) 4.X or higher
+
+All other dependencies are loaded with [npm](https://www.npmjs.com/). All dependencies are cross-platform. Notable dependencies are listed below.
+* [express](http://expressjs.com/) - Minimalist web framework for Node.js
 
 ### config.js
 You can configure your clientID and clientSecret in credit-offers/config.js. In addition, if you change the default port for the mock API, you also need to update this file.
