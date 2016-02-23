@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and limitations 
 */
 
 var request = require('request')
-var qs = require('querystring')
 var _ = require('lodash')
 var format = require('util').format
 var debug = require('debug')('credit-offers:api-client')
@@ -65,15 +64,16 @@ CreditOffersClient.prototype.getTargetedProductsOffer = function getTargetedProd
  */
 CreditOffersClient.prototype._sendRequest = function _sendRequest (reqOptions, callback) {
   request(reqOptions, function (err, response, body) {
-    if (err) { return callback(err); }
+    if (err) { return callback(err) }
     if (response.statusCode === 400) {
       return processResponseErrors(body, callback)
     } else if (response.statusCode === 200) {
       debug('Received response', body)
       parseResponse(body, callback)
     } else {
-      console.error('Received unexpected status code: ' + response.statusCode)
-      return callback(new Error(''))
+      var errorMessage = 'Received unexpected status code: ' + response.statusCode
+      console.error(errorMessage)
+      return callback(new Error(errorMessage))
     }
   })
 
@@ -85,14 +85,14 @@ CreditOffersClient.prototype._sendRequest = function _sendRequest (reqOptions, c
     try {
       var responseObject = JSON.parse(responseBody)
       return callback(null, responseObject)
-    } catch(error) {
+    } catch (error) {
       return callback(error)
     }
   }
 
   function processResponseErrors (responseBody, callback) {
     parseResponse(responseBody, function (err, data) {
-      if (err) { return callback(err); }
+      if (err) { return callback(err) }
 
       var errorCode = data.code || '<no code>'
       var errorDescription = data.description || '<no description>'
