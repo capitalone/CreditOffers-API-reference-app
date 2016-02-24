@@ -1,3 +1,6 @@
+# Ignore config files. Users should alter the sample.
+config.js
+
 # Thumbs
 Thumbs.db
 
