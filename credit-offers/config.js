@@ -13,13 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
 
+var oauthHost = 'http://localhost:3002'
+var creditOffersHost = 'http://localhost:3002'
+
 module.exports = {
   // Settings for connecting to the Credit Offers API
   creditOffers: {
-    // Change this to the URL of the environment you are connecting to
-    url: 'http://localhost:3002',
-    apiVersion: 1,
-    clientID: 'COF_CLIENT_ID',
-    clientSecret: 'COF_CLIENT_SECRET'
+    client: {
+      // The URL of the Credit Offers environment you are connecting to.
+      url: creditOffersHost,
+      apiVersion: 1
+    },
+    oauth: {
+      tokenURL: oauthHost + '/oauth/oauth20/token',
+      // The clientId and clientSecret you received when registering your app.
+      clientID: 'COF_CLIENT_ID',
+      clientSecret: 'COF_CLIENT_SECRET'
+    }
   }
 }
