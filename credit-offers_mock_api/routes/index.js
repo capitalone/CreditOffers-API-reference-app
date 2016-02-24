@@ -42,7 +42,7 @@ var fakeProducts = {
     "tier": "EXCELLENT CREDIT",
     "images": [{
       "url": {
-        "href": "http://images/www-venture-one-visa-sig-flat-9-14.png",
+        "href": "http://localhost:3002/images/www-venture-visa-sig-flat-9-14.png",
         "method": "GET",
         "type": "image/png"
       },

@@ -22,22 +22,22 @@ var debug = require('debug')('credit-offers:api-client')
 var defaultOptions = {
   // TODO: update this value with actual/staging api host
   url: 'https://api.capitalone.com',
-  apiVersion: 1,
-  clientID: null,
-  clientSecret: null
+  apiVersion: 1
 }
 
 /**
  * The API client class
  * @param options {object} Client options (host url, API version)
  */
-function CreditOffersClient (options) {
+function CreditOffersClient (options, oauth) {
   if (!this instanceof CreditOffersClient) {
     return new CreditOffersClient(options)
   }
 
   // Store the supplied options, using default values if not specified
   this.options = _.defaults({}, options, defaultOptions)
+  this.oauth = oauth
+  debug('Initializing Credit Offers client', this.options)
 }
 module.exports = CreditOffersClient
 
@@ -46,17 +46,25 @@ module.exports = CreditOffersClient
  * @param customerInfo {object} Represents the customer info to pass to the API
  */
 CreditOffersClient.prototype.getTargetedProductsOffer = function getTargetedProductsOffer (customerInfo, callback) {
-  var reqOptions = {
-    baseUrl: this.options.url,
-    url: '/credit-cards/targeted-products-offer',
-    method: 'GET',
-    qs: customerInfo,
-    headers: {
-      'Accept': 'application/json; v=' + this.options.apiVersion
+  var client = this
+  this.oauth.withToken(function (err, token) {
+    if (err) { return callback(err) }
+
+    var reqOptions = {
+      baseUrl: client.options.url,
+      url: '/credit-cards/targeted-products-offer',
+      method: 'GET',
+      qs: customerInfo,
+      headers: {
+        'Accept': 'application/json; v=' + client.options.apiVersion
+      },
+      auth: {
+        bearer: token.access_token
+      }
     }
-  }
-  debug('Sending request for targeted product offers', reqOptions)
-  this._sendRequest(reqOptions, callback)
+    debug('Sending request for targeted product offers', reqOptions)
+    client._sendRequest(reqOptions, callback)
+  })
 }
 
 /**
