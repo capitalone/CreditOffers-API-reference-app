@@ -30,8 +30,8 @@ block content
         div.product-offer.media
           div.media-left
             img.product-image(
-              src = product.image.url.href
-              alt = product.image.alternateText
+              src = product.images[0].url.href
+              alt = product.images[0].alternateText
             )
           div.media-body
             h4.media-heading= product.name
