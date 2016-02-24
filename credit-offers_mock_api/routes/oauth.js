@@ -52,15 +52,15 @@ router.post('/oauth20/token', function (req, res, next) {
     responseBody = {
       access_token: '5354e3a56036056cffb5a99f368a31cef3aee2a8',
       token_type: 'Bearer',
-      expires_in: '900',
-      refresh_token: 'cV6tIa3UQncpzGgXfufRwZJvVbwZeoQPpsx7YzxdYNY',
-      id_token: 'eyJraWQiOiIxNDM4NzA2MDM4NTc4IiwiYWxnIjoiUlMyNTYifQ'
+      expires_in: '900'
     }
   } else if (grantType === 'authorization_code' || grantType === 'refresh_token') {
     responseBody = {
       access_token: '5354e3a56036056cffb5a99f368a31cef3aee2a8',
       token_type: 'Bearer',
-      expires_in: '900'
+      expires_in: '900',
+      refresh_token: 'cV6tIa3UQncpzGgXfufRwZJvVbwZeoQPpsx7YzxdYNY',
+      id_token: 'eyJraWQiOiIxNDM4NzA2MDM4NTc4IiwiYWxnIjoiUlMyNTYifQ'
     }
   } else {
     res.status(400)
