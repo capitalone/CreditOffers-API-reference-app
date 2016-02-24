@@ -18,16 +18,17 @@ See the License for the specific language governing permissions and limitations 
 var express = require('express')
 var _ = require('lodash')
 var CreditOffersClient = require('../creditOffersClient')
+var oauth = require('../oauth')
 
 module.exports = function (options) {
   var router = express.Router()
-  var client = new CreditOffersClient(options)
+  var client = new CreditOffersClient(options.client, oauth(options.oauth))
 
   // POST customer info to check for offers
   router.post('/', function (req, res, next) {
     var customerInfo = req.body
     client.getTargetedProductsOffer(customerInfo, function (err, response) {
-      if (err) { return next(err); }
+      if (err) { return next(err) }
 
       var viewModel = {
         title: 'Credit Offers',
