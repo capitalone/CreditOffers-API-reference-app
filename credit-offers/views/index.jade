@@ -24,6 +24,7 @@ block modals
     div.modal-dialog
       div.modal-content
         form(action='/offers', method='POST')
+          input(type="hidden" name="_csrf" value="#{csrfToken}")
           div.modal-header
             button.close(type='button', data-dismiss='modal', aria-label='close')
               span(aria-hidden='true')
