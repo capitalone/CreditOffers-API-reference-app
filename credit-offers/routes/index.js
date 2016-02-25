@@ -15,10 +15,15 @@ See the License for the specific language governing permissions and limitations 
 
 var express = require('express')
 var router = express.Router()
+var csrf = require('csurf')
+var csrfProtection = csrf({ cookie: true })
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Credit Offers Sample' })
+router.get('/', csrfProtection, function (req, res, next) {
+  res.render('index', {
+    csrfToken: req.csrfToken(),
+    title: 'Credit Offers Sample'
+  })
 })
 
 module.exports = router
