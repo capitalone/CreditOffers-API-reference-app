@@ -17,15 +17,17 @@ See the License for the specific language governing permissions and limitations 
 
 var express = require('express')
 var _ = require('lodash')
+var csrf = require('csurf')
 var CreditOffersClient = require('../creditOffersClient')
 var oauth = require('../oauth')
 
 module.exports = function (options) {
   var router = express.Router()
   var client = new CreditOffersClient(options.client, oauth(options.oauth))
+  var csrfProtection = csrf({ cookie: true })
 
   // POST customer info to check for offers
-  router.post('/', function (req, res, next) {
+  router.post('/', csrfProtection, function (req, res, next) {
     var customerInfo = req.body
     client.getTargetedProductsOffer(customerInfo, function (err, response) {
       if (err) { return next(err) }
