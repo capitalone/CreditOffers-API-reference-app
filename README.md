@@ -39,6 +39,9 @@ This will submit a request to the Credit Offers endpoint and redirect the user t
 
 To get a deeper look at the messages being passed, start the app with the following command `DEBUG=credit-offers:* NODE_DEBUG=request npm start`.  This will activate detailed debug logging to the console, showing the details of the request to the API and the response received.
 
+## Best Practices
+This application makes use of the [helmet](https://www.npmjs.com/package/helmet) library for safer http headers, and the [csurf](https://www.npmjs.com/package/csurf) library to avoid cross-site request forgery attacks. However, when developing and hosting a real world application, make sure to be aware of the [security](http://expressjs.com/en/advanced/best-practice-security.html) and [performance](http://expressjs.com/en/advanced/best-practice-performance.html) best practices for the Express framework. In particular, hosting with TLS is strongly recommended and free certificates can be acquired at https://letsencrypt.org/.
+
 ## Architecture
 This is a [Node.js](https://nodejs.org) 4.x and higher app built with [Express](http://expressjs.com/) 4.13.1.  Because of the simple nature, there is no session management or data persistence.
 
