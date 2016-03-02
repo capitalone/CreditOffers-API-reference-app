@@ -93,7 +93,7 @@ var fakeProducts = {
 }
 
 /* GET home page. */
-router.get('/credit-cards/targeted-products-offer', function (req, res, next) {
+router.get('/credit-cards/targeted-product-offers', function (req, res, next) {
   console.info(req.query)
   var creditRating = req.query.selfAssessedCreditRating
   var response = {}

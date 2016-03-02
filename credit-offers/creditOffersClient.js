@@ -52,7 +52,7 @@ CreditOffersClient.prototype.getTargetedProductsOffer = function getTargetedProd
 
     var reqOptions = {
       baseUrl: client.options.url,
-      url: '/credit-cards/targeted-products-offer',
+      url: '/credit-cards/targeted-product-offers',
       method: 'GET',
       qs: customerInfo,
       headers: {
