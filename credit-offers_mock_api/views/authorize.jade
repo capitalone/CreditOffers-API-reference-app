@@ -1,9 +1,0 @@
-extends layout
-
-block content
-  h1 Authorize
-  
-  p PhotoShed would like access.
-  form(action="/oauth/auz/authorize" method="POST")
-    input(type="hidden" name="redirect_uri" value="#{redirectURI}")
-    button(type="submit") Authorize
