@@ -17,12 +17,6 @@ All other dependencies are loaded with [npm](https://www.npmjs.com/). All depend
 ### config.js
 config.js contains information specific to your app, such as your client_id and client_secret. Create this file by copying [config.js.sample](/credit-offers/config.js.sample). Be careful not to put config.js into version control.
 
-### Start the mock API
-From the project root:  
-`cd credit-offers_mock_api`  
-`npm install`  
-`npm start`
-
 ### Start the app
 From the project root:  
 `cd credit-offers`  

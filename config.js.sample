@@ -18,8 +18,8 @@ See the License for the specific language governing permissions and limitations 
  * config.js should not be under version control since it contains your
  * client_id and client_secret.
  */
-var oauthHost = 'http://localhost:3002'
-var creditOffersHost = 'http://localhost:3002'
+var oauthHost = 'https://api-sandbox.capitalone.com'
+var creditOffersHost = 'https://api-sandbox.capitalone.com'
 
 module.exports = {
   // Settings for connecting to the Credit Offers API
