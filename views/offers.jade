@@ -18,9 +18,9 @@ block content
     if error
       span.error= error
     else if isPrequalified
-      h1 Good news!  You already qualify!
+      h1 You prequalify for the following offers:
     else if products && products.length
-      h1 Check out these great offers!
+      h1 We're sorry, you don't prequalify, but you can check out these great offers:
     else
       h1 We weren't able to find any offers
       
