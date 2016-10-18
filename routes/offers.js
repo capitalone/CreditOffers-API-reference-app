@@ -28,13 +28,30 @@ module.exports = function (options) {
 
   // POST customer info to check for offers
   router.post('/', csrfProtection, function (req, res, next) {
-    var customerInfo = req.body
-    client.getTargetedProductsOffer(customerInfo, function (err, response) {
+    // Build the customer info (moving address into its own object)
+    // NOTE: In a production app, make sure to perform more in-depth validation of your inputs
+    var customerInfo = _.assign({}, req.body)
+    var addressProps = [
+      'addressLine1',
+      'addressLine2',
+      'addressLine3',
+      'addressLine4',
+      'city',
+      'stateCode',
+      'postalCode',
+      'addressType'
+    ]
+    var address = _.pick(customerInfo, addressProps)
+    customerInfo = _.omit(customerInfo, addressProps)
+    customerInfo.address = address
+
+    client.createPrequalificationCheck(customerInfo, function (err, response) {
       if (err) { return next(err) }
 
       var viewModel = {
         title: 'Credit Offers',
         isPrequalified: response.isPrequalified,
+        prequalificationId: response.prequalificationId,
         products: response.products && _.sortBy(response.products, 'priority')
       }
 
