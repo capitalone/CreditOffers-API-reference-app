@@ -20,9 +20,8 @@ var debug = require('debug')('credit-offers:api-client')
 
 // Default to a secure call to the API endpoint
 var defaultOptions = {
-  // TODO: update this value with actual/staging api host
   url: 'https://api.capitalone.com',
-  apiVersion: 1
+  apiVersion: 2
 }
 
 /**
