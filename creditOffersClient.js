@@ -71,6 +71,34 @@ CreditOffersClient.prototype.createPrequalificationCheck = function createPrequa
 }
 
 /**
+ * Acknowledges that a set of pre-qualification results have been displayed
+ * to the consumer.
+ * @param prequalificationId {string} The unique identifier of the prequalification request to acknowledge
+ */
+CreditOffersClient.prototype.acknowledgePrequalification = function acknowledgePrequalification (prequalificationId, callback) {
+  var client = this
+  this.oauth.withToken(function (err, token) {
+    if (err) { return callback(err) }
+
+    var reqOptions = {
+      baseUrl: client.options.url,
+      url: '/credit-offers/prequalifications/' + prequalificationId,
+      method: 'POST',
+      json: true,
+      body: { 'hasBeenAcknowledged': true },
+      headers: {
+        'Accept': 'application/json; v=' + client.options.apiVersion
+      },
+      auth: {
+        bearer: token.access_token
+      }
+    }
+    debug('Sending request to acknowledge pre-qualification ID prequalificationId', reqOptions)
+    client._sendRequest(reqOptions, callback)
+  })
+}
+
+/**
  * A private function to send a request to the API and parse the response, handling errors as needed
  */
 CreditOffersClient.prototype._sendRequest = function _sendRequest (reqOptions, callback) {
