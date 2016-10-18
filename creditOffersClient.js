@@ -72,7 +72,7 @@ CreditOffersClient.prototype.getTargetedProductsOffer = function getTargetedProd
 CreditOffersClient.prototype._sendRequest = function _sendRequest (reqOptions, callback) {
   request(reqOptions, function (err, response, body) {
     if (err) { return callback(err) }
-    if (response.statusCode === 400) {
+    if (response.statusCode >= 400) {
       return processResponseErrors(body, callback)
     } else if (response.statusCode === 200) {
       debug('Received response', body)
