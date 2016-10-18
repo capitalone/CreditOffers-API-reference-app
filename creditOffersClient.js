@@ -56,6 +56,7 @@ CreditOffersClient.prototype.createPrequalificationCheck = function createPrequa
       baseUrl: client.options.url,
       url: '/credit-offers/prequalifications',
       method: 'POST',
+      json: true,
       body: customerInfo,
       headers: {
         'Accept': 'application/json; v=' + client.options.apiVersion
@@ -77,28 +78,15 @@ CreditOffersClient.prototype._sendRequest = function _sendRequest (reqOptions, c
     if (err) { return callback(err) }
     if (response.statusCode >= 400) {
       return processResponseErrors(body, callback)
-    } else if (response.statusCode === 200) {
+    } else if (response.statusCode >= 200) {
       debug('Received response', body)
-      parseResponse(body, callback)
+      return callback(null, body)
     } else {
       var errorMessage = 'Received unexpected status code: ' + response.statusCode
       console.error(errorMessage)
       return callback(new Error(errorMessage))
     }
   })
-}
-
-function parseResponse (responseBody, callback) {
-  if (!responseBody) {
-    return callback(null, null)
-  }
-
-  try {
-    var responseObject = JSON.parse(responseBody)
-    return callback(null, responseObject)
-  } catch (error) {
-    return callback(error)
-  }
 }
 
 function processResponseErrors (responseBody, callback) {
