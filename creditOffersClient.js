@@ -90,14 +90,14 @@ CreditOffersClient.prototype._sendRequest = function _sendRequest (reqOptions, c
 }
 
 function processResponseErrors (responseBody, callback) {
-  parseResponse(responseBody, function (err, data) {
-    if (err) { return callback(err) }
+  if (!responseBody) {
+    return callback(new Error('The request failed with no error details returned'))
+  }
 
-    var errorCode = data.code || '<no code>'
-    var errorDescription = data.description || '<no description>'
-    var documentationUrl = data.documentationUrl || '<no URL>'
-    var message = format('Received an error from the API: code=%s | description=%s | documentation=%s', errorCode, errorDescription, documentationUrl)
-    console.error(message)
-    callback(new Error(message))
-  })
+  var errorCode = responseBody.code || '<no code>'
+  var errorDescription = responseBody.description || '<no description>'
+  var documentationUrl = responseBody.documentationUrl || '<no URL>'
+  var message = format('Received an error from the API: code=%s | description=%s | documentation=%s', errorCode, errorDescription, documentationUrl)
+  console.error(message)
+  callback(new Error(message))
 }
