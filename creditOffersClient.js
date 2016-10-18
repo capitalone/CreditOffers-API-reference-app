@@ -83,30 +83,30 @@ CreditOffersClient.prototype._sendRequest = function _sendRequest (reqOptions, c
       return callback(new Error(errorMessage))
     }
   })
+}
 
-  function parseResponse (responseBody, callback) {
-    if (!responseBody) {
-      return callback(null, null)
-    }
-
-    try {
-      var responseObject = JSON.parse(responseBody)
-      return callback(null, responseObject)
-    } catch (error) {
-      return callback(error)
-    }
+function parseResponse (responseBody, callback) {
+  if (!responseBody) {
+    return callback(null, null)
   }
 
-  function processResponseErrors (responseBody, callback) {
-    parseResponse(responseBody, function (err, data) {
-      if (err) { return callback(err) }
-
-      var errorCode = data.code || '<no code>'
-      var errorDescription = data.description || '<no description>'
-      var documentationUrl = data.documentationUrl || '<no URL>'
-      var message = format('Received an error from the API: code=%s | description=%s | documentation=%s', errorCode, errorDescription, documentationUrl)
-      console.error(message)
-      callback(new Error(message))
-    })
+  try {
+    var responseObject = JSON.parse(responseBody)
+    return callback(null, responseObject)
+  } catch (error) {
+    return callback(error)
   }
+}
+
+function processResponseErrors (responseBody, callback) {
+  parseResponse(responseBody, function (err, data) {
+    if (err) { return callback(err) }
+
+    var errorCode = data.code || '<no code>'
+    var errorDescription = data.description || '<no description>'
+    var documentationUrl = data.documentationUrl || '<no URL>'
+    var message = format('Received an error from the API: code=%s | description=%s | documentation=%s', errorCode, errorDescription, documentationUrl)
+    console.error(message)
+    callback(new Error(message))
+  })
 }
