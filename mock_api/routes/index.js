@@ -52,7 +52,7 @@ var fakeProducts = {
     "productId": "3",
     "applicationUrl": "https://www.capitalone.com?context=applicationUrl",
     "code": "BLUESTEEL",
-    "name": "Blue Steel MasterCard®",
+    "productDisplayName": "Blue Steel MasterCard®",
     "priority": 6,
     "tier": "RebuildingCredit",
     "images": [{
