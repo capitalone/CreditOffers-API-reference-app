@@ -41,19 +41,22 @@ function CreditOffersClient (options, oauth) {
 module.exports = CreditOffersClient
 
 /**
- * Perform a request to retrieve credit offers for a customer
+ * Initiate a pre-qualification check for a customer.
+ * The response will include products for which the customer may be
+ * pre-qualified.  If they do not qualify, at least one product will still
+ * be returned.
  * @param customerInfo {object} Represents the customer info to pass to the API
  */
-CreditOffersClient.prototype.getTargetedProductsOffer = function getTargetedProductsOffer (customerInfo, callback) {
+CreditOffersClient.prototype.createPrequalificationCheck = function createPrequalificationCheck (customerInfo, callback) {
   var client = this
   this.oauth.withToken(function (err, token) {
     if (err) { return callback(err) }
 
     var reqOptions = {
       baseUrl: client.options.url,
-      url: '/credit-cards/targeted-product-offers',
-      method: 'GET',
-      qs: customerInfo,
+      url: '/credit-offers/prequalifications',
+      method: 'POST',
+      body: customerInfo,
       headers: {
         'Accept': 'application/json; v=' + client.options.apiVersion
       },
@@ -61,7 +64,7 @@ CreditOffersClient.prototype.getTargetedProductsOffer = function getTargetedProd
         bearer: token.access_token
       }
     }
-    debug('Sending request for targeted product offers', reqOptions)
+    debug('Sending request to start pre-qualification', reqOptions)
     client._sendRequest(reqOptions, callback)
   })
 }
