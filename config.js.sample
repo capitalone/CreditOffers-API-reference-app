@@ -27,7 +27,7 @@ module.exports = {
     client: {
       // The URL of the Credit Offers environment you are connecting to.
       url: creditOffersHost,
-      apiVersion: 1
+      apiVersion: 2
     },
     oauth: {
       tokenURL: oauthHost + '/oauth/oauth20/token',
