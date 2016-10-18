@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var uuid = require('node-uuid')
+var _ = require('lodash')
 
 var fakeProducts = {
   'good_credit': {
@@ -72,7 +73,7 @@ var fakeProducts = {
 }
 
 /* POST to create a prequal check */
-router.post('/credit-cards/prequalifications', function (req, res, next) {
+router.post('/credit-offers/prequalifications', function (req, res, next) {
   console.info(req.body)
   var response = {}
   var status = 200
