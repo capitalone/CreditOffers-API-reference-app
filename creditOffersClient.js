@@ -77,12 +77,14 @@ CreditOffersClient.prototype.createPrequalificationCheck = function createPrequa
  */
 CreditOffersClient.prototype.acknowledgePrequalification = function acknowledgePrequalification (prequalificationId, callback) {
   var client = this
+  if (!prequalificationId) { return callback(new Error('Unable to acknowledge prequalification without an ID')) }
+
   this.oauth.withToken(function (err, token) {
     if (err) { return callback(err) }
 
     var reqOptions = {
       baseUrl: client.options.url,
-      url: '/credit-offers/prequalifications/' + prequalificationId,
+      url: '/credit-offers/prequalifications/' + encodeURIComponent(prequalificationId),
       method: 'POST',
       json: true,
       body: { 'hasBeenAcknowledged': true },
