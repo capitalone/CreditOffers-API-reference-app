@@ -132,4 +132,23 @@ router.post('/credit-offers/prequalifications', function (req, res, next) {
   res.json(finalResponse)
 })
 
+/* POST to acknowledge the results of a prequal check */
+router.post('/credit-offers/prequalifications/:id', function (req, res, next) {
+  console.info('Acknowledging prequal ID ' + req.params.id)
+  console.info(req.body)
+  var response = null
+  var status = 204
+
+  if (!req.body.hasBeenAcknowledged) {
+    status = 400
+    response = {
+      code: 202028,
+      description: 'The value of the hasBeenAcknowledged body property is invalid. Must be set to true.'
+    }
+  }
+
+  res.status(status)
+  res.json(response)
+})
+
 module.exports = router

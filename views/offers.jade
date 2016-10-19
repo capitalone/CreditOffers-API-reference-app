@@ -11,7 +11,7 @@
 //- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //- See the License for the specific language governing permissions and limitations under the License.
 
-extends ./layout.jade
+extends ./layout
 
 block content
   p.offer-summary
@@ -37,3 +37,22 @@ block content
             h4.media-heading= product.productDisplayName
             if product.terms && product.terms.primaryBenefit
               div.primary-benefit= product.terms.primaryBenefit
+
+block scripts
+  script.
+    $(function() {
+      var prequalificationId = '#{prequalificationId}'
+      if (!prequalificationId) {
+        console.warn('Displayed offers without a prequalification ID')
+        return;
+      }
+      
+      // Tell the server that we have displayed the products to the user
+      $.post('/offers/acknowledge/' + encodeURIComponent(prequalificationId))
+        .done(function () {
+          console.log('Successfully acknowledged prequalification products')
+        })
+        .fail(function (res, st, err) {
+          console.warn('Failed to acknowledge prequalification products: ' + err)
+        })
+    })

@@ -59,5 +59,22 @@ module.exports = function (options) {
     })
   })
 
+  // POST acknowledgement that prequal offers were displayed
+  router.post('/acknowledge/:id', function (req, res, next) {
+    var id = req.params.id
+    if (!id) {
+      res.status(400).send()
+      return
+    }
+
+    client.acknowledgePrequalification(id, function (err, response) {
+      if (err) {
+        res.status(500).send()
+        return
+      }
+      res.status(200).send()
+    })
+  })
+
   return router
 }
