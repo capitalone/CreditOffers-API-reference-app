@@ -18,12 +18,13 @@ See the License for the specific language governing permissions and limitations 
 var express = require('express')
 var _ = require('lodash')
 var csrf = require('csurf')
-var CreditOffersClient = require('../creditOffersClient')
+var CreditOffers = require('../creditoffers')
 var oauth = require('../oauth')
+var debug = require('debug')('credit-offers:offers')
 
 module.exports = function (options) {
   var router = express.Router()
-  var client = new CreditOffersClient(options.client, oauth(options.oauth))
+  var client = new CreditOffers(options.client, oauth(options.oauth))
   var csrfProtection = csrf({ cookie: true })
 
   // POST customer info to check for offers
@@ -45,7 +46,7 @@ module.exports = function (options) {
     customerInfo = _.omit(customerInfo, addressProps)
     customerInfo.address = address
 
-    client.createPrequalificationCheck(customerInfo, function (err, response) {
+    client.prequalification.create(customerInfo, function (err, response) {
       if (err) { return next(err) }
 
       var viewModel = {
@@ -61,14 +62,16 @@ module.exports = function (options) {
 
   // POST acknowledgement that prequal offers were displayed
   router.post('/acknowledge/:id', function (req, res, next) {
+    debug('Received acknowledgement of ' + req.params.id)
     var id = req.params.id
     if (!id) {
       res.status(400).send()
       return
     }
 
-    client.acknowledgePrequalification(id, function (err, response) {
+    client.prequalification.acknowledge(id, function (err, response) {
       if (err) {
+        debug('Error in API call', err)
         res.status(500).send()
         return
       }
