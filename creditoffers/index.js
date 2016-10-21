@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and limitations 
 
 var ApiClient = require('./client')
 var Prequalification = require('./prequalification')
+var Products = require('./products')
 
 /**
  * The Credit Offers API client
@@ -27,7 +28,9 @@ function CreditOffers (options, oauth) {
   }
 
   var client = new ApiClient(options, oauth)
+
   this.prequalification = new Prequalification(client)
+  this.products = new Products(client)
 }
 
 module.exports = CreditOffers
