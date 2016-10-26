@@ -25,7 +25,13 @@ head
     script(src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(src='/js/bootstrap.min.js')
   body
-    div.container
-      block content
+    nav.navbar.navbar-default.navbar-fixed-top
+      div.container
+        div.navbar-header
+          a.navbar-brand(href="/")            
+            i.fa.fa-credit-card-alt(aria-hidden="true")
+            | CreditSite
+        block navbar-custom
+    block content
     block modals
     block scripts

@@ -14,16 +14,50 @@ See the License for the specific language governing permissions and limitations 
 */
 
 var express = require('express')
-var router = express.Router()
+var CreditOffers = require('../creditoffers')
+var oauth = require('../oauth')
 var csrf = require('csurf')
-var csrfProtection = csrf({ cookie: true })
+var _ = require('lodash')
 
-/* GET home page. */
-router.get('/', csrfProtection, function (req, res, next) {
-  res.render('index', {
-    csrfToken: req.csrfToken(),
-    title: 'Credit Offers Sample'
+module.exports = function (options) {
+  var client = new CreditOffers(options.client, oauth(options.oauth))
+  var csrfProtection = csrf({ cookie: true })
+  var router = express.Router()
+
+  // The supported card types
+  var cardTypes = [
+    {
+      name: 'ConsumerCard',
+      display: 'Consumer Cards'
+    },
+    {
+      name: 'BusinessCard',
+      display: 'Business Cards'
+    }
+  ]
+
+  // How many products to pull at a time
+  var productCount = 20
+
+  /* GET home page. */
+  router.get('/', csrfProtection, function (req, res, next) {
+    var requestedCardType = _.find(cardTypes, { name: req.query.cardType })
+    if (!requestedCardType) {
+      res.redirect('/?cardType=' + cardTypes[0])
+      return
+    }
+
+    client.products.getCards(requestedCardType.name, { limit: productCount }, function (err, data) {
+      cards = _.get(data, 'products')
+      res.render('index', {
+        csrfToken: req.csrfToken(),
+        title: 'Credit Offers Reference App',
+        currentCardType: requestedCardType.name,
+        cardTypes: cardTypes,
+        cards: cards
+      })
+    })
   })
-})
 
-module.exports = router
+  return router
+}

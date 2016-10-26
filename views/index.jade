@@ -13,11 +13,43 @@
 
 extends ./layout
 
+mixin cardInfo(card)
+  div.card-info
+    div.main-info
+      div.details
+        p.card-title= card.productDisplayName
+        img(src=card.images[0].url)
+      div.apply
+        a.btn.btn-lg.btn-success(href=card.applyNowLink)
+          i.fa.fa-lock(aria-hidden="true")
+          | APPLY NOW
+        p With CapitalOne®
+    div.additional-info
+      p Info 1
+      p Info 2
+      p Info 3
+        
+
+block navbar-custom
+  button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
+    i.btn-img.fa.fa-credit-card(aria-hidden="true")
+    | Find Pre-Qualified Offers
+
 block content
-  div.jumbotron
-    h1 You Deserve a Better Credit Card!
-    p
-      button.btn.btn-lg.btn-success(role='button', data-toggle='modal', data-target='#customer-info') See Your Offers
+  div.cards
+    div.header
+      div.container        
+        div.row
+          div.col-md-8
+            h2 CapitalOne® Credit Cards
+            p These are some of the cards on offer from CapitalOne®.
+          div.filters.col-md-4
+            div.btn-group(role="group", aria-label="Card Types")
+              each cardType in cardTypes
+                a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
+    div.container
+      each card in cards
+        +cardInfo(card)
 
 block modals
   div#customer-info.modal.fade(tabindex='-1', role='dialog')
