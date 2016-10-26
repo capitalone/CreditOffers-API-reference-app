@@ -61,7 +61,7 @@ body {
 .card-info {
   display: flex;
   flex-flow: column nowrap;
-  border: 1px solid #ddd;
+  border: 1px solid #aaa;
   background-color: #fff; }
   .card-info .card-title {
     font-size: 1.5em;
@@ -70,7 +70,7 @@ body {
     display: flex;
     flex-flow: row nowrap; }
     .card-info .main-info .details {
-      padding: 20px;
+      padding: 10px 20px 20px 20px;
       flex-grow: 1; }
     .card-info .main-info .apply {
       text-align: center;
