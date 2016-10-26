@@ -12,6 +12,7 @@
     "express": "~4.13.1",
     "jade": "^1.11.0",
     "lodash": "4.16.4",
+    "moment": "2.15.2",
     "morgan": "~1.6.1",
     "node-uuid": "1.4.7",
     "request": "^2.69.0"

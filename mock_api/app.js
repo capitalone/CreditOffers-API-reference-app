@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 
 var prequal = require('./routes/prequal')
 var oauth = require('./routes/oauth')
+var products = require('./routes/products')
 
 var app = express()
 
@@ -20,6 +21,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', prequal)
+app.use('/', products)
 app.use('/oauth/', oauth)
 
 // catch 404 and forward to error handler

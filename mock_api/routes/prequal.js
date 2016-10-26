@@ -16,7 +16,7 @@ var fakeProducts = {
       "width": 244,
       "alternateText": "Apply now for the Venture Rewards Card",
       "url": "http://localhost:3002/images/JB16760-GenericEMV-Venture-EMV-flat-244x154-06-15.png",
-      "imageType": "CardArt"
+      "imageType": "CardName"
     }],
     "terms": {
       "primaryBenefit": "Earn unlimited 2X miles per dollar on every purchase. Plus, earn 40,000 bonus miles once you spend $3,000 on purchases within the first 3 months.",
@@ -38,7 +38,7 @@ var fakeProducts = {
       "width": 244,
       "alternateText": "Apply now for the VentureOne Rewards Card",
       "url": "http://localhost:3002/images/JB16760-Generic-VentureOne-EMV-flat-244x154-06-15.png",
-      "imageType": "CardArt"
+      "imageType": "CardName"
     }],
     "terms": {
       "primaryBenefit": "Earn unlimited 1.25 miles per dollar on every purchase. Plus, earn 20,000 bonus miles once you spend $1,000 on purchases within the first 3 months.\r\n",
@@ -60,7 +60,7 @@ var fakeProducts = {
       "width": 244,
       "alternateText": "Apply now for the VentureOne Rewards Card",
       "url": "http://localhost:3002/images/JB16760-MC-Blue-Steel-EMV-flat-244x154-06-15.png",
-      "imageType": "CardArt"
+      "imageType": "CardName"
     }],
     "terms": {
       "primaryBenefit": "Build your credit with responsible use. Refundable deposit of $49, $99 or $200 required.",
