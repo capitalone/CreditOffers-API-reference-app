@@ -42,7 +42,7 @@ Products.prototype.getAll = function getAll (pagingOptions, callback) {
     url: '/credit-offers/products/cards',
     useOAuth: true,
     method: 'GET',
-    query: query
+    qs: query
   }, callback)
 }
 
@@ -60,7 +60,7 @@ Products.prototype.getCards = function getCards (cardType, pagingOptions, callba
     url: '/credit-offers/products/cards/' + encodeURIComponent(cardType),
     useOAuth: true,
     method: 'GET',
-    query: query
+    qs: query
   }, callback)
 }
 
