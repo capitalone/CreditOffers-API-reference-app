@@ -14,15 +14,16 @@
 extends ./layout
 
 block content
-  p.offer-summary
-    if error
-      span.error= error
-    else if isPrequalified
-      h1 You prequalify for the following offers:
-    else if products && products.length
-      h1 We're sorry, we can't prequalify you based on the information that you provided, but you can check out these great offers:
-    else
-      h1 We weren't able to find any offers
+  div.header
+    div.container
+      if error
+        span.error= error
+      else if isPrequalified
+        h2 You prequalify for the following offers:
+      else if products && products.length
+        h2 We're sorry, we can't prequalify you based on the information that you provided, but you can check out these great offers:
+      else
+        h2 We weren't able to find any offers
       
   if products
     div.product-offers

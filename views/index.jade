@@ -33,18 +33,17 @@ block navbar-custom
     | Find Pre-Qualified Offers
 
 block content
-  div.cards
-    div.header
-      div.container        
-        div.row
-          div.col-md-8
-            h2 CapitalOne® Credit Cards
-            p These are some of the cards on offer from CapitalOne®.
-          div.filters.col-md-4
-            div.btn-group(role="group", aria-label="Card Types")
-              each cardType in cardTypes
-                a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
-    div.container
+  div.header
+    div.container        
+      div.row
+        div.col-md-8
+          h2 CapitalOne® Credit Cards
+          p These are some of the cards on offer from CapitalOne®.
+        div.filters.col-md-4
+          div.btn-group(role="group", aria-label="Card Types")
+            each cardType in cardTypes
+              a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
+  div.cards.container
       each card in cards
         +cardInfo(card)
 
