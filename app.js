@@ -42,6 +42,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Include the bootstrap package
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
+// Include font awesome
+app.use('/css', express.static(path.join(__dirname, 'node_modules/font-awesome/css')))
+app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')))
+
 app.use(helmet())
 
 app.use('/', index)
