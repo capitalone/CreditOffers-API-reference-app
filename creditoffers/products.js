@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and limitations 
 
 var request = require('request')
 var debug = require('debug')('credit-offers:api-client')
+var _ = require('lodash')
 
 /**
  * Contains all functions for interacting with the credit offer product listings API
@@ -38,7 +39,7 @@ Products.prototype.getAll = function getAll (pagingOptions, callback) {
   var query = _.pick(pagingOptions, ['limit', 'offset'])
 
   this.client.sendRequest({
-    url: '/credit-offers/products',
+    url: '/credit-offers/products/cards',
     useOAuth: true,
     method: 'GET',
     query: query
@@ -46,15 +47,17 @@ Products.prototype.getAll = function getAll (pagingOptions, callback) {
 }
 
 /**
- * Retrieve summary information on all consumer card products
+ * Retrieve detailed information on all card products of a specific type
+ * @param {string} cardType The type of card (BusinessCard, ConsumerCard)
  * @param {object} pagingOptions Optionally control the number of results and starting offset
  * in the result set
  */
-Products.prototype.getConsumerCards = function getConsumerCards (pagingOptions, callback) {
+Products.prototype.getCards = function getCards (cardType, pagingOptions, callback) {
+  if (!cardType) { callback(new Error('A card type must be specified')) }
   var query = _.pick(pagingOptions, ['limit', 'offset'])
 
   this.client.sendRequest({
-    url: '/credit-offers/products/consumer-cards',
+    url: '/credit-offers/products/cards/' + encodeURIComponent(cardType),
     useOAuth: true,
     method: 'GET',
     query: query
@@ -63,13 +66,15 @@ Products.prototype.getConsumerCards = function getConsumerCards (pagingOptions, 
 
 /**
  * Retrieve summary information on all products
+ * @param {string} cardType The type of card (BusinessCard, ConsumerCard)
  * @param {string} productId The ID of the consumer card product for which to retrieve details
  */
-Products.prototype.getConsumerCardDetail = function getConsumerCardDetail (productId, callback) {
+Products.prototype.getCardDetail = function getCardDetail (cardType, productId, callback) {
+  if (!cardType) { callback(new Error('A card type must be specified')) }
   if (!productId) { callback(new Error('A product ID must be specified in order to retrieve product details')) }
 
   this.client.sendRequest({
-    url: '/credit-offers/products/consumer-cards/' + encodeURIComponent(productId),
+    url: '/credit-offers/products/' + encodeURIComponent(cardType) + '/' + encodeURIComponent(productId),
     useOAuth: true,
     method: 'GET'
   }, callback)
