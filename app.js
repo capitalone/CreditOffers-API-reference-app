@@ -48,7 +48,7 @@ app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome
 
 app.use(helmet())
 
-app.use('/', index)
+app.use('/', index(config.creditOffers))
 app.use('/offers', offers(config.creditOffers))
 
 // catch 404 and forward to error handler

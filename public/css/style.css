@@ -15,8 +15,13 @@ See the License for the specific language governing permissions and limitations 
 
 body {
   padding-bottom: 20px;
-  padding-top: 20px;
+  padding-top: 100px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 50px; }
+}
 
 .form-group.required > label:after {
   content: " *";
@@ -44,3 +49,82 @@ body {
       width: 100px; }
     .product-offers .product-offer .primary-benefit {
       font-style: italic; }
+
+.cards .header {
+  background-color: #efefef;
+  padding-bottom: 10px; }
+  .cards .header .filters {
+    margin-top: 15px; }
+  .cards .card-info {
+    margin-top: 15px; }
+
+.card-info {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid #ddd;
+  background-color: #fff; }
+  .card-info .card-title {
+    font-size: 1.5em;
+    font-weight: 600; }
+  .card-info .main-info {
+    display: flex;
+    flex-flow: row nowrap; }
+    .card-info .main-info .details {
+      padding: 20px;
+      flex-grow: 1; }
+    .card-info .main-info .apply {
+      text-align: center;
+      padding: 20px;
+      color: #555;
+      background-color: #eee; }
+  .card-info .additional-info {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    background-color: #bbb;
+    box-shadow: inset 0 6px 6px -4px rgba(0,0,0,0.25); }
+    .card-info .additional-info > * {
+      flex-grow: 1; }
+
+.btn i {
+  margin-right: 10px; }
+
+/* Bootstrap overrides */
+.navbar-default {
+  border: 0;
+  background-image: none;
+  background-color: #03A9F4; }
+  .navbar-default .navbar-brand,
+  .navbar-default .navbar-brand:hover,
+  .navbar-default .navbar-brand:focus {
+    color: #fff;
+    text-shadow: none; }
+    .navbar-default .navbar-brand i {
+      margin-right: 10px; }
+
+.btn[disabled] {
+  cursor: default; }
+
+.btn-success {
+  background-image: none;
+  background-color: #8BC34A;
+  box-shadow: none;
+  border: none;
+  text-shadow: none; }
+  .btn-success:hover, .btn-success:focus {
+    background-image: none;
+    background-color: #9ace5d;
+    background-position: 0; }
+
+.btn-primary {
+  background-image: none;
+  background-color: #1976D2;
+  box-shadow: none;
+  border: none;
+  text-shadow: none; }
+  .btn-primary:hover, .btn-primary:focus {
+    background-image: none;
+    background-color: #2196F3;
+    background-position: 0; }
+  .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus {
+    background-color: #1976D2; }
