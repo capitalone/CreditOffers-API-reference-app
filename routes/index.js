@@ -43,7 +43,7 @@ module.exports = function (options) {
   router.get('/', csrfProtection, function (req, res, next) {
     var requestedCardType = _.find(cardTypes, { name: req.query.cardType })
     if (!requestedCardType) {
-      res.redirect('/?cardType=' + cardTypes[0])
+      res.redirect('/?cardType=' + cardTypes[0].name)
       return
     }
 

@@ -50,13 +50,14 @@ body {
     .product-offers .product-offer .primary-benefit {
       font-style: italic; }
 
-.cards .header {
+.header {
   background-color: #efefef;
   padding-bottom: 10px; }
-  .cards .header .filters {
+  .header .filters {
     margin-top: 15px; }
-  .cards .card-info {
-    margin-top: 15px; }
+
+.cards .card-info {
+  margin-top: 15px; }
 
 .card-info {
   display: flex;
