@@ -26,9 +26,10 @@ block content
           h2 CapitalOne® Credit Cards
           p These are some of the cards on offer from CapitalOne®.
         div.filters.col-md-4
-          div.btn-group(role="group", aria-label="Card Types")
-            each cardType in cardTypes
-              a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
+          div.pull-right
+            div.btn-group(role="group", aria-label="Card Types")
+              each cardType in cardTypes
+                a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
   div.cards.container
       each card in cards
         div.card-info
@@ -37,10 +38,7 @@ block content
               p.card-title= card.productDisplayName
               div.summary
                 +cardNameImage(card)
-                div.marketing-copy
-                  ul
-                    each copyLine in card.marketingCopy
-                      li= copyLine
+                +marketingCopy(card)
             div.apply
               +applyButton(card)
               p with CapitalOne®

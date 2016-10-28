@@ -26,22 +26,14 @@ block content
         h2 We weren't able to find any offers
 
   div.cards.container
-    each product in products
+    each card in products
       div.card-info
         div.main-info
           div.details
             p.card-title= card.productDisplayName
             div.summary
               +cardNameImage(card)
-              ul.marketingCopy
-                if card.primaryBenefitDescription
-                  li= card.primaryBenefitDescription
-                if card.purchaseAPRDescription
-                  li= card.purchaseAPRDescription
-                if card.balanceTransferAPRDescription
-                  li= card.balanceTransferAPRDescription
-                if card.annualMembershipFeeDescription
-                  li= card.annualMembershipFeeDescription
+              +marketingCopy(card)
           div.apply
             +applyButton(card)
             p with CapitalOne®

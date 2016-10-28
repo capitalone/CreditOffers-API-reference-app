@@ -35,21 +35,6 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
-.product-offers {
-  margin-top: 20px; }
-  .product-offers .product-offer {
-    width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: #ddd 0 2px; }
-    .product-offers .product-offer .product-image {
-      width: 100px; }
-    .product-offers .product-offer .primary-benefit {
-      font-style: italic; }
-
 .header {
   background-color: #efefef;
   padding-bottom: 10px; }
@@ -78,6 +63,8 @@ body {
       padding: 20px;
       color: #555;
       background-color: #eee; }
+      .card-info .main-info .apply > .btn {
+        margin-bottom: 5px; }
   .card-info .summary {
     display: flex;
     flex-flow: row nowrap;
@@ -90,6 +77,23 @@ body {
     box-shadow: inset 0 6px 6px -4px rgba(0,0,0,0.25); }
     .card-info .additional-info > * {
       flex-grow: 1; }
+
+.marketing-copy > ul:first-child {
+  margin-bottom: 0; }
+.marketing-copy ul.collapse {
+  margin-top: 0; }
+.marketing-copy a.show-hide {
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 40px; }
+  .marketing-copy a.show-hide:focus {
+    text-decoration: none; }
+  .marketing-copy .collapse + a.show-hide::after, .marketing-copy .collapsing + a.show-hide::after {
+    font-family: FontAwesome;
+    content: " \f078"; }
+  .marketing-copy .collapse.in + a.show-hide::after {
+    font-family: FontAwesome;
+    content: " \f077"; }
 
 .btn i {
   margin-right: 10px; }
