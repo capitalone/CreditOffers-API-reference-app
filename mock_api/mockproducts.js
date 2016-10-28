@@ -2,9 +2,14 @@ var _ = require('lodash')
 var format = require('util').format
 var moment = require('moment')
 var debug = require('debug')('credit-offers_mock_api:mockproducts')
+var loremIpsum = require('lorem-ipsum')
 
-function multiSample (items, maxCount) {
-  return _.sampleSize(items, _.random(maxCount))
+function multiSample (items, minCount, maxCount) {
+  if (maxCount === undefined) {
+    maxCount = minCount
+    minCount = 0
+  }
+  return _.sampleSize(items, _.random(minCount, maxCount))
 }
 
 function numberFormat (formatString, max, sampleSize) {
@@ -14,15 +19,16 @@ function numberFormat (formatString, max, sampleSize) {
 
 // Dynamic product properties to be built per product
 var randomizeProduct = function (product) {
-  var productDisplayName = format('Fake %s %s %s', product.productType, processingNetwork, product.productId),
-      activeFrom = moment().startOf('day').subtract(_.random(5), 'years'),
+  var activeFrom = moment().startOf('day').subtract(_.random(5), 'years'),
       processingNetwork = _.sample(['Visa', 'MasterCard']),
+      productDisplayName = format('Fake %s %s %s', product.productType, processingNetwork, product.productId),
       imageFile = _.sample([
         'JB16760-GenericEMV-Venture-EMV-flat-244x154-06-15.png',
         'JB16760-Generic-VentureOne-EMV-flat-244x154-06-15.png',
         'JB16760-MC-Blue-Steel-EMV-flat-244x154-06-15.png',
         'www-venture-visa-sig-flat-9-14.png'
       ]),
+      // Fees & APR
       initialFee = _.random(0, 100),
       fullFee = initialFee + _.random(50),
       initialApr = _.random(0, 50),
@@ -30,7 +36,37 @@ var randomizeProduct = function (product) {
       fullAprLowFraction = _.random(99),
       fullAprHigh = fullAprLow + 10 + _.random(9),
       fullAprHighFraction = _.random(99),
-      aprMonthLimit = _.random(2, 10)
+      aprMonthLimit = _.random(2, 10),
+      // Mile rewards
+      milesPerDollar = _.random(2, 4),
+      bonusMiles = format('%d0,000', _.random(1, 5)),
+      rewardSpendingMin = format('%d,000', _.random(1, 3)),
+      rewardMonthLimit = _.random(3, 10).toString(),
+      // Marketing copy
+      customMarketingCopy = [
+        format('Enjoy a one-time bonus of %d miles once you spend $%s on purchases within %d months of approval, equal to $200 in travel',
+          bonusMiles, rewardSpendingMin, rewardMonthLimit),
+        format('Earn unlimited %d miles per dollar on every purchase, every day and pay no annual fee', milesPerDollar),
+        'Fly any airline, stay at any hotel, anytime',
+        'Complies with the standard expected size for a credit card, guaranteeing a snug fit in any wallet',
+        'Impress your friends by pretending your new card is a tiny skateboard, and using your fingers as a tiny person to perform cool tricks',
+        'Collect multiple cards and build your very own house of cards',
+        'Explore the world!  Accepted in over 400 countries',
+        'Now you can own anything, anytime, anywhere!',
+        'Get a head start on your bucket list',
+        'Keep your credit going in the right direction',
+        'Official credit card of the Milwaukee Corn Dogs',
+        'Earn bonus points on all purchases from Jake\'s Smoothie Hut',
+        'Use it to buy something nice for your mother.  She deserves it after all you\'ve put her through'
+      ],
+      randomMarketingCopy = _.map(_.range(15), function () {
+        return loremIpsum({
+          count: _.random(12, 50),
+          units: 'words',
+          format: 'plain'
+        })
+      }),
+      marketingCopy = _.concat(customMarketingCopy, randomMarketingCopy)
 
   var newValues = {
     productDisplayName: productDisplayName,
@@ -43,7 +79,7 @@ var randomizeProduct = function (product) {
       height: 154,
       width: 244,
       alternateText: format('Apply now for the %s Card', productDisplayName),
-      url: 'http://localhost:3002/images/' + filename,
+      url: 'http://localhost:3002/images/' + imageFile,
       imageType: 'CardName'
     }],
     categoryTags: multiSample([
@@ -64,11 +100,7 @@ var randomizeProduct = function (product) {
       'VentureOne',
       'Rewards'
     ], 3),
-    marketingCopy: multiSample([
-      'Enjoy a one-time bonus of 20,000 miles once you spend $1,000 on purchases within 3 months of approval, equal to $200 in travel',
-      'Earn unlimited 1.25 miles per dollar on every purchase, every day and pay no annual fee',
-      'Fly any airline, stay at any hotel, anytime'
-    ], 3),
+    marketingCopy: multiSample(marketingCopy, 3, 10),
     processingNetwork: processingNetwork,
     creditRating: multiSample([
       'Excellent',
@@ -77,7 +109,8 @@ var randomizeProduct = function (product) {
       'Rebuilding'
     ], 2),
     rewardsType: _.sample([null, 'Miles', 'Points']),
-    primaryBenefitDescription: format('Earn unlimited %d miles per dollar on every purchase. Plus, earn %d0,000 bonus miles once you spend $%d,000 on purchases within the first %d months.', _.random(1,3), _.random(2,5), _.random(1,3), _.random(1,5)),
+    primaryBenefitDescription: format('Earn unlimited %d miles per dollar on every purchase. Plus, earn %s bonus miles once you spend $%s on purchases within the first %d months.',
+      milesPerDollar, bonusMiles, rewardSpendingMin, rewardMonthLimit),
     balanceTransferFeeDescription: format('$%d', initialFee),
     introBalanceTransferAPRDescription: format('%d%%', initialApr),
     balanceTransferAPRDescription: format('%d%% intro APR for %d months; %d.%d%% to %d.%d%% variable APR after that',
@@ -90,7 +123,7 @@ var randomizeProduct = function (product) {
       fullAprHigh, fullAprHighFraction,
       aprMonthLimit),
     annualMembershipFeeDescription: format('$%d intro for first year; $%d after that', initialFee, fullFee),
-    rewardsRateDescription: '',
+    rewardsRateDescription: format(''),
     foreignTransactionFeeDescription: '',
     fraudCoverageDescription: '',
     latePaymentDescription: '',
