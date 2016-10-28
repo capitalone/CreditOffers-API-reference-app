@@ -49,7 +49,9 @@ module.exports = function (options) {
     }
 
     client.products.getCards(requestedCardType.name, { limit: productCount }, function (err, data) {
-      cards = _.map(data.products, productViewModel)
+      if (err) { return next(err) }
+      
+      cards = _.map(_.get(data, 'products', []), productViewModel)
       res.render('index', {
         csrfToken: req.csrfToken(),
         title: 'Credit Offers Reference App',
