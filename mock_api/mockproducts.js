@@ -59,14 +59,14 @@ var randomizeProduct = function (product) {
         'Earn bonus points on all purchases from Jake\'s Smoothie Hut',
         'Use it to buy something nice for your mother.  She deserves it after all you\'ve put her through'
       ],
-      randomMarketingCopy = _.map(_.range(15), function () {
+      randomMarketingCopy = _.map(_.range(25), function () {
         return loremIpsum({
-          count: _.random(12, 50),
+          count: _.random(5, 50),
           units: 'words',
           format: 'plain'
         })
       }),
-      marketingCopy = _.concat(customMarketingCopy, randomMarketingCopy)
+      marketingCopy = randomMarketingCopy
 
   var newValues = {
     productDisplayName: productDisplayName,
