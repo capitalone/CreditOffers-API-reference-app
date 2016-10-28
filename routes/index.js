@@ -18,6 +18,7 @@ var CreditOffers = require('../creditoffers')
 var oauth = require('../oauth')
 var csrf = require('csurf')
 var _ = require('lodash')
+var productViewModel = require('../viewmodels').product
 
 module.exports = function (options) {
   var client = new CreditOffers(options.client, oauth(options.oauth))
@@ -48,7 +49,7 @@ module.exports = function (options) {
     }
 
     client.products.getCards(requestedCardType.name, { limit: productCount }, function (err, data) {
-      cards = _.get(data, 'products')
+      cards = _.map(data.products, productViewModel)
       res.render('index', {
         csrfToken: req.csrfToken(),
         title: 'Credit Offers Reference App',
