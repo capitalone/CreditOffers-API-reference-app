@@ -11,21 +11,7 @@
 //- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //- See the License for the specific language governing permissions and limitations under the License.
 
-extends ./layout
-
-mixin cardInfo(card)
-  div.card-info
-    div.main-info
-      div.details
-        p.card-title= card.productDisplayName
-        img(src=card.images[0].url)
-      div.apply
-        a.btn.btn-lg.btn-success(href=card.applyNowLink)
-          i.fa.fa-lock(aria-hidden="true")
-          | APPLY NOW
-        p with CapitalOne®
-    div.additional-info
-        
+extends ./layout.jade
 
 block navbar-custom
   button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
@@ -45,7 +31,20 @@ block content
               a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
   div.cards.container
       each card in cards
-        +cardInfo(card)
+        div.card-info
+          div.main-info
+            div.details
+              p.card-title= card.productDisplayName
+              div.summary
+                +cardNameImage(card)
+                div.marketing-copy
+                  ul
+                    each copyLine in card.marketingCopy
+                      li= copyLine
+            div.apply
+              +applyButton(card)
+              p with CapitalOne®
+          div.additional-info
 
 block modals
   div#customer-info.modal.fade(tabindex='-1', role='dialog')
@@ -59,7 +58,7 @@ block modals
                 &times;
             h4.modal-title Tell us a little about yourself
           div.modal-body
-            include ./includes/customer-form.jade
+            include ./includes/customer-form
           div.modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal')
               | Close

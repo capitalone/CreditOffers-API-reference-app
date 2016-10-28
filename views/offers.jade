@@ -24,20 +24,27 @@ block content
         h2 We're sorry, we can't prequalify you based on the information that you provided, but you can check out these great offers:
       else
         h2 We weren't able to find any offers
-      
-  if products
-    div.product-offers
-      each product in products
-        div.product-offer.media
-          div.media-left
-            img.product-image(
-              src = product.images[0].url
-              alt = product.images[0].alternateText
-            )
-          div.media-body
-            h4.media-heading= product.productDisplayName
-            if product.terms && product.terms.primaryBenefit
-              div.primary-benefit= product.terms.primaryBenefit
+
+  div.cards.container
+    each product in products
+      div.card-info
+        div.main-info
+          div.details
+            p.card-title= card.productDisplayName
+            div.summary
+              +cardNameImage(card)
+              ul.marketingCopy
+                if card.primaryBenefitDescription
+                  li= card.primaryBenefitDescription
+                if card.purchaseAPRDescription
+                  li= card.purchaseAPRDescription
+                if card.balanceTransferAPRDescription
+                  li= card.balanceTransferAPRDescription
+                if card.annualMembershipFeeDescription
+                  li= card.annualMembershipFeeDescription
+          div.apply
+            +applyButton(card)
+            p with CapitalOne®
 
 block scripts
   script.

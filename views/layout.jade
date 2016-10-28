@@ -11,6 +11,18 @@
 //- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //- See the License for the specific language governing permissions and limitations under the License.
 
+//- Common Card mixins
+mixin cardNameImage(card)
+  if card.images && card.images.cardName
+    img.card-name(src=card.images.cardName.url, alt=card.images.cardName.alternateText)
+  else
+    img.card-name(src='/images/default-card.png')
+      
+mixin applyButton(card)
+  a.btn.btn-lg.btn-success(href=card.applyNowLink)
+    i.fa.fa-lock(aria-hidden="true")
+    | APPLY NOW
+
 doctype html(lang='en')
 head
     meta(charset='utf-8')

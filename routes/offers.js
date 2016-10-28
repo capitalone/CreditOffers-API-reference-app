@@ -21,6 +21,7 @@ var csrf = require('csurf')
 var CreditOffers = require('../creditoffers')
 var oauth = require('../oauth')
 var debug = require('debug')('credit-offers:offers')
+var productViewModel = require('../viewmodels').preQualProduct
 
 module.exports = function (options) {
   var router = express.Router()
@@ -49,11 +50,17 @@ module.exports = function (options) {
     client.prequalification.create(customerInfo, function (err, response) {
       if (err) { return next(err) }
 
+      var apiProducts = response.products || []
+      var productViewModels = _(apiProducts)
+            .sortBy('priority') // Display in the priority order given by the API
+            .map(productViewModel) // Transform to a view model for easier display
+            .value()
+
       var viewModel = {
         title: 'Credit Offers',
         isPrequalified: response.isPrequalified,
         prequalificationId: response.prequalificationId,
-        products: response.products && _.sortBy(response.products, 'priority')
+        products: productViewModels
       }
 
       res.render('offers', viewModel)

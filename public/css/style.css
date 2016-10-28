@@ -78,6 +78,10 @@ body {
       padding: 20px;
       color: #555;
       background-color: #eee; }
+  .card-info .summary {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start; }
   .card-info .additional-info {
     display: flex;
     flex-flow: row nowrap;
