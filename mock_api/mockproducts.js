@@ -44,7 +44,7 @@ var randomizeProduct = function (product) {
       rewardMonthLimit = _.random(3, 10).toString(),
       // Marketing copy
       customMarketingCopy = [
-        format('Enjoy a one-time bonus of %d miles once you spend $%s on purchases within %d months of approval, equal to $200 in travel',
+        format('Enjoy a one-time bonus of %s miles once you spend $%s on purchases within %d months of approval, equal to $200 in travel',
           bonusMiles, rewardSpendingMin, rewardMonthLimit),
         format('Earn unlimited %d miles per dollar on every purchase, every day and pay no annual fee', milesPerDollar),
         'Fly any airline, stay at any hotel, anytime',
