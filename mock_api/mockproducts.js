@@ -100,7 +100,7 @@ var randomizeProduct = function (product) {
       'VentureOne',
       'Rewards'
     ], 3),
-    marketingCopy: multiSample(marketingCopy, 3, 10),
+    marketingCopy: multiSample(marketingCopy, 1, 10),
     processingNetwork: processingNetwork,
     creditRating: multiSample([
       'Excellent',
