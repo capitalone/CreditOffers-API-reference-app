@@ -19,9 +19,27 @@ mixin cardNameImage(card)
     img.card-name(src='/images/default-card.png')
       
 mixin applyButton(card)
-  a.btn.btn-lg.btn-success(href=card.applyNowLink)
+  a.btn.btn.btn-lg.btn-success(href=card.applyNowLink)
     i.fa.fa-lock(aria-hidden="true")
     | APPLY NOW
+
+mixin collapsibleMarketingCopy(card)
+  ul
+    each copyLine in card.mainMarketingCopy
+      li= copyLine
+  if card.extraMarketingCopy && card.extraMarketingCopy.length
+    ul.collapse
+      each copyLine in card.extraMarketingCopy
+        li= copyLine
+    a.show-hide(href='#')
+      | Show More
+
+mixin marketingCopy(card)
+  div.marketing-copy
+    if card.mainMarketingCopy
+      +collapsibleMarketingCopy(card)
+    else
+      span.missing-text 'No Info'
 
 doctype html(lang='en')
 head
@@ -47,3 +65,20 @@ head
     block content
     block modals
     block scripts
+    script.
+      $(function () {
+        $('.marketing-copy a.show-hide').click(function (e) {
+          var $el = $(e.target),
+              copy = $el.siblings('.collapse')
+          e.preventDefault()
+          copy.collapse('toggle')
+        })
+        
+        $('.marketing-copy .collapse')
+          .on('show.bs.collapse', function (e) {
+            $(e.target).siblings('a.show-hide').text('Show Less')
+          })
+          .on('hide.bs.collapse', function (e) {
+            $(e.target).siblings('a.show-hide').text('Show More')
+          })
+      })

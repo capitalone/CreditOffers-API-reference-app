@@ -36,5 +36,12 @@ module.exports = function preQualProduct (apiProduct) {
   viewModel.annualMembershipFeeDescription = _.get(apiProduct, 'terms.annualMembershipFeeTerms')
   viewModel.applyNowLink = apiProduct.applicationUrl
 
+  var marketingCopy = _.compact([
+    viewModel.primaryBenefitDescription,
+    viewModel.balanceTransferAPRDescription
+  ])
+  viewModel.mainMarketingCopy = _.take(marketingCopy, 2)
+  viewModel.extraMarketingCopy = _.drop(marketingCopy, 2)
+
   return viewModel
 }

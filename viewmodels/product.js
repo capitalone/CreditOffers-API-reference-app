@@ -29,7 +29,6 @@ module.exports = function product (apiProduct) {
     'brand',
     'categoryTags',
     'productKeywords',
-    'marketingCopy',
     'processingNetwork',
     'creditRating',
     'rewardsType',
@@ -54,6 +53,10 @@ module.exports = function product (apiProduct) {
   }
 
   viewModel.additionalInformationUrl = _.get(apiProduct, 'links.self.href')
+
+  var marketingCopy = apiProduct.marketingCopy || []
+  viewModel.mainMarketingCopy = _.take(marketingCopy, 2)
+  viewModel.extraMarketingCopy = _.drop(marketingCopy, 2)
 
   return viewModel
 }
