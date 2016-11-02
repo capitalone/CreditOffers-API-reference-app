@@ -42,31 +42,13 @@ var randomizeProduct = function (product) {
       bonusMiles = format('%d0,000', _.random(1, 5)),
       rewardSpendingMin = format('%d,000', _.random(1, 3)),
       rewardMonthLimit = _.random(3, 10).toString(),
-      // Marketing copy
-      customMarketingCopy = [
-        format('Enjoy a one-time bonus of %s miles once you spend $%s on purchases within %d months of approval, equal to $200 in travel',
-          bonusMiles, rewardSpendingMin, rewardMonthLimit),
-        format('Earn unlimited %d miles per dollar on every purchase, every day and pay no annual fee', milesPerDollar),
-        'Fly any airline, stay at any hotel, anytime',
-        'Complies with the standard expected size for a credit card, guaranteeing a snug fit in any wallet',
-        'Impress your friends by pretending your new card is a tiny skateboard, and using your fingers as a tiny person to perform cool tricks',
-        'Collect multiple cards and build your very own house of cards',
-        'Explore the world!  Accepted in over 400 countries',
-        'Now you can own anything, anytime, anywhere!',
-        'Get a head start on your bucket list',
-        'Keep your credit going in the right direction',
-        'Official credit card of the Milwaukee Corn Dogs',
-        'Earn bonus points on all purchases from Jake\'s Smoothie Hut',
-        'Use it to buy something nice for your mother.  She deserves it after all you\'ve put her through'
-      ],
-      randomMarketingCopy = _.map(_.range(25), function () {
+      marketingCopy = _.map(_.range(25), function () {
         return loremIpsum({
           count: _.random(5, 50),
           units: 'words',
           format: 'plain'
         })
-      }),
-      marketingCopy = randomMarketingCopy
+      })
 
   var newValues = {
     productDisplayName: productDisplayName,
