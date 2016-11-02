@@ -38,7 +38,7 @@ module.exports = function (options) {
   ]
 
   // How many products to pull at a time
-  var productCount = 20
+  var productCount = 10
 
   /* GET home page. */
   router.get('/', csrfProtection, function (req, res, next) {
@@ -50,7 +50,7 @@ module.exports = function (options) {
 
     client.products.getCards(requestedCardType.name, { limit: productCount }, function (err, data) {
       if (err) { return next(err) }
-      
+
       cards = _.map(_.get(data, 'products', []), productViewModel)
       res.render('index', {
         csrfToken: req.csrfToken(),
