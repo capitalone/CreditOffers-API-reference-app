@@ -17,6 +17,7 @@ var request = require('request')
 var _ = require('lodash')
 var format = require('util').format
 var debug = require('debug')('credit-offers:api-client')
+var util = require('util')
 
 // Default to a secure call to the API endpoint
 var defaultOptions = {
@@ -84,7 +85,7 @@ function processResponse (err, response, body, callback) {
     return processResponseErrors(body, callback)
   } else if (response.statusCode >= 200) {
     // Pass the body contents back to the caller
-    debug('Received response', body)
+    debug('Received response', util.inspect(body, false, null))
     return callback(null, body)
   } else {
     // Unknown status code
