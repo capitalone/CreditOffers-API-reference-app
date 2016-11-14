@@ -16,12 +16,14 @@ See the License for the specific language governing permissions and limitations 
 /* Defines routes related to finding and displaying credit offers */
 
 var express = require('express')
+var util = require('util')
 var _ = require('lodash')
 var csrf = require('csurf')
 var CreditOffers = require('../creditoffers')
 var oauth = require('../oauth')
 var debug = require('debug')('credit-offers:offers')
 var productViewModel = require('../viewmodels').preQualProduct
+var validation = require('../validation')
 
 module.exports = function (options) {
   var router = express.Router()
@@ -29,9 +31,56 @@ module.exports = function (options) {
   var csrfProtection = csrf({ cookie: true })
 
   // POST customer info to check for offers
-  router.post('/', csrfProtection, function (req, res, next) {
+  router.post('/',
+    csrfProtection,
+    function (req, res, next) {
+      // Strip out the CSRF token
+      delete req.body._csrf
+
+      // Validate the request body
+      // NOTE: In a larger app, it would be worth pulling this logic out into
+      // more reusable middleware
+      req.checkBody(validation.models.customerInfo)
+      var errors = req.validationErrors(true)
+      if (errors) {
+        debug('Validation errors in request body!', util.inspect(errors, false, null))
+        next(new Error('Bad form data'))
+        return
+      }
+
+      // Strip out empty fields
+      req.body = _.omitBy(req.body, function (value, key) { return value == '' })
+
+      // Custom body sanitizing
+      req.sanitizeBody('annualIncome').toInt()
+
+      next()
+    },
+    function (req, res, next) {
+      var customerInfo = getCustomerInfo(req.body)
+
+      client.prequalification.create(customerInfo, function (err, response) {
+        if (err) { return next(err) }
+
+        var apiProducts = response.products || []
+        var productViewModels = _(apiProducts)
+              .sortBy('priority') // Display in the priority order given by the API
+              .map(productViewModel) // Transform to a view model for easier display
+              .value()
+
+        var viewModel = {
+          title: 'Credit Offers',
+          isPrequalified: response.isPrequalified,
+          prequalificationId: response.prequalificationId,
+          products: productViewModels
+        }
+
+        res.render('offers', viewModel)
+      })
+    })
+
+  function getCustomerInfo(body) {
     // Build the customer info (moving address into its own object)
-    // NOTE: In a production app, make sure to perform more in-depth validation of your inputs
     var customerProps = [
       'firstName',
       'middleName',
@@ -55,28 +104,11 @@ module.exports = function (options) {
       'postalCode',
       'addressType'
     ]
-    var customerInfo = _.pick(req.body, customerProps)
-    customerInfo.address = _.pick(req.body, addressProps)
+    var customerInfo = _.pick(body, customerProps)
+    customerInfo.address = _.pick(body, addressProps)
 
-    client.prequalification.create(customerInfo, function (err, response) {
-      if (err) { return next(err) }
-
-      var apiProducts = response.products || []
-      var productViewModels = _(apiProducts)
-            .sortBy('priority') // Display in the priority order given by the API
-            .map(productViewModel) // Transform to a view model for easier display
-            .value()
-
-      var viewModel = {
-        title: 'Credit Offers',
-        isPrequalified: response.isPrequalified,
-        prequalificationId: response.prequalificationId,
-        products: productViewModels
-      }
-
-      res.render('offers', viewModel)
-    })
-  })
+    return customerInfo
+  }
 
   // POST acknowledgement that prequal offers were displayed
   router.post('/acknowledge/:id', function (req, res, next) {
