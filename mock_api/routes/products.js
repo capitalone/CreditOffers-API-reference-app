@@ -63,7 +63,7 @@ router.get('/credit-offers/products/cards/:cardType', function (req, res, next) 
 
   var cardType = productTypes[req.params.cardType]
   if (!cardType) {
-    res.status = 400
+    res.status(400)
     res.json({
       code: null,
       description: 'Unknown card type: ' + req.params.cardType
