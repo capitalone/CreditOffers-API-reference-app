@@ -5,6 +5,12 @@ var mockproducts = require('../mockproducts')
 var debug = require('debug')('credit-offers_mock_api:products')
 var format = require('util').format
 
+// Product types in the card response and API URL differ, so map them here
+var productTypes = {
+  'consumer': 'ConsumerCard',
+  'business': 'BusinessCard'
+}
+
 var fakeProducts = mockproducts({
   ConsumerCard: 100,
   BusinessCard: 100
@@ -55,7 +61,16 @@ makeResponse)
 router.get('/credit-offers/products/cards/:cardType', function (req, res, next) {
   console.info(req.body)
 
-  var cardType = req.params.cardType
+  var cardType = productTypes[req.params.cardType]
+  if (!cardType) {
+    res.status = 400
+    res.json({
+      code: null,
+      description: 'Unknown card type: ' + req.params.cardType
+    })
+    return
+  }
+
   res.locals.products = _(fakeProducts).filter({ productType: cardType })
   next()
 },

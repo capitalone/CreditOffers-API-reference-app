@@ -28,11 +28,11 @@ module.exports = function (options) {
   // The supported card types
   var cardTypes = [
     {
-      name: 'ConsumerCard',
+      name: 'consumer',
       display: 'Consumer Cards'
     },
     {
-      name: 'BusinessCard',
+      name: 'business',
       display: 'Business Cards'
     }
   ]
