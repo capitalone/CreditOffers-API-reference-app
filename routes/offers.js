@@ -32,7 +32,19 @@ module.exports = function (options) {
   router.post('/', csrfProtection, function (req, res, next) {
     // Build the customer info (moving address into its own object)
     // NOTE: In a production app, make sure to perform more in-depth validation of your inputs
-    var customerInfo = _.assign({}, req.body)
+    var customerProps = [
+      'firstName',
+      'middleName',
+      'lastName',
+      'nameSuffix',
+      'taxId',
+      'dateOfBirth',
+      'emailAddress',
+      'annualIncome',
+      'selfAssessedCreditRating',
+      'bankAccountSummary',
+      'requestedBenefit'
+    ]
     var addressProps = [
       'addressLine1',
       'addressLine2',
@@ -43,9 +55,8 @@ module.exports = function (options) {
       'postalCode',
       'addressType'
     ]
-    var address = _.pick(customerInfo, addressProps)
-    customerInfo = _.omit(customerInfo, addressProps)
-    customerInfo.address = address
+    var customerInfo = _.pick(req.body, customerProps)
+    customerInfo.address = _.pick(req.body, addressProps)
 
     client.prequalification.create(customerInfo, function (err, response) {
       if (err) { return next(err) }
