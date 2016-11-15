@@ -26,11 +26,11 @@ mixin applyButton(card)
 mixin collapsibleMarketingCopy(card)
   ul
     each copyLine in card.mainMarketingCopy
-      li= copyLine
+      li !{copyLine}
   if card.extraMarketingCopy && card.extraMarketingCopy.length
     ul.collapse
       each copyLine in card.extraMarketingCopy
-        li= copyLine
+        li !{copyLine}
     a.show-hide(href='#')
       | Show More
 

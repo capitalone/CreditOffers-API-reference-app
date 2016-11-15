@@ -23,8 +23,12 @@ block content
     div.container        
       div.row
         div.col-md-8
-          h2 CapitalOne® Credit Cards
-          p These are some of the cards on offer from CapitalOne®.
+          h2 CapitalOne
+            sup ® 
+            | Credit Cards
+          p These are some of the cards on offer from CapitalOne
+            sup ® 
+            | .
         div.filters.col-md-4
           div.pull-right
             div.btn-group(role="group", aria-label="Card Types")
@@ -35,13 +39,14 @@ block content
         div.card-info
           div.main-info
             div.details
-              p.card-title= card.productDisplayName
+              p.card-title !{card.productDisplayName}
               div.summary
                 +cardNameImage(card)
                 +marketingCopy(card)
             div.apply
               +applyButton(card)
-              p with CapitalOne®
+              p with CapitalOne
+                sup ®
           div.additional-info
 
 block modals

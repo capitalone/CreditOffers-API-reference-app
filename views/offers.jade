@@ -30,13 +30,14 @@ block content
       div.card-info
         div.main-info
           div.details
-            p.card-title= card.productDisplayName
+            p.card-title !{card.productDisplayName}
             div.summary
               +cardNameImage(card)
               +marketingCopy(card)
           div.apply
             +applyButton(card)
-            p with CapitalOne®
+            p with CapitalOne
+              sup ®
 
 block scripts
   script.
