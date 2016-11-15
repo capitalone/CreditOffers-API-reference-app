@@ -44,7 +44,10 @@ module.exports = function (options) {
       var errors = req.validationErrors(true)
       if (errors) {
         debug('Validation errors in request body!', util.inspect(errors, false, null))
-        next(new Error('Bad form data'))
+        var failSummary = _(errors).map(function (error) {
+          return error.msg
+        }).value().join('; ')
+        next(new Error('Validation failed: ' + failSummary))
         return
       }
 
