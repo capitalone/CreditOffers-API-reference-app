@@ -16,11 +16,11 @@ See the License for the specific language governing permissions and limitations 
 /** @module Defines a consistent model for displaying products from the API **/
 
 var _ = require('lodash')
+var sanitize = require('../helpers').sanitize.sanitizeHtmlForDisplay
 
 module.exports = function product (apiProduct) {
   var viewModel = _.pick(apiProduct, [
     'productId',
-    'productDisplayName',
     'activeFrom',
     'activeTo',
     'publishedDate',
@@ -48,13 +48,14 @@ module.exports = function product (apiProduct) {
     'promotionalDescriptions'
   ])
 
+  viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || '???')
   viewModel.images = {
     cardName: _.find(apiProduct.images, { imageType: 'CardName' })
   }
 
   viewModel.additionalInformationUrl = _.get(apiProduct, 'links.self.href')
 
-  var marketingCopy = apiProduct.marketingCopy || []
+  var marketingCopy = _.map(apiProduct.marketingCopy || [], sanitize)
   viewModel.mainMarketingCopy = _.take(marketingCopy, 2)
   viewModel.extraMarketingCopy = _.drop(marketingCopy, 2)
 

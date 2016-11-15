@@ -16,24 +16,25 @@ See the License for the specific language governing permissions and limitations 
 /** @module Defines a consistent model for displaying pre-qualification products, which contain less info than normal products **/
 
 var _ = require('lodash')
+var sanitize = require('../helpers').sanitize.sanitizeHtmlForDisplay
 
 module.exports = function preQualProduct (apiProduct) {
   var viewModel = _.pick(apiProduct, [
     'productId',
-    'productDisplayName',
     'tier',
     'terms',
     'additionalInformationUrl'
   ])
 
+  viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || apiProduct.productName || '???')
   viewModel.images = {
     cardName: _.find(apiProduct.images, { imageType: 'CardName' })
   }
   // Normalize to the keys used by the products API
-  viewModel.primaryBenefitDescription = _.get(apiProduct, 'terms.primaryBenefit')
-  viewModel.purchaseAPRDescription = _.get(apiProduct, 'terms.purchaseAprTerms')
-  viewModel.balanceTransferAPRDescription = _.get(apiProduct, 'terms.balanceTransferTerms')
-  viewModel.annualMembershipFeeDescription = _.get(apiProduct, 'terms.annualMembershipFeeTerms')
+  viewModel.primaryBenefitDescription = sanitize(_.get(apiProduct, 'terms.primaryBenefit'))
+  viewModel.purchaseAPRDescription = sanitize(_.get(apiProduct, 'terms.purchaseAprTerms'))
+  viewModel.balanceTransferAPRDescription = sanitize(_.get(apiProduct, 'terms.balanceTransferTerms'))
+  viewModel.annualMembershipFeeDescription = sanitize(_.get(apiProduct, 'terms.annualMembershipFeeTerms'))
   viewModel.applyNowLink = apiProduct.applicationUrl
 
   var marketingCopy = _.compact([
