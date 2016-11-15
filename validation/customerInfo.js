@@ -104,7 +104,7 @@ module.exports = {
   'taxId': {
     notEmpty: { errorMessage: 'Tax ID is required' },
     matches: {
-      options: [/^\d{4}|\d{9}$/],
+      options: [/^(\d{4}|\d{9})$/],
       errorMessage: 'Either the full nine digits or last four digits of the Tax ID are required'
     },
     errorMessage: 'Tax ID is invalid'
