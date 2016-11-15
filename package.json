@@ -23,6 +23,7 @@
     "lodash": "~4.1.0",
     "morgan": "~1.6.1",
     "request": "~2.69.0",
+    "sanitize-html": "1.13.0",
     "serve-favicon": "~2.3.0"
   },
   "engines": {
