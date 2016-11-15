@@ -55,8 +55,12 @@ ApiClient.prototype.sendRequest = function _sendRequest (reqOptions, callback) {
 
   // Populate the above request defaults if not passed in
   _.defaults(reqOptions, defaultRequestSettings)
-
-  debug('Sending request', reqOptions)
+  var send = function() {
+    debug('Sending request', reqOptions)
+    request(reqOptions, function (err, response, body) {
+      processResponse(err, response, body, callback)
+    })
+  }
 
   if (reqOptions.useOAuth)
   {
@@ -64,15 +68,11 @@ ApiClient.prototype.sendRequest = function _sendRequest (reqOptions, callback) {
     this.oauth.withToken(function (err, token) {
       if (err) { return callback(err) }
       reqOptions.auth = { bearer: token.access_token }
-      request(reqOptions, function (err, response, body) {
-        processResponse(err, response, body, callback)
-      })
+      send()
     })
   }
   else {
-    request(reqOptions, function (err, response, body) {
-      processResponse(err, response, body, callback)
-    })
+    send()
   }
 }
 
