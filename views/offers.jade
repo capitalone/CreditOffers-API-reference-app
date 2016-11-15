@@ -30,7 +30,8 @@ block content
       div.card-info
         div.main-info
           div.details
-            p.card-title !{card.productDisplayName}
+            p.card-title
+              +cardNameLink(card)
             div.summary
               +cardNameImage(card)
               +marketingCopy(card)
