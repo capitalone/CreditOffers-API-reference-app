@@ -25,6 +25,8 @@ var csrf = require('csurf')
 
 var validation = require('./validation')
 
+var CreditOffers = require('./creditoffers')
+var oauth = require('./oauth')
 var index = require('./routes/index')
 var offers = require('./routes/offers')
 
@@ -54,8 +56,10 @@ app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome
 
 app.use(helmet())
 
-app.use('/', index(config.creditOffers))
-app.use('/offers', offers(config.creditOffers))
+// Initialize the routing
+var client = new CreditOffers(config.creditOffers.client, oauth(config.creditOffers.oauth))
+app.use('/', index(client))
+app.use('/offers', offers(client))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
