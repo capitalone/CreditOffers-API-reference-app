@@ -58,8 +58,7 @@ block modals
           input(type="hidden" name="_csrf" value="#{csrfToken}")
           div.modal-header
             button.close(type='button', data-dismiss='modal', aria-label='close')
-              span(aria-hidden='true')
-                &times;
+              span(aria-hidden='true') &times;
             h4.modal-title Tell us a little about yourself
           div.modal-body
             include ./includes/customer-form
