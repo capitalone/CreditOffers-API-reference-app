@@ -19,15 +19,12 @@ var express = require('express')
 var util = require('util')
 var _ = require('lodash')
 var csrf = require('csurf')
-var CreditOffers = require('../creditoffers')
-var oauth = require('../oauth')
 var debug = require('debug')('credit-offers:offers')
 var productViewModel = require('../viewmodels').preQualProduct
 var validation = require('../validation')
 
-module.exports = function (options) {
+module.exports = function (client) {
   var router = express.Router()
-  var client = new CreditOffers(options.client, oauth(options.oauth))
   var csrfProtection = csrf({ cookie: true })
 
   // POST customer info to check for offers

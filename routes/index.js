@@ -14,14 +14,11 @@ See the License for the specific language governing permissions and limitations 
 */
 
 var express = require('express')
-var CreditOffers = require('../creditoffers')
-var oauth = require('../oauth')
 var csrf = require('csurf')
 var _ = require('lodash')
 var productViewModel = require('../viewmodels').product
 
-module.exports = function (options) {
-  var client = new CreditOffers(options.client, oauth(options.oauth))
+module.exports = function (client) {
   var csrfProtection = csrf({ cookie: true })
   var router = express.Router()
 
