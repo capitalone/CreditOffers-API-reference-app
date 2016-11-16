@@ -25,16 +25,21 @@ From the project root:
 
 ### Try it out
 
-Navigate to http://localhost:3000.  You will see a simple page with a button to launch a customer info modal.  Enter some fake customer data (at least the minimum required fields) and submit the form.  
+Navigate to http://localhost:3000.  This will retrieve a list of customer card products from the API and display simple information about each.  From here, you can try a few simple things:
 
-This will submit a request to the Credit Offers endpoint and redirect the user to a page displaying the offers.
+  * Toggle the card type to 'Business' to request and display a list of business card products from the API
+  * Click on the 'Find Pre-Qualified Offers' button to launch a simple customer information form and test out the pre-qualification API behavior.
+
+#### A note about errors
+
+For demonstration purposes, API and server-side validation errors are displayed in an error page in the UI.  A full production-ready application should have more robust error handling, and keep a smooth user experience.
 
 ### Viewing more details
 
 To get a deeper look at the messages being passed, start the app with the following command `DEBUG=credit-offers:* NODE_DEBUG=request npm start`.  This will activate detailed debug logging to the console, showing the details of the request to the API and the response received.
 
 ## Best Practices
-This application makes use of the [helmet](https://www.npmjs.com/package/helmet) library for safer http headers, and the [csurf](https://www.npmjs.com/package/csurf) library to avoid cross-site request forgery attacks. However, when developing and hosting a real world application, make sure to be aware of the [security](http://expressjs.com/en/advanced/best-practice-security.html) and [performance](http://expressjs.com/en/advanced/best-practice-performance.html) best practices for the Express framework. In particular, hosting with TLS is strongly recommended and free certificates can be acquired at https://letsencrypt.org/.
+This application makes use of the [helmet](https://www.npmjs.com/package/helmet) library for safer http headers, the [csurf](https://www.npmjs.com/package/csurf) library to avoid cross-site request forgery attacks, the [express-validator](https://www.npmjs.com/package/express-validator) library to validate customer info on the server side, and the [sanitize-html](https://www.npmjs.com/package/sanitize-html) library to safely sanitize values from the API before displaying them as HTML to the user. However, when developing and hosting a real world application, make sure to be aware of the [security](http://expressjs.com/en/advanced/best-practice-security.html) and [performance](http://expressjs.com/en/advanced/best-practice-performance.html) best practices for the Express framework. In particular, hosting with TLS is strongly recommended and free certificates can be acquired at https://letsencrypt.org/.
 
 ## Architecture
 This is a [Node.js](https://nodejs.org) 4.x and higher app built with [Express](http://expressjs.com/) 4.13.1.  Because of the simple nature, there is no session management or data persistence.
@@ -57,4 +62,3 @@ This project adheres to the [Open Source Code of Conduct][code-of-conduct]. By p
 
 ### Contribution Guidelines
 We encourage any contributions that align with the intent of this project and add more functionality or languages that other developers can make use of. To contribute to the project, please submit a PR for our review. Before contributing any source code, familiarize yourself with the Apache License 2.0 (license.md), which controls the licensing for this project.
-
