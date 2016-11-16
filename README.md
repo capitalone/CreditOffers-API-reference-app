@@ -3,9 +3,22 @@
 Credit Offers is a card acquisition service that provides prequalified credit offer listings based on end customer provided information. Affiliates are able to provide these offers directly without need of a web redirect.  If a prequalified offer is not available, a default offer is returned by us.
 
 ## Software Requirements Including version
-This is version 1.0 of the Credit Offers API Reference Application Code. For software requirements, see Build/Install Instructions below.
+This is version 2.0 of the Credit Offers API Reference Application Code. For software requirements, see Build/Install Instructions below.
 
-This reference app illustrates the use of the Credit Offers API to collect customer information and retrieve a list of targeted product offers for display. If you encounter any issues using this reference code, please submit them in the form of GitHub issues.
+This reference app illustrates the use of the Credit Offers API to
+
+* Retrieve and display card products (Business or Consumer) using the `/credit-offers/products/cards/{cardType}` endpoint
+* Collect customer information and retrieve a list of targeted product offers for display using the `/credit-offers/prequalifications` endpoint
+* Send acknowledgement to Capital One that the targeted product offers have been displayed using the `/credit-offers/prequalifications/{prequalificationId}` endpoint
+
+Some additional API features that are **not** directly illustrated by this app include:
+
+* Using the `limit` and `offset` parameters to retrieve multiple pages of products
+* Using the `/credit-offers/products` endpoint to retrieve summaries of *all* products
+* Using the `/credit-offers/products/cards` endpoint to retrieve summaries of all card products
+* Using the `/credit-offers/products/cards/{cardType}/{productId}` endpoint to retrieve information about a single specific card product
+
+If you encounter any issues using this reference code, please submit them in the form of GitHub issues.
 
 ## Build/Install Instructions
 ### Dependencies
@@ -25,7 +38,7 @@ From the project root:
 
 ### Try it out
 
-Navigate to http://localhost:3000.  This will retrieve a list of customer card products from the API and display simple information about each.  From here, you can try a few simple things:
+Navigate to http://localhost:3000.  This will retrieve a list of Consumer card products from the API and display simple information about each.  From here, you can try a few simple things:
 
   * Toggle the card type to 'Business' to request and display a list of business card products from the API
   * Click on the 'Find Pre-Qualified Offers' button to launch a simple customer information form and test out the pre-qualification API behavior.
