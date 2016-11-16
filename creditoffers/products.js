@@ -39,6 +39,22 @@ Products.prototype.getAll = function getAll (pagingOptions, callback) {
   var query = _.pick(pagingOptions, ['limit', 'offset'])
 
   this.client.sendRequest({
+    url: '/credit-offers/products',
+    useOAuth: true,
+    method: 'GET',
+    qs: query
+  }, callback)
+}
+
+/**
+ * Retrieve summary information on all card products
+ * @param {object} pagingOptions Optionally control the number of results and starting offset
+ * in the result set
+ */
+Products.prototype.getAllCards = function getAllCards (pagingOptions, callback) {
+  var query = _.pick(pagingOptions, ['limit', 'offset'])
+
+  this.client.sendRequest({
     url: '/credit-offers/products/cards',
     useOAuth: true,
     method: 'GET',
