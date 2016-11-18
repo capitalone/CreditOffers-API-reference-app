@@ -10,6 +10,7 @@ This reference app illustrates the use of the Credit Offers API to
 * Retrieve and display card products (Business or Consumer) using the `/credit-offers/products/cards/{cardType}` endpoint
 * Collect customer information and retrieve a list of targeted product offers for display using the `/credit-offers/prequalifications` endpoint
 * Send acknowledgement to Capital One that the targeted product offers have been displayed using the `/credit-offers/prequalifications/{prequalificationId}` endpoint
+* Retrieve and display prequalification summary info using the `/credit-offers/prequalifications-summary` endpoint
 
 Some additional API features that are **not** directly illustrated by this app include:
 
@@ -40,7 +41,9 @@ From the project root:
 Navigate to http://localhost:3000.  This will retrieve a list of Consumer card products from the API and display simple information about each.  From here, you can try a few simple things:
 
   * Toggle the card type to 'Business' to request and display a list of business card products from the API
-  * Click on the 'Find Pre-Qualified Offers' button to launch a simple customer information form and test out the pre-qualification API behavior.
+  * Click on the 'Find Pre-Qualified Offers' button to launch a simple customer information form and test out the pre-qualification API behavior.  The results screen will also perform two asynchronous calls:
+    * POST to `/credit-offers/prequalifications/{prequalificationId}` to acknowledge that the results were displayed to the customer
+    * GET from the `/credit-offers/prequalifications-summary` endpoint to display simple pre-qualification statistics at the bottom of the page
 
 #### A note about errors
 
