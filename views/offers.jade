@@ -14,31 +14,35 @@
 extends ./layout
 
 block content
-  div.header
-    div.container
-      if error
-        span.error= error
-      else if isPrequalified
-        h2 You prequalify for the following offers:
-      else if products && products.length
-        h2 We're sorry, we can't prequalify you based on the information that you provided, but you can check out these great offers:
-      else
-        h2 We weren't able to find any offers
+  div#prequal-offers
+    div.header
+      div.container
+        if error
+          span.error= error
+        else if isPrequalified
+          h2 You prequalify for the following offers:
+        else if products && products.length
+          h2 We're sorry, we can't prequalify you based on the information that you provided, but you can check out these great offers:
+        else
+          h2 We weren't able to find any offers
 
-  div.cards.container
-    each card in products
-      div.card-info
-        div.main-info
-          div.details
-            p.card-title
-              +cardNameLink(card)
-            div.summary
-              +cardNameImage(card)
-              +marketingCopy(card)
-          div.apply
-            +applyButton(card)
-            p with CapitalOne
-              sup ®
+    div.cards.container
+      each card in products
+        div.card-info
+          div.main-info
+            div.details
+              p.card-title
+                +cardNameLink(card)
+              div.summary
+                +cardNameImage(card)
+                +marketingCopy(card)
+            div.apply
+              +applyButton(card)
+              p with CapitalOne
+                sup ®
+    footer#prequal-stats-summary.navbar-fixed-bottom
+      i.fa.fa-pie-chart(aria-hidden="true")
+      div.stat-text Loading Stats...
 
 block scripts
   script.
@@ -46,7 +50,7 @@ block scripts
       var prequalificationId = '#{prequalificationId}'
       if (!prequalificationId) {
         console.warn('Displayed offers without a prequalification ID')
-        return;
+        return
       }
       
       // Tell the server that we have displayed the products to the user
@@ -56,5 +60,29 @@ block scripts
         })
         .fail(function (res, st, err) {
           console.warn('Failed to acknowledge prequalification products: ' + err)
+        })
+    })
+    
+    $(function () {
+      function makeStat(title, value) {
+        var stat = $('<div></div>').addClass('stat')
+        stat.append($('<span></span>').addClass('stat-title').html(title + ': '))
+        stat.append($('<span></span>').html(value))
+        return stat
+      }
+    
+      $.getJSON('/offers/summary')
+        .done(function (data) {
+          var parent = $('#prequal-stats-summary .stat-text').html(''),
+              stats = [
+                makeStat('Consumer Cards', data.consumerCardCount),
+                makeStat('Non-PreQualified', data.nonPrequalifiedCount),
+                makeStat('PreQualified', data.prequalifiedCount),
+                makeStat('Total', data.total)
+              ]
+          parent.append(stats)
+        })
+        .fail(function () {
+          $('#prequal-stats-summary .stat-text').html('<span class="error">FAILED to get prequalification summary data!</span>')
         })
     })

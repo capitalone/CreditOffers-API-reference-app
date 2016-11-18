@@ -129,5 +129,20 @@ module.exports = function (client) {
     })
   })
 
+  // GET prequalification summary data for this client
+  router.get('/summary', function (req, res, next) {
+    debug('Getting prequal summary data')
+
+    // Get unfiltered summary
+    client.prequalification.getSummary({}, function (err, response) {
+      if (err) {
+        debug('Error in API call', err)
+        res.status(500).send()
+        return
+      }
+      res.json(response)
+    })
+  })
+
   return router
 }
