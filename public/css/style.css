@@ -98,6 +98,30 @@ body {
 .btn i {
   margin-right: 10px; }
 
+#prequal-offers > .cards {
+  margin-bottom: 40px; }
+
+footer#prequal-stats-summary {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #666;
+  color: #ddd;
+  box-shadow: inset 0 10px 10px -10px rgba(0,0,0,0.5); }
+  #prequal-stats-summary i {
+    margin-right: 10px; }
+  #prequal-stats-summary .stat-text {
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row nowrap; }
+  #prequal-stats-summary .stat:not(:last-child) {
+    margin-right: 15px; }
+  #prequal-stats-summary .stat-title {
+    font-weight: bold; }
+
 /* Bootstrap overrides */
 .navbar-default {
   border: 0;
