@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and limitations 
 
 var request = require('request')
 var debug = require('debug')('credit-offers:api-client')
+var moment = require('moment')
+var _ = require('lodash')
 
 /**
  * Contains all functions for interacting with the credit offer prequalification API
@@ -58,5 +60,36 @@ Prequalification.prototype.acknowledge = function acknowledge (prequalificationI
     useOAuth: true,
     method: 'POST',
     body: { 'hasBeenAcknowledged': true }
+  }, callback)
+}
+
+/**
+ * Retrieves a set of summary info about your client's usage of the prequalification API
+ */
+Prequalification.prototype.getSummary = function getSummary (options, callback) {
+  var defaults = {
+    fromDate: null,
+    toDate: null,
+    minIncome: null,
+    maxIncome: null
+  }
+
+  options = _.defaults({}, options, defaults)
+  var dateFormat = 'YYYY-MM-DD',
+      fromDate   = options.fromDate && moment(options.fromDate).format(dateFormat),
+      toDate     = options.toDate && moment(options.toDate).format(dateFormat),
+      // Build the query string values, dropping any nulls
+      query      = _.omitBy({
+        fromDate: fromDate,
+        toDate: toDate,
+        minIncome: options.minIncome,
+        maxIncome: options.maxIncome
+      }, _.isNull)
+
+  this.client.sendRequest({
+    url: '/credit-offers/prequalifications-summary',
+    useOAuth: true,
+    method: 'GET',
+    qs: query
   }, callback)
 }
