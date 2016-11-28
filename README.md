@@ -29,10 +29,15 @@ All other dependencies are loaded with [npm](https://www.npmjs.com/). All depend
 * [express](http://expressjs.com/) - Minimalist web framework for Node.js
 
 ### config.js
-config.js contains information specific to your app, such as your client_id and client_secret. Create this file by copying [config.js.sample](/credit-offers/config.js.sample). Be careful not to put config.js into version control.
+You'll need to set up your `config.js` file before you can run the app.
+
+* Create this file by copying and renaming [config.js.sample](/credit-offers/config.js.sample). Be careful not to put `config.js` into version control. (We've added it to the repository's `.gitignore` for you.)
+* Make sure that you've registered an app on [Capital One's developer portal](developer.capitalone.com).
+* Edit the `clientID` and `clientSecret` values in `config.js` to specify the **Client ID** and **Client Secret** that were provided when you registered the app.
 
 ### Start the app
 From the project root:
+
 `npm install`  
 `npm start`
 
