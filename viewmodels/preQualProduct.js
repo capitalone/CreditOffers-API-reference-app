@@ -28,7 +28,9 @@ module.exports = function preQualProduct (apiProduct) {
 
   viewModel.productDisplayName = sanitize(apiProduct.productName || '???')
   viewModel.images = {
-    cardName: _.find(apiProduct.images, { imageType: 'CardName' })
+    cardName: _.find(apiProduct.images, { imageType: 'CardName' }),
+    cardArt: _.find(apiProduct.images, { imageType: 'CardArt' }),
+    banner: _.find(apiProduct.images, { imageType: 'Banner' })
   }
   // Normalize to the keys used by the products API
   viewModel.primaryBenefitDescription = sanitize(_.get(apiProduct, 'terms.primaryBenefit'))

@@ -20,8 +20,11 @@ mixin cardNameLink(card)
     span !{card.productDisplayName}
 
 mixin cardNameImage(card)
-  if card.images && card.images.cardName
-    img.card-name(src=card.images.cardName.url, alt=card.images.cardName.alternateText)
+  - console.log(card)
+  - var image = card.images && (card.images.cardName || card.images.cardArt || card.images.banner)
+  - console.log(image)
+  if image
+      img.card-name(src=image.url, alt=image.alternateText)
   else
     img.card-name(src='/images/default-card.png')
       
