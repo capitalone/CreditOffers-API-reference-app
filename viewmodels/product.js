@@ -50,7 +50,9 @@ module.exports = function product (apiProduct) {
 
   viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || '???')
   viewModel.images = {
-    cardName: _.find(apiProduct.images, { imageType: 'CardName' })
+    cardName: _.find(apiProduct.images, { type: 'CardName' }),
+    cardArt: _.find(apiProduct.images, { type: 'CardArt' }),
+    banner: _.find(apiProduct.images, { type: 'Banner' })
   }
 
   viewModel.additionalInformationUrl = _.get(apiProduct, 'links.self.href')
