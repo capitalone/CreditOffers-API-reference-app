@@ -49,6 +49,8 @@ body {
   flex-flow: column nowrap;
   border: 1px solid #aaa;
   background-color: #fff; }
+  .card-info img.card-name {
+    width: 200px; }
   .card-info .card-title {
     font-size: 1.5em;
     font-weight: 600; }
