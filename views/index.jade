@@ -13,11 +13,42 @@
 
 extends ./layout.jade
 
+block navbar-custom
+  button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
+    i.btn-img.fa.fa-credit-card(aria-hidden="true")
+    | Find Pre-Qualified Offers
+
 block content
-  div.jumbotron
-    h1 You Deserve a Better Credit Card!
-    p
-      button.btn.btn-lg.btn-success(role='button', data-toggle='modal', data-target='#customer-info') See Your Offers
+  div.header
+    div.container        
+      div.row
+        div.col-md-8
+          h2 CapitalOne
+            sup ® 
+            | Credit Cards
+          p These are some of the cards on offer from CapitalOne
+            sup ® 
+            | .
+        div.filters.col-md-4
+          div.pull-right
+            div.btn-group(role="group", aria-label="Card Types")
+              each cardType in cardTypes
+                a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
+  div.cards.container
+      each card in cards
+        div.card-info
+          div.main-info
+            div.details
+              p.card-title
+                +cardNameLink(card)
+              div.summary
+                +cardNameImage(card)
+                +marketingCopy(card)
+            div.apply
+              +applyButton(card)
+              p with CapitalOne
+                sup ®
+          div.additional-info
 
 block modals
   div#customer-info.modal.fade(tabindex='-1', role='dialog')
@@ -27,11 +58,10 @@ block modals
           input(type="hidden" name="_csrf" value="#{csrfToken}")
           div.modal-header
             button.close(type='button', data-dismiss='modal', aria-label='close')
-              span(aria-hidden='true')
-                &times;
+              span(aria-hidden='true') &times;
             h4.modal-title Tell us a little about yourself
           div.modal-body
-            include ./includes/customer-form.jade
+            include ./includes/customer-form
           div.modal-footer
             button.btn.btn-default(type='button', data-dismiss='modal')
               | Close

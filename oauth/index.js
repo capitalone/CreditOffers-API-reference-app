@@ -40,6 +40,8 @@ module.exports = function (options) {
       }
     }
 
+    debug('Sending OAuth request', reqOptions)
+
     request(reqOptions, function (error, response, body) {
       if (error) {
         return callback(error)

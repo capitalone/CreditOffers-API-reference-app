@@ -14,7 +14,8 @@
 extends ./layout.jade
 
 block content
-  h1=message
-  h2=error.status
-  pre
-    error.stack
+  div.container
+    h1=message
+    h2=error.status
+    if error.stack
+      pre= error.stack

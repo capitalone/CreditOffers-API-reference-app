@@ -11,6 +11,44 @@
 //- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //- See the License for the specific language governing permissions and limitations under the License.
 
+//- Common Card mixins
+mixin cardNameLink(card)
+  if card.additionalInformationUrl
+    span
+      a(href=card.additionalInformationUrl) !{card.productDisplayName}
+  else
+    span !{card.productDisplayName}
+
+mixin cardNameImage(card)
+  - var image = card.images && (card.images.cardArt || card.images.cardName || card.images.banner)
+  if image
+      img.card-name(src=image.url, alt=image.alternateText)
+  else
+    img.card-name(src='/images/default-card.png')
+      
+mixin applyButton(card)
+  a.btn.btn.btn-lg.btn-success(href=card.applyNowLink)
+    i.fa.fa-lock(aria-hidden="true")
+    | APPLY NOW
+
+mixin collapsibleMarketingCopy(card)
+  ul
+    each copyLine in card.mainMarketingCopy
+      li !{copyLine}
+  if card.extraMarketingCopy && card.extraMarketingCopy.length
+    ul.collapse
+      each copyLine in card.extraMarketingCopy
+        li !{copyLine}
+    a.show-hide(href='#')
+      | Show More
+
+mixin marketingCopy(card)
+  div.marketing-copy
+    if card.mainMarketingCopy
+      +collapsibleMarketingCopy(card)
+    else
+      span.missing-text 'No Info'
+
 doctype html(lang='en')
 head
     meta(charset='utf-8')
@@ -18,12 +56,37 @@ head
     title=title
     meta(name='description', content='')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7', crossorigin='anonymous')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css', integrity='sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r', crossorigin='anonymous')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/css/style.css')
     script(src='https://code.jquery.com/jquery-2.2.0.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
+    script(src='/js/bootstrap.min.js')
   body
-    div.container
-      block content
+    nav.navbar.navbar-default.navbar-fixed-top
+      div.container
+        div.navbar-header
+          a.navbar-brand(href="/")            
+            i.fa.fa-credit-card-alt(aria-hidden="true")
+            | CreditSite
+        block navbar-custom
+    block content
     block modals
+    block scripts
+    script.
+      $(function () {
+        $('.marketing-copy a.show-hide').click(function (e) {
+          var $el = $(e.target),
+              copy = $el.siblings('.collapse')
+          e.preventDefault()
+          copy.collapse('toggle')
+        })
+        
+        $('.marketing-copy .collapse')
+          .on('show.bs.collapse', function (e) {
+            $(e.target).siblings('a.show-hide').text('Show Less')
+          })
+          .on('hide.bs.collapse', function (e) {
+            $(e.target).siblings('a.show-hide').text('Show More')
+          })
+      })

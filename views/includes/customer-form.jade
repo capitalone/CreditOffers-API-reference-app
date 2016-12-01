@@ -94,10 +94,15 @@ mixin stateOptions()
 +textinput('nameSuffix', 'Suffix')(placeholder='E.g. Jr, Sr')
 +textinput('addressLine1', 'Address Line 1', true)
 +textinput('addressLine2', 'Address Line 2')
++textinput('addressLine3', 'Address Line 3')
++textinput('addressLine4', 'Address Line 4')
 +textinput('city', 'City', true)
 +select('stateCode', 'State', true)
   +stateOptions()
 +textinput('postalCode', 'Zip Code', true)
++select('addressType', 'Address Type', true)
+  option(value='Home') Home
+  option(value='Business') Business
 +textinput('taxId', 'Last Four Digits of SSN', true)
 +textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD')
 
