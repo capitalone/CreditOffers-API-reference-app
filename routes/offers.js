@@ -16,29 +16,131 @@ See the License for the specific language governing permissions and limitations 
 /* Defines routes related to finding and displaying credit offers */
 
 var express = require('express')
+var util = require('util')
 var _ = require('lodash')
 var csrf = require('csurf')
-var CreditOffersClient = require('../creditOffersClient')
-var oauth = require('../oauth')
+var debug = require('debug')('credit-offers:offers')
+var productViewModel = require('../viewmodels').preQualProduct
+var validation = require('../validation')
 
-module.exports = function (options) {
+module.exports = function (client) {
   var router = express.Router()
-  var client = new CreditOffersClient(options.client, oauth(options.oauth))
   var csrfProtection = csrf({ cookie: true })
 
   // POST customer info to check for offers
-  router.post('/', csrfProtection, function (req, res, next) {
-    var customerInfo = req.body
-    client.getTargetedProductsOffer(customerInfo, function (err, response) {
-      if (err) { return next(err) }
+  router.post('/',
+    csrfProtection,
+    function (req, res, next) {
+      // Strip out the CSRF token
+      delete req.body._csrf
 
-      var viewModel = {
-        title: 'Credit Offers',
-        isPrequalified: response.isPrequalified,
-        products: response.products && _.sortBy(response.products, 'priority')
+      // Validate the request body
+      // NOTE: In a larger app, it would be worth pulling this logic out into
+      // more reusable middleware
+      req.checkBody(validation.models.customerInfo)
+      var errors = req.validationErrors(true)
+      if (errors) {
+        debug('Validation errors in request body!', util.inspect(errors, false, null))
+        var failSummary = _(errors).map(function (error) {
+          return error.msg
+        }).value().join('; ')
+        next(new Error('Validation failed: ' + failSummary))
+        return
       }
 
-      res.render('offers', viewModel)
+      // Strip out empty fields
+      req.body = _.omitBy(req.body, function (value, key) { return value == '' })
+
+      // Custom body sanitizing
+      req.sanitizeBody('annualIncome').toInt()
+
+      next()
+    },
+    function (req, res, next) {
+      var customerInfo = getCustomerInfo(req.body)
+
+      client.prequalification.create(customerInfo, function (err, response) {
+        if (err) { return next(err) }
+
+        var apiProducts = response.products || []
+        var productViewModels = _(apiProducts)
+              .sortBy('priority') // Display in the priority order given by the API
+              .map(productViewModel) // Transform to a view model for easier display
+              .value()
+
+        var viewModel = {
+          title: 'Credit Offers',
+          isPrequalified: response.isPrequalified,
+          prequalificationId: response.prequalificationId,
+          products: productViewModels
+        }
+
+        res.render('offers', viewModel)
+      })
+    })
+
+  function getCustomerInfo(body) {
+    // Build the customer info (moving address into its own object)
+    var customerProps = [
+      'firstName',
+      'middleName',
+      'lastName',
+      'nameSuffix',
+      'taxId',
+      'dateOfBirth',
+      'emailAddress',
+      'annualIncome',
+      'selfAssessedCreditRating',
+      'bankAccountSummary',
+      'requestedBenefit'
+    ]
+    var addressProps = [
+      'addressLine1',
+      'addressLine2',
+      'addressLine3',
+      'addressLine4',
+      'city',
+      'stateCode',
+      'postalCode',
+      'addressType'
+    ]
+    var customerInfo = _.pick(body, customerProps)
+    customerInfo.address = _.pick(body, addressProps)
+
+    return customerInfo
+  }
+
+  // POST acknowledgement that prequal offers were displayed
+  router.post('/acknowledge/:id', function (req, res, next) {
+    debug('Received acknowledgement of ' + req.params.id)
+    var id = req.params.id
+    if (!id) {
+      res.status(400).send()
+      return
+    }
+
+    client.prequalification.acknowledge(id, function (err, response) {
+      if (err) {
+        debug('Error in API call', err)
+        res.status(500).send()
+        return
+      }
+      res.status(200).send()
+    })
+  })
+
+  // GET prequalification summary data for this client
+  router.get('/summary', function (req, res, next) {
+    debug('Getting prequal summary data')
+
+    // Get unfiltered summary
+    client.prequalification.getSummary({}, function (err, response) {
+      if (err) {
+        debug('Error in API call', err)
+        res.status(500).send()
+        return
+      }
+      res.json(response)
     })
   })
 

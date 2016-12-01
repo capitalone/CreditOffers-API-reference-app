@@ -27,10 +27,10 @@ module.exports = {
     client: {
       // The URL of the Credit Offers environment you are connecting to.
       url: creditOffersHost,
-      apiVersion: 1
+      apiVersion: 2
     },
     oauth: {
-      tokenURL: oauthHost + '/oauth/oauth20/token',
+      tokenURL: oauthHost + '/oauth2/token',
       // The clientId and clientSecret you received when registering your app.
       clientID: 'COF_CLIENT_ID',
       clientSecret: 'COF_CLIENT_SECRET'

@@ -19,9 +19,14 @@ var favicon = require('serve-favicon')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+var expressValidator = require('express-validator')
 var helmet = require('helmet')
 var csrf = require('csurf')
 
+var validation = require('./validation')
+
+var CreditOffers = require('./creditoffers')
+var oauth = require('./oauth')
 var index = require('./routes/index')
 var offers = require('./routes/offers')
 
@@ -33,16 +38,28 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(expressValidator({
+  customValidators: validation.customValidators
+}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+// Include the bootstrap package
+app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
+// Include font awesome
+app.use('/css', express.static(path.join(__dirname, 'node_modules/font-awesome/css')))
+app.use('/fonts', express.static(path.join(__dirname, 'node_modules/font-awesome/fonts')))
+
 app.use(helmet())
 
-app.use('/', index)
-app.use('/offers', offers(config.creditOffers))
+// Initialize the routing
+var client = new CreditOffers(config.creditOffers.client, oauth(config.creditOffers.oauth))
+app.use('/', index(client))
+app.use('/offers', offers(client))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

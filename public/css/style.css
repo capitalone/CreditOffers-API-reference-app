@@ -1,0 +1,165 @@
+/*
+Copyright 2016 Capital One Services, LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
+*/
+
+body {
+  padding-bottom: 20px;
+  padding-top: 100px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 50px; }
+}
+
+.form-group.required > label:after {
+  content: " *";
+  color: red; }
+
+.form-note {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #888;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.header {
+  background-color: #efefef;
+  padding-bottom: 10px; }
+  .header .filters {
+    margin-top: 15px; }
+
+.cards .card-info {
+  margin-top: 15px; }
+
+.card-info {
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid #aaa;
+  background-color: #fff; }
+  .card-info img.card-name {
+    width: 200px; }
+  .card-info .card-title {
+    font-size: 1.5em;
+    font-weight: 600; }
+  .card-info .main-info {
+    display: flex;
+    flex-flow: row nowrap; }
+    .card-info .main-info .details {
+      padding: 10px 20px 20px 20px;
+      flex-grow: 1; }
+    .card-info .main-info .apply {
+      text-align: center;
+      padding: 20px;
+      color: #555;
+      background-color: #eee; }
+      .card-info .main-info .apply > .btn {
+        margin-bottom: 5px; }
+  .card-info .summary {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start; }
+  .card-info .additional-info {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    background-color: #bbb;
+    box-shadow: inset 0 6px 6px -4px rgba(0,0,0,0.25); }
+    .card-info .additional-info > * {
+      flex-grow: 1; }
+
+.marketing-copy > ul:first-child {
+  margin-bottom: 0; }
+.marketing-copy ul.collapse {
+  margin-top: 0; }
+.marketing-copy a.show-hide {
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 40px; }
+  .marketing-copy a.show-hide:focus {
+    text-decoration: none; }
+  .marketing-copy .collapse + a.show-hide::after, .marketing-copy .collapsing + a.show-hide::after {
+    font-family: FontAwesome;
+    content: " \f078"; }
+  .marketing-copy .collapse.in + a.show-hide::after {
+    font-family: FontAwesome;
+    content: " \f077"; }
+
+.btn i {
+  margin-right: 10px; }
+
+#prequal-offers > .cards {
+  margin-bottom: 40px; }
+
+footer#prequal-stats-summary {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #666;
+  color: #ddd;
+  box-shadow: inset 0 10px 10px -10px rgba(0,0,0,0.5); }
+  #prequal-stats-summary i {
+    margin-right: 10px; }
+  #prequal-stats-summary .stat-text {
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row nowrap; }
+  #prequal-stats-summary .stat:not(:last-child) {
+    margin-right: 15px; }
+  #prequal-stats-summary .stat-title {
+    font-weight: bold; }
+
+/* Bootstrap overrides */
+.navbar-default {
+  border: 0;
+  background-image: none;
+  background-color: #03A9F4; }
+  .navbar-default .navbar-brand,
+  .navbar-default .navbar-brand:hover,
+  .navbar-default .navbar-brand:focus {
+    color: #fff;
+    text-shadow: none; }
+    .navbar-default .navbar-brand i {
+      margin-right: 10px; }
+
+.btn[disabled] {
+  cursor: default; }
+
+.btn-success {
+  background-image: none;
+  background-color: #8BC34A;
+  box-shadow: none;
+  border: none;
+  text-shadow: none; }
+  .btn-success:hover, .btn-success:focus {
+    background-image: none;
+    background-color: #9ace5d;
+    background-position: 0; }
+
+.btn-primary {
+  background-image: none;
+  background-color: #1976D2;
+  box-shadow: none;
+  border: none;
+  text-shadow: none; }
+  .btn-primary:hover, .btn-primary:focus {
+    background-image: none;
+    background-color: #2196F3;
+    background-position: 0; }
+  .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus {
+    background-color: #1976D2; }
