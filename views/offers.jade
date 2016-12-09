@@ -43,6 +43,9 @@ block content
     footer#prequal-stats-summary.navbar-fixed-bottom
       i.fa.fa-pie-chart(aria-hidden="true")
       div.stat-text Loading Stats...
+      div.acknowledgement
+        span.status-text Acknowledging...
+        i.status-icon.fa.fa-circle-o
 
 block scripts
   script.
@@ -57,9 +60,20 @@ block scripts
       $.post('/offers/acknowledge/' + encodeURIComponent(prequalificationId))
         .done(function () {
           console.log('Successfully acknowledged prequalification products')
+          $('.acknowledgement .status-icon').addClass('success')
+          $('.acknowledgement .status-text').text('Acknowledged')
         })
         .fail(function (res, st, err) {
           console.warn('Failed to acknowledge prequalification products: ' + err)
+          $('.acknowledgement .status-icon').addClass('failure')
+          $('.acknowledgement .status-text').text('Acknowledgement Failed')
+          $('.acknowledgement')
+              .attr('data-toggle', 'tooltip')
+              .attr('title', 'err')
+              .tooltip()
+        })
+        .always(function () {
+          $('.acknowledgement .status-icon').removeClass('fa-circle-o').addClass('fa-circle')
         })
     })
     

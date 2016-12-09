@@ -124,6 +124,13 @@ footer#prequal-stats-summary {
   #prequal-stats-summary .stat-title {
     font-weight: bold; }
 
+.acknowledgement .status-icon {
+    margin-left: 5px; }
+    .acknowledgement .status-icon.success {
+      color: #61b961; }
+    .acknowledgement .status-icon.failure {
+      color: #e42626; }
+
 /* Bootstrap overrides */
 .navbar-default {
   border: 0;
