@@ -22,9 +22,9 @@ mixin cardNameLink(card)
 mixin cardNameImage(card)
   - var image = card.images && (card.images.cardArt || card.images.cardName || card.images.banner)
   if image
-      img.card-name(src=image.url, alt=image.alternateText)
+      img.card-name(src=image.url, alt=image.alternateText)&attributes(attributes)
   else
-    img.card-name(src='/images/default-card.png')
+    img.card-name(src='/images/default-card.png')&attributes(attributes)
       
 mixin applyButton(card)
   a.btn.btn.btn-lg.btn-success(href=card.applyNowLink)

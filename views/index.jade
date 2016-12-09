@@ -42,7 +42,7 @@ block content
               p.card-title
                 +cardNameLink(card)
               div.summary
-                +cardNameImage(card)
+                +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
                 +marketingCopy(card)
             div.apply
               +applyButton(card)
@@ -67,3 +67,9 @@ block modals
               | Close
             button.btn.btn-primary(type='submit')
               | See Offers
+
+block scripts
+  script.
+    $(function () {
+      $('.card-info [data-toggle="tooltip"]').tooltip({ delay: 200, placement: 'right' })
+    })
