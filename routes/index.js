@@ -23,16 +23,21 @@ module.exports = function (client) {
   var router = express.Router()
 
   // The supported card types
-  var cardTypes = [
-    {
-      name: 'consumer',
-      display: 'Consumer Cards'
+  var allType = {
+      name: 'all',
+      display: 'All Cards'
     },
-    {
-      name: 'business',
-      display: 'Business Cards'
-    }
-  ]
+    cardTypes = [
+      allType,
+      {
+        name: 'consumer',
+        display: 'Consumer Cards'
+      },
+      {
+        name: 'business',
+        display: 'Business Cards'
+      }
+    ]
 
   // How many products to pull at a time
   var productCount = 10
@@ -40,12 +45,13 @@ module.exports = function (client) {
   /* GET home page. */
   router.get('/', csrfProtection, function (req, res, next) {
     var requestedCardType = _.find(cardTypes, { name: req.query.cardType })
+
     if (!requestedCardType) {
       res.redirect('/?cardType=' + cardTypes[0].name)
       return
     }
 
-    client.products.getCards(requestedCardType.name, { limit: productCount }, function (err, data) {
+    var onComplete = function (err, data) {
       if (err) { return next(err) }
 
       cards = _.map(_.get(data, 'products', []), productViewModel)
@@ -56,7 +62,13 @@ module.exports = function (client) {
         cardTypes: cardTypes,
         cards: cards
       })
-    })
+    }
+    
+    if (requestedCardType === allType) {
+      client.products.getAllCards({ limit: productCount }, onComplete)
+    } else {
+      client.products.getCards(requestedCardType.name, { limit: productCount }, onComplete)
+    }
   })
 
   return router
