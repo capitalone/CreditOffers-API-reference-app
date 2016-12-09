@@ -22,18 +22,18 @@ block content
   div.header
     div.container        
       div.row
-        div.col-md-8
+        div.col-md-7
           h2 CapitalOne
             sup ® 
             | Credit Cards
           p These are some of the cards on offer from CapitalOne
             sup ® 
             | .
-        div.filters.col-md-4
+        div.filters.col-md-5
           div.pull-right
             div.btn-group(role="group", aria-label="Card Types")
               each cardType in cardTypes
-                a.btn.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
+                a.btn.btn-sm.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
   div.cards.container
       each card in cards
         div.card-info
