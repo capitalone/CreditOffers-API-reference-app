@@ -74,11 +74,20 @@ body {
   .card-info .additional-info {
     display: flex;
     flex-flow: row nowrap;
-    align-items: stretch;
-    background-color: #bbb;
-    box-shadow: inset 0 6px 6px -4px rgba(0,0,0,0.25); }
+    align-items: stretch; }
     .card-info .additional-info > * {
       flex-grow: 1; }
+    .card-info .info .info-label {
+      height: 54px;
+      background-color: #0a4469;
+      text-align: center;
+      padding: 10px 20px;
+      color: white; }
+    .card-info .info:not(:last-child) .info-label {
+      border-right: 1px solid #fff; }
+    .card-info .info .info-value {
+      text-align: center;
+      padding: 10px; }
 
 .marketing-copy > ul:first-child {
   margin-bottom: 0; }
