@@ -28,11 +28,12 @@ block content
 
     div.cards.container
       each card in products
-        div.card-info
+        div.card-info(data-raw-json="#{card.rawJSON}")
           div.main-info
             div.details
               p.card-title
                 +cardNameLink(card)
+                a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)
                 +marketingCopy(card)
@@ -46,6 +47,9 @@ block content
       div.acknowledgement
         span.status-text Acknowledging...
         i.status-icon.fa.fa-circle-o
+
+block modals
+  include ./includes/raw-json-modal
 
 block scripts
   script.
@@ -100,3 +104,14 @@ block scripts
           $('#prequal-stats-summary .stat-text').html('<span class="error">FAILED to get prequalification summary data!</span>')
         })
     })
+
+    $(function () {
+      $('.card-info .json-toggle').click(function (evt) {
+        var card = $(this).closest('.card-info'),
+            json = JSON.stringify(card.data('rawJson'), null, 2);
+        evt.preventDefault();
+
+        $('#card-json .raw-json').text(json);
+        $('#card-json').modal('show');
+      });
+    });

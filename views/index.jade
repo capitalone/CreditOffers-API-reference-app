@@ -84,15 +84,7 @@ block modals
               | Close
             button.btn.btn-primary(type='submit')
               | See Offers
-  div#card-json.modal.fade(tabindex='-1', role='dialog')
-    div.modal-dialog
-      div.modal-content
-        div.modal-header
-          button.close(type='button', data-dismiss='modal', aria-label='close')
-            span(aria-hidden='true') &times;
-          h4.modal-title Raw Card JSON
-        div.modal-body
-          pre.raw-json
+  include ./includes/raw-json-modal
 
 block scripts
   script.
