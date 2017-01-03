@@ -46,5 +46,8 @@ module.exports = function preQualProduct (apiProduct) {
   viewModel.mainMarketingCopy = _.take(marketingCopy, 2)
   viewModel.extraMarketingCopy = _.drop(marketingCopy, 2)
 
+  // Store the raw JSON value to display as reference in the UI
+  viewModel.rawJSON = JSON.stringify(apiProduct)
+
   return viewModel
 }
