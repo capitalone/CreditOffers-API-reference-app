@@ -36,11 +36,13 @@ block content
                 a.btn.btn-sm.btn-primary(href='/?cardType='+cardType.name, disabled=currentCardType===cardType.name)= cardType.display
   div.cards.container
       each card in cards
-        div.card-info
+        // NOTE: In a real app, avoid storing truth in the DOM!
+        div.card-info(data-raw-json="#{card.rawJSON}")
           div.main-info
             div.details
               p.card-title
                 +cardNameLink(card)
+                a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
                 +marketingCopy(card)
@@ -82,9 +84,28 @@ block modals
               | Close
             button.btn.btn-primary(type='submit')
               | See Offers
+  div#card-json.modal.fade(tabindex='-1', role='dialog')
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='close')
+            span(aria-hidden='true') &times;
+          h4.modal-title Raw Card JSON
+        div.modal-body
+          pre.raw-json
 
 block scripts
   script.
     $(function () {
-      $('.card-info [data-toggle="tooltip"]').tooltip({ delay: 200, placement: 'right' })
-    })
+      $('.card-info [data-toggle="tooltip"]').tooltip({ delay: 200, placement: 'right' });
+    });
+    $(function () {
+      $('.card-info .json-toggle').click(function (evt) {
+        var card = $(this).closest('.card-info'),
+            json = JSON.stringify(card.data('rawJson'), null, 2);
+        evt.preventDefault();
+
+        $('#card-json .raw-json').text(json);
+        $('#card-json').modal('show');
+      });
+    });

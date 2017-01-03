@@ -78,16 +78,30 @@ body {
     .card-info .additional-info > * {
       flex-grow: 1; }
     .card-info .info .info-label {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
       height: 54px;
-      background-color: #0a4469;
-      text-align: center;
       padding: 10px 20px;
+      text-align: center;
+      background-color: #0a4469;
       color: white; }
     .card-info .info:not(:last-child) .info-label {
       border-right: 1px solid #fff; }
     .card-info .info .info-value {
       text-align: center;
       padding: 10px; }
+  .card-info .json-toggle {
+    font-size: 0.5em;
+    text-decoration: none;
+    background-color: #eee;
+    padding: 0.5em;
+    border-radius: 0.2em;
+    color: #888; }
+  .card-info .json-toggle:hover {
+    text-decoration: none;
+    background-color: #efefef;
+    color: #333; }
 
 .marketing-copy > ul:first-child {
   margin-bottom: 0; }
@@ -105,6 +119,9 @@ body {
   .marketing-copy .collapse.in + a.show-hide::after {
     font-family: FontAwesome;
     content: " \f077"; }
+
+#card-json .raw-json {
+  max-height: 400px; }
 
 .btn i {
   margin-right: 10px; }
