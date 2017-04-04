@@ -35,7 +35,7 @@ block content
           div.main-info
             div.details
               p.card-title
-                +cardNameLink(card)
+                !{card.productDisplayName}
                 a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)

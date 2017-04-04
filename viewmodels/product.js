@@ -29,26 +29,34 @@ module.exports = function product (apiProduct) {
     'publishedDate',
     'applyNowLink',
     'productType',
-    'brand',
+    'brandName',
     'categoryTags',
-    'productKeywords',
     'processingNetwork',
     'creditRating',
-    'rewardsType',
-    'primaryBenefitDescription',
-    'balanceTransferAPRDescription',
-    'introPurchaseAPRDescription',
-    'purchaseAPRDescription',
-    'annualMembershipFeeDescription',
-    'rewardsRateDescription',
-    'foreignTransactionFeeDescription',
-    'fraudCoverageDescription',
-    'latePaymentDescription',
-    'penaltyAPRDescription',
-    'cashAdvanceFeeDescription',
-    'cashAdvanceAPRDescription',
+    'rewards',
+    'balanceTransfer',
+    'introBalanceTransferApr',
+    'introBalanceTransferAprPeriod',
+    'balanceTransferApr',
+    'balanceTransferGracePeriod',
+    'introPurchaseApr',
+    'introPurchaseAprPeriod',
+    'purchaseApr',
+    'purchaseGracePeriod',
+    'annualMembershipFee',
+    'foreignTransactionFee',
+    'fraudCoverage',
+    'latePaymentFee',
+    'penaltyApr',
+    'cashAdvanceFee',
+    'cashAdvanceApr',
+    'cashAdvanceGracePeriod',
     'generalDescription',
-    'promotionalDescriptions'
+    'promotionalCopy',
+    'overLimitFee',
+    'minimumDeposit',
+    'additionalMarketingCopy',
+    'productCount'
   ])
 
   viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || '???')
@@ -57,8 +65,6 @@ module.exports = function product (apiProduct) {
     cardArt: _.find(apiProduct.images, { imageType: 'CardArt' }),
     banner: _.find(apiProduct.images, { imageType: 'Banner' })
   }
-
-  viewModel.additionalInformationUrl = _.get(apiProduct, 'links.self.href')
 
   var marketingCopy = _.map(apiProduct.marketingCopy || [], sanitize)
   viewModel.mainMarketingCopy = _.take(marketingCopy, 2)

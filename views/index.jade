@@ -44,7 +44,7 @@ block content
           div.main-info
             div.details
               p.card-title
-                +cardNameLink(card)
+                !{card.productDisplayName}
                 a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
@@ -56,16 +56,16 @@ block content
           div.additional-info
             div.info
               div.info-label Purchases Intro APR
-              div.info-value= card.introPurchaseAPRDescription || 'N/A'
+              div.info-value= card.introPurchaseApr.introPurchaseAprDescription || 'N/A'
             div.info
               div.info-label Balance Transfers Intro APR
-              div.info-value= card.balanceTransferAPRDescription || 'N/A'
+              div.info-value= card.introBalanceTransferApr.introBalanceTransferAprDescription || 'N/A'
             div.info
               div.info-label Regular APR
-              div.info-value= card.purchaseAPRDescription || 'N/A'
+              div.info-value= card.purchaseApr.purchaseAprDescription || 'N/A'
             div.info
               div.info-label Annual Fee
-              div.info-value= card.annualMembershipFeeDescription || 'N/A'
+              div.info-value= card.annualMembershipFee || 'N/A'
             div.info
               div.info-label Credit Needed
               div.info-value= (card.creditRating || []).join(', ' ) || 'N/A'

@@ -24,6 +24,8 @@ var sanitize = require('../helpers').sanitize.sanitizeHtmlForDisplay
 module.exports = function preQualProduct (apiProduct) {
   var viewModel = _.pick(apiProduct, [
     'productId',
+    'code',
+    'priority',
     'tier',
     'terms',
     'additionalInformationUrl'
@@ -35,16 +37,15 @@ module.exports = function preQualProduct (apiProduct) {
     cardArt: _.find(apiProduct.images, { imageType: 'CardArt' }),
     banner: _.find(apiProduct.images, { imageType: 'Banner' })
   }
+  
   // Normalize to the keys used by the products API
-  viewModel.primaryBenefitDescription = sanitize(_.get(apiProduct, 'terms.primaryBenefit'))
-  viewModel.purchaseAPRDescription = sanitize(_.get(apiProduct, 'terms.purchaseAprTerms'))
-  viewModel.balanceTransferAPRDescription = sanitize(_.get(apiProduct, 'terms.balanceTransferTerms'))
-  viewModel.annualMembershipFeeDescription = sanitize(_.get(apiProduct, 'terms.annualMembershipFeeTerms'))
   viewModel.applyNowLink = apiProduct.applicationUrl
 
+  var primaryBenefitDescription = sanitize(_.get(apiProduct, 'terms.primaryBenefit'))
+  var balanceTransferAPRDescription = sanitize(_.get(apiProduct, 'terms.balanceTransferTerms'))
   var marketingCopy = _.compact([
-    viewModel.primaryBenefitDescription,
-    viewModel.balanceTransferAPRDescription
+    primaryBenefitDescription,
+    balanceTransferAPRDescription
   ])
   viewModel.mainMarketingCopy = _.take(marketingCopy, 2)
   viewModel.extraMarketingCopy = _.drop(marketingCopy, 2)
