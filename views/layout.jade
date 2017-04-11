@@ -1,4 +1,4 @@
-//- Copyright 2016 Capital One Services, LLC
+//- Copyright 2017 Capital One Services, LLC
 //- 
 //- Licensed under the Apache License, Version 2.0 (the "License");
 //- you may not use this file except in compliance with the License.
@@ -15,12 +15,6 @@
 //- SPDX-License-Identifier: Apache-2.0
 
 //- Common Card mixins
-mixin cardNameLink(card)
-  if card.additionalInformationUrl
-    span
-      a(href=card.additionalInformationUrl) !{card.productDisplayName}
-  else
-    span !{card.productDisplayName}
 
 mixin cardNameImage(card)
   - var image = card.images && (card.images.cardArt || card.images.cardName || card.images.banner)
