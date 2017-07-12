@@ -31,7 +31,7 @@ All other dependencies are loaded with [npm](https://www.npmjs.com/). All depend
 ### config.js
 You'll need to set up your `config.js` file before you can run the app.
 
-* Create this file by copying and renaming [config.js.sample](/credit-offers/config.js.sample). Be careful not to put `config.js` into version control. (We've added it to the repository's `.gitignore` for you.)
+* Create this file by copying and renaming [config.js.sample](https://github.com/capitalone/CreditOffers-API-reference-app/blob/master/config.js.sample). Be careful not to put `config.js` into version control. (We've added it to the repository's `.gitignore` for you.)
 * Make sure that you've registered an app on [Capital One's developer portal](developer.capitalone.com).
 * Edit the `clientID` and `clientSecret` values in `config.js` to specify the **Client ID** and **Client Secret** that were provided when you registered the app.
 
