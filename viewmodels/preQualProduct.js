@@ -31,7 +31,7 @@ module.exports = function preQualProduct (apiProduct) {
     'additionalInformationUrl'
   ])
 
-  viewModel.productDisplayName = sanitize(apiProduct.productName || '???')
+  viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || '???')
   viewModel.images = {
     cardName: _.find(apiProduct.images, { imageType: 'CardName' }),
     cardArt: _.find(apiProduct.images, { imageType: 'CardArt' }),
