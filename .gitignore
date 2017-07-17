@@ -38,3 +38,9 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# Optional IDEA file
+.idea
+
+# Package-lock JSON
+package-lock.json
