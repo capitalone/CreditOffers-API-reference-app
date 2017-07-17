@@ -20,6 +20,7 @@ SPDX-License-Identifier: Apache-2.0
 
 var _ = require('lodash')
 var sanitize = require('../helpers').sanitize.sanitizeHtmlForDisplay
+var debug = require('debug')('name')
 
 module.exports = function preQualProduct (apiProduct) {
   var viewModel = _.pick(apiProduct, [
@@ -31,7 +32,7 @@ module.exports = function preQualProduct (apiProduct) {
     'additionalInformationUrl'
   ])
 
-  viewModel.productDisplayName = sanitize(apiProduct.productName || '???')
+  viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || '???')
   viewModel.images = {
     cardName: _.find(apiProduct.images, { imageType: 'CardName' }),
     cardArt: _.find(apiProduct.images, { imageType: 'CardArt' }),
@@ -39,14 +40,9 @@ module.exports = function preQualProduct (apiProduct) {
   }
   
   // Normalize to the keys used by the products API
-  viewModel.applyNowLink = apiProduct.applicationUrl
+  viewModel.applyNowLink = apiProduct.applyNowLink
 
-  var primaryBenefitDescription = sanitize(_.get(apiProduct, 'terms.primaryBenefit'))
-  var balanceTransferAPRDescription = sanitize(_.get(apiProduct, 'terms.balanceTransferTerms'))
-  var marketingCopy = _.compact([
-    primaryBenefitDescription,
-    balanceTransferAPRDescription
-  ])
+  var marketingCopy = _.map(apiProduct.marketingCopy || [], sanitize)
   viewModel.mainMarketingCopy = _.take(marketingCopy, 2)
   viewModel.extraMarketingCopy = _.drop(marketingCopy, 2)
 
