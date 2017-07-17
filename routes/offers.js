@@ -65,6 +65,8 @@ module.exports = function (client) {
       client.prequalification.create(customerInfo, function (err, response) {
         if (err) { return next(err) }
 
+        debug(response.prequalification)
+
         var apiProducts = response.products || []
         var productViewModels = _(apiProducts)
               .sortBy('priority') // Display in the priority order given by the API
