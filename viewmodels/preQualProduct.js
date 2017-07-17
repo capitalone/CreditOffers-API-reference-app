@@ -20,7 +20,6 @@ SPDX-License-Identifier: Apache-2.0
 
 var _ = require('lodash')
 var sanitize = require('../helpers').sanitize.sanitizeHtmlForDisplay
-var debug = require('debug')('name')
 
 module.exports = function preQualProduct (apiProduct) {
   var viewModel = _.pick(apiProduct, [
