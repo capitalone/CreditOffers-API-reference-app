@@ -49,7 +49,7 @@ block content
               div.summary
                 +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
                 +marketingCopy(card)
-            div.apply
+            div.apply.json-toggle.pull-right(title="Apply Now Link Disabled in Sandbox")
               +applyButton(card)
               p with CapitalOne
                 sup ®
@@ -89,18 +89,3 @@ block modals
               | See Offers
   include ./includes/raw-json-modal
 
-block scripts
-  script.
-    $(function () {
-      $('.card-info [data-toggle="tooltip"]').tooltip({ delay: 200, placement: 'right' });
-    });
-    $(function () {
-      $('.card-info .json-toggle').click(function (evt) {
-        var card = $(this).closest('.card-info'),
-            json = JSON.stringify(card.data('rawJson'), null, 2);
-        evt.preventDefault();
-
-        $('#card-json .raw-json').text(json);
-        $('#card-json').modal('show');
-      });
-    });

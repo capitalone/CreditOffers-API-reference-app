@@ -24,7 +24,7 @@ mixin cardNameImage(card)
     img.card-name(src='/images/default-card.png')&attributes(attributes)
       
 mixin applyButton(card)
-  a.btn.btn.btn-lg.btn-success(href=card.applyNowLink)
+  a.btn.btn.btn-lg.btn-success
     i.fa.fa-lock(aria-hidden="true")
     | APPLY NOW
 
@@ -86,4 +86,17 @@ head
           .on('hide.bs.collapse', function (e) {
             $(e.target).siblings('a.show-hide').text('Show More')
           })
-      })
+      });
+      $(function () {
+          $('.card-info [data-toggle="tooltip"]').tooltip({delay: 0, placement: 'right'});
+      });
+      $(function () {
+          $('.card-info a.json-toggle').click(function (evt) {
+              var card = $(this).closest('.card-info'),
+                  json = JSON.stringify(card.data('rawJson'), null, 2);
+              evt.preventDefault();
+
+              $('#card-json .raw-json').text(json);
+              $('#card-json').modal('show');
+          });
+      });

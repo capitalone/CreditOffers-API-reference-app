@@ -40,10 +40,26 @@ block content
               div.summary
                 +cardNameImage(card)
                 +marketingCopy(card)
-            div.apply
+            div.apply.json-toggle.pull-right(title="Apply Now Link Disabled in Sandbox")
               +applyButton(card)
               p with CapitalOne
                 sup ®
+          div.additional-info
+            div.info
+              div.info-label Purchases Intro APR
+              div.info-value= card.introPurchaseApr.introPurchaseAprDescription || 'N/A'
+            div.info
+              div.info-label Balance Transfers Intro APR
+              div.info-value= card.introBalanceTransferApr.introBalanceTransferAprDescription || 'N/A'
+            div.info
+              div.info-label Regular APR
+              div.info-value= card.purchaseApr.purchaseAprDescription || 'N/A'
+            div.info
+              div.info-label Annual Fee
+              div.info-value= card.annualMembershipFee || 'N/A'
+            div.info
+              div.info-label Credit Needed
+              div.info-value= (card.creditRating || []).join(', ') || 'N/A'
     footer#prequal-stats-summary.navbar-fixed-bottom
       i.fa.fa-pie-chart(aria-hidden="true")
       div.stat-text Loading Stats...
@@ -107,14 +123,3 @@ block scripts
           $('#prequal-stats-summary .stat-text').html('<span class="error">FAILED to get prequalification summary data!</span>')
         })
     })
-
-    $(function () {
-      $('.card-info .json-toggle').click(function (evt) {
-        var card = $(this).closest('.card-info'),
-            json = JSON.stringify(card.data('rawJson'), null, 2);
-        evt.preventDefault();
-
-        $('#card-json .raw-json').text(json);
-        $('#card-json').modal('show');
-      });
-    });

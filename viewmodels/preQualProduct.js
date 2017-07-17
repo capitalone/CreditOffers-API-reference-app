@@ -28,7 +28,12 @@ module.exports = function preQualProduct (apiProduct) {
     'priority',
     'tier',
     'terms',
-    'additionalInformationUrl'
+    'additionalInformationUrl',
+    'introPurchaseApr',
+    'purchaseApr',
+    'introBalanceTransferApr',
+    'annualMembershipFee',
+    'creditRating'
   ])
 
   viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || '???')
