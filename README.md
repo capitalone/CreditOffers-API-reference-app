@@ -47,7 +47,6 @@ Navigate to http://localhost:3000.  This will retrieve a list of Consumer card p
 
   * In sandbox mode, “Apply now” button will not work
   * Toggle the card type to 'Business' to request and display a list of business card products from the API
-  * In sandbox mode, "Apply now" button will not work
   * Click on the 'Find Pre-Qualified Offers' button to launch a simple customer information form and test out the pre-qualification API behavior.  The results screen will also perform two asynchronous calls:
     * POST to `/credit-offers/prequalifications/{prequalificationId}` to acknowledge that the results were displayed to the customer
     * GET from the `/credit-offers/prequalifications-summary` endpoint to display simple pre-qualification statistics at the bottom of the page
