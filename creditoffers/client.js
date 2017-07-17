@@ -25,7 +25,7 @@ var util = require('util')
 // Default to a secure call to the API endpoint
 var defaultOptions = {
   url: 'https://api.capitalone.com',
-  apiVersion: 2
+  apiVersion: 3
 }
 
 /**
