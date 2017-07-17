@@ -45,6 +45,7 @@ From the project root:
 
 Navigate to http://localhost:3000.  This will retrieve a list of Consumer card products from the API and display simple information about each.  From here, you can try a few simple things:
 
+  * In sandbox mode, “Apply now” button will not work
   * Toggle the card type to 'Business' to request and display a list of business card products from the API
   * In sandbox mode, "Apply now" button will not work
   * Click on the 'Find Pre-Qualified Offers' button to launch a simple customer information form and test out the pre-qualification API behavior.  The results screen will also perform two asynchronous calls:
