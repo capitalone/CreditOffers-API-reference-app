@@ -27,7 +27,6 @@ module.exports = function preQualProduct (apiProduct) {
     'code',
     'priority',
     'tier',
-    'terms',
     'additionalInformationUrl',
     'introPurchaseApr',
     'purchaseApr',
