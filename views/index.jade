@@ -17,9 +17,14 @@
 extends ./layout.jade
 
 block navbar-custom
-  button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
-    i.btn-img.fa.fa-credit-card(aria-hidden="true")
-    | Find Pre-Qualified Offers
+  .btn-toolbar
+    button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#login')
+      i.btn-img.fa.fa-sign-in(aria-hidden="true")
+      | Sign In
+    button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
+      i.btn-img.fa.fa-credit-card(aria-hidden="true")
+      | Find Pre-Qualified Offers
+  
 
 block content
   div.header
@@ -88,4 +93,4 @@ block modals
             button.btn.btn-primary(type='submit')
               | See Offers
   include ./includes/raw-json-modal
-
+  include ./includes/login-modal
