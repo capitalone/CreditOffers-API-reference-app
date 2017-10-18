@@ -17,9 +17,21 @@
 div#login.modal.fade(tabindex='-1', role='dialog')
     div.modal-dialog
         div.modal-content
+          form(action='/login', method='POST')
+            input(type="hidden" name="_csrf" value="#{csrfToken}")
             div.modal-header
-                button.close(type='button', data-dismiss='modal', aria-label='close')
-                    span(aria-hidden='true') &times;
-                h4.modal-title Raw Card JSON
+              button.close(type='button', data-dismiss='modal', aria-label='close')
+                span(aria-hidden='true') &times;
+              h4.modal-title Sign In
             div.modal-body
-                pre.raw-json
+              div.form-group(class={required: true})
+                label(for='username')= 'Username'
+                input.form-control(type='text', name='username', required=true)
+              div.form-group(class={required: true})
+                label(for='password')= 'Password'
+                input.form-control(type='text', name='password', required=true)
+            div.modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal')
+                | Close
+              button.btn.btn-primary(type='submit')
+                | Sign In
