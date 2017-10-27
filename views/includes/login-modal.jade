@@ -13,23 +13,23 @@
 //-
 //- SPDX-Copyright: Copyright (c) Capital One Services, LLC
 //- SPDX-License-Identifier: Apache-2.0
-
+- sandboxEnv = this.process.env.NODE_ENV == 'sandbox'
 div#login.modal.fade(tabindex='-1', role='dialog')
     div.modal-dialog
         div.modal-content
-          form(action='/login', method='POST')
+          form(action='/login', method='POST', name="login")
             input(type="hidden" name="_csrf" value="#{csrfToken}")
             div.modal-header
               button.close(type='button', data-dismiss='modal', aria-label='close')
                 span(aria-hidden='true') &times;
               h4.modal-title Sign In
             div.modal-body
-              div.form-group(class={required: true})
+              div.form-group(class={required: truth})
                 label(for='username')= 'Username'
-                input.form-control(type='text', name='username', required=true)
-              div.form-group(class={required: true})
+                input.form-control(type='text', name='username', required='true', value=sandboxEnv ? 'jsmith' : '')
+              div.form-group(class={required: truth})
                 label(for='password')= 'Password'
-                input.form-control(type='text', name='password', required=true)
+                input.form-control(type='password', name='password', required='true', value=sandboxEnv ? 'Reference@123' : '')
             div.modal-footer
               button.btn.btn-default(type='button', data-dismiss='modal')
                 | Close
