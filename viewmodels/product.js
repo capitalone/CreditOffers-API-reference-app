@@ -21,7 +21,7 @@ SPDX-License-Identifier: Apache-2.0
 var _ = require('lodash')
 var sanitize = require('../helpers').sanitize.sanitizeHtmlForDisplay
 
-module.exports = function product (apiProduct) {
+module.exports = function product(apiProduct) {
   var viewModel = _.pick(apiProduct, [
     'productId',
     'activeFrom',
@@ -56,14 +56,21 @@ module.exports = function product (apiProduct) {
     'overLimitFee',
     'minimumDeposit',
     'additionalMarketingCopy',
-    'productCount'
+    'productCount',
+    'productMetrics'
   ])
 
   viewModel.productDisplayName = sanitize(apiProduct.productDisplayName || '???')
   viewModel.images = {
-    cardName: _.find(apiProduct.images, { imageType: 'CardName' }),
-    cardArt: _.find(apiProduct.images, { imageType: 'CardArt' }),
-    banner: _.find(apiProduct.images, { imageType: 'Banner' })
+    cardName: _.find(apiProduct.images, {
+      imageType: 'CardName'
+    }),
+    cardArt: _.find(apiProduct.images, {
+      imageType: 'CardArt'
+    }),
+    banner: _.find(apiProduct.images, {
+      imageType: 'Banner'
+    })
   }
 
   var marketingCopy = _.map(apiProduct.marketingCopy || [], sanitize)
