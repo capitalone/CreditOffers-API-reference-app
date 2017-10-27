@@ -17,14 +17,14 @@
 extends ./layout.jade
 
 block navbar-custom
-  .btn-toolbar
-    button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#login')
-      i.btn-img.fa.fa-sign-in(aria-hidden="true")
-      | Sign In
-    button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
+  .btn-toolbar.navbar-right
+    button.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
       i.btn-img.fa.fa-credit-card(aria-hidden="true")
       | Find Pre-Qualified Offers
-  
+    a.btn.btn-md.navbar-btn.btn-success.auth-btn&attributes(user ? { 'class': 'logout-btn', 'href': '/logout' } : { 'data-toggle': 'modal', 'data-target': '#login', 'role': 'button' })
+      i.btn-img.fa(aria-hidden="true", class="#{ user ? fa-sign-out : fa-sign-in }")
+      = user ? 'Sign Out' : 'Sign In' 
+    
 
 block content
   div.header
@@ -49,7 +49,18 @@ block content
           div.main-info
             div.details
               p.card-title
-                !{card.productDisplayName}
+                span
+                  !{card.productDisplayName}
+                  if card.productMetrics
+                    - metric = card.productMetrics[0].ratingsAndReviews
+                    - review = metric.productReviews
+                    - width = metric.productRating*20 
+                    span.total-stars
+                      span.actual-stars(style='width:#{width}%;')
+                    if review
+                      a.reviews(href="#{review.link}", target="_blank")
+                        = review.count
+                        | &nbsp;reviews
                 a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
@@ -94,3 +105,4 @@ block modals
               | See Offers
   include ./includes/raw-json-modal
   include ./includes/login-modal
+  include ./includes/prefill-accept-modal
