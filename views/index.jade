@@ -90,7 +90,7 @@ block modals
   div#customer-info.modal.fade(tabindex='-1', role='dialog')
     div.modal-dialog
       div.modal-content
-        form(action='/offers', method='POST')
+        form(action='/offers', method='POST', name="prequalification")
           input(type="hidden" name="_csrf" value="#{csrfToken}")
           div.modal-header
             button.close(type='button', data-dismiss='modal', aria-label='close')
@@ -99,6 +99,9 @@ block modals
           div.modal-body
             include ./includes/customer-form
           div.modal-footer
+            span.text-danger.hidden
+              | Errors detected.
+            &nbsp;&nbsp;
             button.btn.btn-default(type='button', data-dismiss='modal')
               | Close
             button.btn.btn-primary(type='submit')
