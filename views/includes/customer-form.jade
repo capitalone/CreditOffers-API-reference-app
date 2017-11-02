@@ -15,7 +15,7 @@
 //- SPDX-License-Identifier: Apache-2.0
 
 //- A re-usable bootstrap text input
-- sandboxEnv = this.process.env.NODE_ENV == 'sandbox'
+- sandboxEnv = this.process.env.C1_ENV == 'sandbox'
 mixin textinput(name, label, required)
   div.form-group(class={required: required})
     label(for=name)= label
@@ -26,11 +26,11 @@ mixin select(name, label, required)
     select.form-control(name=name, selected=attributes.selected || '')
       block
 
-mixin sandboxTaxIds()
-  option(value='555555555') 555555555
-  option(value='666666666') 666666666
-  option(value='777777777') 777777777
-  option(value='888888888') 888888888
+mixin taxIdOptions()
+  option(value='555555555') 555555555 (No Prequalification Offer)
+  option(value='666666666') 666666666 (Single Prequalification Offer)
+  option(value='777777777') 777777777 (Multiple Prequalified Offers)
+  option(value='888888888') 888888888 (Max Prequalification Offers)
 
 mixin stateOptions()
   option(value='AL') AL
@@ -58,7 +58,10 @@ mixin stateOptions()
   option(value='ME') ME
   option(value='MH') MH
   option(value='MD') MD
-  option(value='MA')(selected=sandboxEnv ?'selected' : '') MA
+  if sandboxEnv
+    option(value='MA', selected='selected') MA
+  else
+    option(value='MA') MA
   option(value='MI') MI
   option(value='MN') MN
   option(value='MS') MS
@@ -115,8 +118,8 @@ mixin stateOptions()
   option(value='Business') Business
 if sandboxEnv
   +select('taxId', 'SSN', true)
-    +sandboxTaxIds()
-else
+    +taxIdOptions()
+else 
   +textinput('taxId', 'Last Four Digits of SSN', true)
 +textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD', default='1964-11-12')
 

@@ -50,22 +50,19 @@ block content
             div.details
               p.card-title
                 span
-                  !{card.productDisplayName}
-                  if card.productMetrics
+                  | !{card.productDisplayName}
+                  if card.productMetrics && card.productMetrics.length
                     - metric = card.productMetrics[0].ratingsAndReviews
                     - review = metric.productReviews
-                    - width = metric.productRating*20 
                     span.total-stars
-                      span.actual-stars(style='width:#{width}%;')
+                      span.actual-stars(style='width:#{metric.productRating*20}%;')
                     if review
-                      a.reviews(href="#{review.link}", target="_blank")
-                        = review.count
-                        | &nbsp;reviews
+                      a.reviews(href="#{review.link}", target="_blank") !{review.count} reviews
                 a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
                 +marketingCopy(card)
-            div.apply.json-toggle.pull-right(title="Apply Now Link Disabled in Sandbox")
+            div.apply.json-toggle.pull-right
               +applyButton(card)
               p with CapitalOne
                 sup ®
@@ -101,7 +98,7 @@ block modals
           div.modal-footer
             span.text-danger.hidden
               | Errors detected.
-            &nbsp;&nbsp;
+            | &nbsp;&nbsp;
             button.btn.btn-default(type='button', data-dismiss='modal')
               | Close
             button.btn.btn-primary(type='submit')
