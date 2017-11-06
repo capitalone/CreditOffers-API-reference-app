@@ -38,6 +38,11 @@ body {
     border-bottom: 1px solid #ccc;
 }
 
+.bold {
+  font-weight: bold;
+  padding: 5px 0;
+}
+
 .header {
   background-color: #efefef;
   padding-bottom: 10px; }
@@ -57,6 +62,24 @@ body {
   .card-info .card-title {
     font-size: 1.5em;
     font-weight: 600; }
+  .card-info .total-stars {
+    width: 80px;
+    height: 16px;
+    display: inline-block;
+    background-size: 16px 48px;
+    margin: 0 5px;
+    background-image: url('/images/stars_lg.png');
+    background-position: 0 -16px;
+  }
+  .card-info .actual-stars {
+    height: 16px;
+    display: inline-block;
+    background-size: 16px 48px;
+    background-image: url('/images/stars_lg.png');
+  }
+  .card-info a.reviews {
+    font-size: 12px;
+  }
   .card-info .main-info {
     display: flex;
     flex-flow: row nowrap; }

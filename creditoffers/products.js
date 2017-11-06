@@ -24,7 +24,7 @@ var _ = require('lodash')
  * Contains all functions for interacting with the credit offer product listings API
  * @param {object} client The API client
  */
-function Products (client) {
+function Products(client) {
   if (!this instanceof Products) {
     return new Products(client)
   }
@@ -38,7 +38,7 @@ module.exports = Products
  * @param {object} pagingOptions Optionally control the number of results and starting offset
  * in the result set
  */
-Products.prototype.getAll = function getAll (pagingOptions, callback) {
+Products.prototype.getAll = function getAll(pagingOptions, callback) {
   var query = _.pick(pagingOptions, ['limit', 'offset'])
 
   this.client.sendRequest({
@@ -54,7 +54,7 @@ Products.prototype.getAll = function getAll (pagingOptions, callback) {
  * @param {object} pagingOptions Optionally control the number of results and starting offset
  * in the result set
  */
-Products.prototype.getAllCards = function getAllCards (pagingOptions, callback) {
+Products.prototype.getAllCards = function getAllCards(pagingOptions, callback) {
   var query = _.pick(pagingOptions, ['limit', 'offset'])
 
   this.client.sendRequest({
@@ -71,8 +71,10 @@ Products.prototype.getAllCards = function getAllCards (pagingOptions, callback) 
  * @param {object} pagingOptions Optionally control the number of results and starting offset
  * in the result set
  */
-Products.prototype.getCards = function getCards (cardType, pagingOptions, callback) {
-  if (!cardType) { callback(new Error('A card type must be specified')) }
+Products.prototype.getCards = function getCards(cardType, pagingOptions, callback) {
+  if (!cardType) {
+    callback(new Error('A card type must be specified'))
+  }
   var query = _.pick(pagingOptions, ['limit', 'offset'])
 
   this.client.sendRequest({
@@ -88,13 +90,26 @@ Products.prototype.getCards = function getCards (cardType, pagingOptions, callba
  * @param {string} cardType The type of card (BusinessCard, ConsumerCard)
  * @param {string} productId The ID of the consumer card product for which to retrieve details
  */
-Products.prototype.getCardDetail = function getCardDetail (cardType, productId, callback) {
-  if (!cardType) { callback(new Error('A card type must be specified')) }
-  if (!productId) { callback(new Error('A product ID must be specified in order to retrieve product details')) }
+Products.prototype.getCardDetail = function getCardDetail(cardType, productId, callback) {
+  if (!cardType) {
+    callback(new Error('A card type must be specified'))
+  }
+  if (!productId) {
+    callback(new Error('A product ID must be specified in order to retrieve product details'))
+  }
 
   this.client.sendRequest({
     url: '/credit-offers/products/' + encodeURIComponent(cardType) + '/' + encodeURIComponent(productId),
     useOAuth: true,
     method: 'GET'
+  }, callback)
+}
+
+Products.prototype.postPrefillAcceptance = function postPrefillAcceptance(user, callback) {
+  this.client.sendRequest({
+    url: '/credit-offers/applicant-details',
+    useOAuth: true,
+    method: 'POST',
+    body: user
   }, callback)
 }

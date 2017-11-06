@@ -17,9 +17,14 @@
 extends ./layout.jade
 
 block navbar-custom
-  button.navbar-right.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
-    i.btn-img.fa.fa-credit-card(aria-hidden="true")
-    | Find Pre-Qualified Offers
+  .btn-toolbar.navbar-right
+    button.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
+      i.btn-img.fa.fa-credit-card(aria-hidden="true")
+      | Find Pre-Qualified Offers
+    a.btn.btn-md.navbar-btn.btn-success.auth-btn&attributes(user ? { 'class': 'logout-btn', 'href': '/logout' } : { 'data-toggle': 'modal', 'data-target': '#login', 'role': 'button' })
+      i.btn-img.fa(aria-hidden="true", class="#{ user ? fa-sign-out : fa-sign-in }")
+      = user ? 'Sign Out' : 'Sign In' 
+    
 
 block content
   div.header
@@ -44,12 +49,20 @@ block content
           div.main-info
             div.details
               p.card-title
-                !{card.productDisplayName}
+                span
+                  | !{card.productDisplayName}
+                  if card.productMetrics && card.productMetrics.length
+                    - metric = card.productMetrics[0].ratingsAndReviews
+                    - review = metric.productReviews
+                    span.total-stars
+                      span.actual-stars(style='width:#{metric.productRating*20}%;')
+                    if review
+                      a.reviews(href="#{review.link}", target="_blank") !{review.count} reviews
                 a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
                 +marketingCopy(card)
-            div.apply.json-toggle.pull-right(title="Apply Now Link Disabled in Sandbox")
+            div.apply.json-toggle.pull-right
               +applyButton(card)
               p with CapitalOne
                 sup ®
@@ -74,7 +87,7 @@ block modals
   div#customer-info.modal.fade(tabindex='-1', role='dialog')
     div.modal-dialog
       div.modal-content
-        form(action='/offers', method='POST')
+        form(action='/offers', method='POST', name="prequalification")
           input(type="hidden" name="_csrf" value="#{csrfToken}")
           div.modal-header
             button.close(type='button', data-dismiss='modal', aria-label='close')
@@ -83,9 +96,13 @@ block modals
           div.modal-body
             include ./includes/customer-form
           div.modal-footer
+            span.text-danger.hidden
+              | Errors detected.
+            | &nbsp;&nbsp;
             button.btn.btn-default(type='button', data-dismiss='modal')
               | Close
             button.btn.btn-primary(type='submit')
               | See Offers
   include ./includes/raw-json-modal
-
+  include ./includes/login-modal
+  include ./includes/prefill-accept-modal
