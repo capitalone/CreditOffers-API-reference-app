@@ -19,27 +19,32 @@ See the License for the specific language governing permissions and limitations 
  * client_id and client_secret.
  */
 var oauthHost, creditOffersHost, clientID, clientSecret;
-switch (process.env.C1_ENV) {
-  case "production":
-    oauthHost = 'https://api.capitalone.com';
-    creditOffersHost = 'https://api.capitalone.com';
-    //clientID = '';
-    //clientSecret = '';
-    break;
-  case "development":
-    oauthHost = 'https://apiit.capitalone.com';
-    creditOffersHost = 'https://apiit.capitalone.com';
-    clientID = 'a7ba9051c605440185d010b90a4cbd0c';
-    clientSecret = '2cb24843ef0f60e7253da6440d3e5b94';
-    break;
-  case "sandbox":
-  default:
-    oauthHost = 'https://api-sandbox.capitalone.com';
-    creditOffersHost = 'https://api-sandbox.capitalone.com';
-    clientID = '153f83dc92444613a3a46f7a0fd9622f';
-    clientSecret = '2619bb1bc9abadfee5ad70d7268fa876';
-    break;
-}
+// switch (process.env.C1_ENV) {
+//   case "production":
+//     oauthHost = 'https://api.capitalone.com';
+//     creditOffersHost = 'https://api.capitalone.com';
+//     //clientID = '';
+//     //clientSecret = '';
+//     break;
+//   case "development":
+//     oauthHost = 'https://apiit.capitalone.com';
+//     creditOffersHost = 'https://apiit.capitalone.com';
+//     clientID = 'a7ba9051c605440185d010b90a4cbd0c';
+//     clientSecret = '2cb24843ef0f60e7253da6440d3e5b94';
+//     break;
+//   case "sandbox":
+//   default:
+//     oauthHost = 'https://api-sandbox.capitalone.com';
+//     creditOffersHost = 'https://api-sandbox.capitalone.com';
+//     clientID = '153f83dc92444613a3a46f7a0fd9622f';
+//     clientSecret = '2619bb1bc9abadfee5ad70d7268fa876';
+//     break;
+// }
+
+oauthHost = 'https://apiit.capitalone.com';
+creditOffersHost = 'https://apiit.capitalone.com';
+clientID = 'a7ba9051c605440185d010b90a4cbd0c';
+clientSecret = '2cb24843ef0f60e7253da6440d3e5b94';
 
 module.exports = {
   // Settings for connecting to the Credit Offers API
