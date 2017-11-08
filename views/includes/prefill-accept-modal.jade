@@ -33,11 +33,13 @@ div#prefill-acceptance.modal.fade(tabindex='-1', role='dialog')
                 li.list-group-item Income
                 li.list-group-item Type of Bank Account you may have (if any)
             div.modal-footer
-              span.text-danger.hidden
-                | Prefill attempt failed
-              i.spinner.fa.fa-spinner.fa-pulse.fa-fw.hidden
-              | &nbsp;&nbsp;
-              button.btn.btn-default(type='button', data-dismiss='modal')
-                | Close
-              button.btn.btn-primary(type='submit')
-                | Accept
+              div
+                span.text-danger.hidden
+                  | Prefill attempt failed
+                i.spinner.fa.fa-spinner.fa-pulse.fa-fw.hidden
+                | &nbsp;&nbsp;
+                button.btn.btn-default(type='button', data-dismiss='modal')
+                  | Close
+                button.btn.btn-primary(type='submit')
+                  | Accept
+              a.deny-prefill(target="_blank") Don't prefill information
