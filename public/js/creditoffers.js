@@ -1,7 +1,9 @@
 $(function() {
   $('.apply-btn').click(function(evt) {
     if ($('.auth-btn').hasClass('logout-btn')) {
-      $('form[name="prefill-acceptance"]').data('link', $(this).attr('href'))
+      let href = $(this).attr('href')
+      $('form[name="prefill-acceptance"]').data('link', href)
+      $('a.deny-prefill').attr('href', href)
       $('#prefill-acceptance').modal().on('hidden.bs.modal', () => {
         $('#prefill-acceptance .text-danger').addClass('hidden')
       })
