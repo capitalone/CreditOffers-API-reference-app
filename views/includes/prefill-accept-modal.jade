@@ -1,0 +1,45 @@
+//- Copyright 2017 Capital One Services, LLC
+//- 
+//- Licensed under the Apache License, Version 2.0 (the "License");
+//- you may not use this file except in compliance with the License.
+//- You may obtain a copy of the License at
+//- 
+//-     http://www.apache.org/licenses/LICENSE-2.0
+//- 
+//- Unless required by applicable law or agreed to in writing, software
+//- distributed under the License is distributed on an "AS IS" BASIS,
+//- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//- See the License for the specific language governing permissions and limitations under the License.
+//-
+//- SPDX-Copyright: Copyright (c) Capital One Services, LLC
+//- SPDX-License-Identifier: Apache-2.0
+div#prefill-acceptance.modal.fade(tabindex='-1', role='dialog')
+    div.modal-dialog
+        div.modal-content
+          form(action='/prefill-acceptance', method='POST', name="prefill-acceptance")
+            input(type="hidden" name="_csrf" value="#{csrfToken}")
+            div.modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='close')
+                span(aria-hidden='true') &times;
+              h4.modal-title Prefill Acceptance
+            div.modal-body
+              | Save time by allowing us to prefill some of your application information.
+              .bold Information we will attempt to prefill includes:
+              ul.list-group
+                li.list-group-item Name (First, Middle, Last & Suffix)
+                li.list-group-item Address
+                li.list-group-item Phone Numbers
+                li.list-group-item Email Addresses
+                li.list-group-item Income
+                li.list-group-item Type of Bank Account you may have (if any)
+            div.modal-footer
+              div
+                span.text-danger.hidden
+                  | Prefill attempt failed
+                i.spinner.fa.fa-spinner.fa-pulse.fa-fw.hidden
+                | &nbsp;&nbsp;
+                button.btn.btn-default(type='button', data-dismiss='modal')
+                  | Close
+                button.btn.btn-primary(type='submit')
+                  | Accept
+              a.deny-prefill(target="_blank") Don't prefill information

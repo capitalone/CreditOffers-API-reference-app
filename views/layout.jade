@@ -24,7 +24,8 @@ mixin cardNameImage(card)
     img.card-name(src='/images/default-card.png')&attributes(attributes)
       
 mixin applyButton(card)
-  a.btn.btn.btn-lg.btn-success
+  - link = card.applyNowLink.replace('/mpid/', '/12345/')
+  a.btn.btn.btn-lg.btn-success.apply-btn(href="#{link}", target="_blank")
     i.fa.fa-lock(aria-hidden="true")
     | APPLY NOW
 
@@ -59,6 +60,7 @@ head
     link(rel='stylesheet', href='/css/style.css')
     script(src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(src='/js/bootstrap.min.js')
+    script(src='/js/creditoffers.js')
   body
     nav.navbar.navbar-default.navbar-fixed-top
       div.container

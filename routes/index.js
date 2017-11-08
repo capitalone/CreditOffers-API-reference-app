@@ -21,8 +21,10 @@ var csrf = require('csurf')
 var _ = require('lodash')
 var productViewModel = require('../viewmodels').product
 
-module.exports = function (client) {
-  var csrfProtection = csrf({ cookie: true })
+module.exports = function(client) {
+  var csrfProtection = csrf({
+    cookie: true
+  })
   var router = express.Router()
 
   // The supported card types
@@ -46,16 +48,20 @@ module.exports = function (client) {
   var productCount = 10
 
   /* GET home page. */
-  router.get('/', csrfProtection, function (req, res, next) {
-    var requestedCardType = _.find(cardTypes, { name: req.query.cardType })
+  router.get('/', csrfProtection, function(req, res, next) {
+    var requestedCardType = _.find(cardTypes, {
+      name: req.query.cardType
+    })
 
     if (!requestedCardType) {
       res.redirect('/?cardType=' + cardTypes[0].name)
       return
     }
 
-    var onComplete = function (err, data) {
-      if (err) { return next(err) }
+    var onComplete = function(err, data) {
+      if (err) {
+        return next(err)
+      }
 
       cards = _.map(_.get(data, 'products', []), productViewModel)
       res.render('index', {
@@ -63,15 +69,51 @@ module.exports = function (client) {
         title: 'Credit Offers Reference App',
         currentCardType: requestedCardType.name,
         cardTypes: cardTypes,
-        cards: cards
+        cards: cards,
+        user: req.session.user
       })
     }
-    
+
     if (requestedCardType === allType) {
-      client.products.getAllCards({ limit: productCount }, onComplete)
+      client.products.getAllCards({
+        limit: productCount
+      }, onComplete)
     } else {
-      client.products.getCards(requestedCardType.name, { limit: productCount }, onComplete)
+      client.products.getCards(requestedCardType.name, {
+        limit: productCount
+      }, onComplete)
     }
+  })
+
+  router.post('/login', csrfProtection, function(req, res, next) {
+    let user = require('../creditoffers/users').find((user) => {
+      return user.username == req.body.username
+    }) || {}
+    require('bcrypt').compare(req.body.password, user.password, (err, matched) => {
+      if (matched) {
+        req.session.user = user
+      }
+      res.redirect('/')
+    })
+  })
+
+  router.get('/logout', csrfProtection, function(req, res, next) {
+    req.session = null
+    res.redirect('/')
+  })
+
+  router.post('/prefill-acceptance', csrfProtection, function(req, res, next) {
+    let user = req.session.user || {}
+    client.products.postPrefillAcceptance(user.details, (err, response) => {
+      if (err || !response.applicantDetailsKey) {
+        res.status(400).send()
+        // res.json({
+        //   applicantDetailsKey: "testKey"
+        // })
+      } else {
+        res.json(response)
+      }
+    })
   })
 
   return router
