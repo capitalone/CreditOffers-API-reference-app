@@ -155,6 +155,10 @@ body {
 #prequal-offers > .cards {
   margin-bottom: 40px; }
 
+.modal-footer > div {
+  padding-bottom: 5px;
+}
+
 footer#prequal-stats-summary {
   display: flex;
   flex-flow: row nowrap;

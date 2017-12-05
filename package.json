@@ -16,7 +16,7 @@
     "cookie-session": "^2.0.0-beta.3",
     "csurf": "1.8.3",
     "debug": "2.2.0",
-    "ejs": "2.3.4",
+    "ejs": "~2.5.5",
     "express": "4.13.4",
     "express-validator": "2.21.0",
     "font-awesome": "4.7.0",

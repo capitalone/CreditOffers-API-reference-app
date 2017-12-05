@@ -11,8 +11,7 @@ $(function() {
     }
   })
 
-
-  //$('#login').modal('show')
+  //Prefill append applicantDetailsKey to link url
   $('form[name="prefill-acceptance"]').submit(function(evt) {
     let link = $(this).data('link')
     let $spinner = $(this).find('.spinner')
@@ -42,32 +41,4 @@ $(function() {
     });
     evt.preventDefault();
   });
-
-  // $('form[name="prequalification"]').submit(function(evt) {
-  //   evt.preventDefault();
-  //   $form = $(this)
-  //   $.ajax({
-  //     type: "POST",
-  //     url: this.action,
-  //     data: $(this).serialize(), // serializes the form's elements.
-  //     xhrFields: {
-  //       withCredentials: true
-  //     },
-  //     success: function(data) {
-  //       $form[0].submit()
-  //     },
-  //     error: function(err) {
-  //       if (err.responseJSON) {
-  //         $.each($form.serializeArray(), function(i, field) {
-  //           $formInputParent = $(`[name="${field.name}"]`).parents('.form-group')
-  //           if (err.responseJSON[field.name]) $formInputParent.addClass('has-error')
-  //           else $formInputParent.removeClass('has-error')
-  //         })
-  //         $form.find('.modal-footer > .text-danger.hidden').removeClass('hidden')
-  //       } else {
-  //         $form[0].submit()
-  //       }
-  //     }
-  //   });
-  // });
 });
