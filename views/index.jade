@@ -57,8 +57,7 @@ block content
                     span.total-stars
                       span.actual-stars(style='width:#{metric.productRating*20}%;')
                     if review
-                      - link = review.link.replace('/mpid/', '/12345/')
-                      a.reviews(href="#{link}", target="_blank") !{review.count} reviews
+                      a.reviews(href="#{review.link}", target="_blank") !{review.count} reviews
                 a.json-toggle.pull-right(href="#", title="See raw JSON") {...}
               div.summary
                 +cardNameImage(card)(data-toggle='tooltip', title='#{(card.productKeywords || []).join(", ")}')
