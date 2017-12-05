@@ -11,6 +11,7 @@ This reference app illustrates the use of the Credit Offers API to
 * Collect customer information and retrieve a list of targeted product offers for display using the `/credit-offers/prequalifications` endpoint
 * Send acknowledgement to Capital One that the targeted product offers have been displayed using the `/credit-offers/prequalifications/{prequalificationId}` endpoint
 * Retrieve and display prequalification summary info using the `/credit-offers/prequalifications-summary` endpoint
+* Exemplify signing in and submitting example user data to the `/credit-offers/prefill-acceptance` endpoint
 
 Some additional API features that are **not** directly illustrated by this app include:
 
@@ -45,11 +46,14 @@ From the project root:
 
 Navigate to http://localhost:3000.  This will retrieve a list of Consumer card products from the API and display simple information about each.  From here, you can try a few simple things:
 
-  * In sandbox mode, “Apply now” button will not work
   * Toggle the card type to 'Business' to request and display a list of business card products from the API
   * Click on the 'Find Pre-Qualified Offers' button to launch a simple customer information form and test out the pre-qualification API behavior.  The results screen will also perform two asynchronous calls:
     * POST to `/credit-offers/prequalifications/{prequalificationId}` to acknowledge that the results were displayed to the customer
     * GET from the `/credit-offers/prequalifications-summary` endpoint to display simple pre-qualification statistics at the bottom of the page
+  * Click on the 'Sign in' button and use prepared credentials to simulate a session. Now, click on any products 'Apply Now' button. A confirmation window will launch, asking you to confirm whether you would like to prefill application information. Confirming will initiate a POST request to the `/credit-offers/prefill-acceptance` endpoint and append the returned applicantDetailsKey to the application link.
+    * username / password
+    * jsmith / Reference@123
+    * rhubbard / Reference@123
 
 #### A note about errors
 
