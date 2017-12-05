@@ -1,12 +1,12 @@
 module.exports = [{
     username: "rhubbard",
-    password: "$2a$10$KVkQGwZ0qNxau0tHBpg16O5rym/g3dfKJEd5kCnQ4nOJn1oOjzKca",
+    password: "$2a$10$FNWEnW7IR5pusrCtkDpdfeDqhvkGexDOJ3GB9Ae08yHgJGsw0jXIG",
     details: {
       "firstName": "Ray",
       "middleName": "G",
       "lastName": "Hubbard",
       "nameSuffix": "Jr.",
-      "address": {
+      "addresses": [{
         "addressLine1": "1230 Duck Fuss Lane",
         "addressLine2": "Apt 15X",
         "addressLine3": "Room 192",
@@ -16,14 +16,14 @@ module.exports = [{
         "postalCode": "77701",
         "addressType": "PhysicalPrimary"
 
-      },
+      }],
       "telephoneNumbers": [{
         "phoneNumberType": "Home",
         "telephoneNumber": "2025550110"
       }],
-      "emailAddresses": [
-        "ray@wyliehubbard.com"
-      ],
+      "emailAddresses": [{
+        "emailAddress": "ray@wyliehubbard.com"
+      }],
       "annualIncome": 75000,
       "bankAccountSummary": "CheckingOnly"
     }
@@ -34,7 +34,7 @@ module.exports = [{
     details: {
       "firstName": "Jane",
       "lastName": "Smith",
-      "address": {
+      "addresses": [{
         "addressLine1": "3828 Piermont Dr",
         "addressLine2": "Unit A",
         "city": "Albuquerque",
@@ -42,10 +42,10 @@ module.exports = [{
         "postalCode": "87111",
         "addressType": "Mailing"
 
-      },
-      "emailAddresses": [
-        "jane@example.com"
-      ],
+      }],
+      "emailAddresses": [{
+        "emailAddress": "jane@example.com"
+      }],
       "telephoneNumbers": [{
         "phoneNumberType": "Work",
         "telephoneNumber": "2025550246"

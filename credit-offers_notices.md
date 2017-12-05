@@ -46,6 +46,7 @@
   * [content-security-policy-builder@1.0.0](https://github.com/helmetjs/content-security-policy-builder) - MIT
   * [content-type@1.0.2](https://github.com/jshttp/content-type) - MIT
   * [cookie-parser@1.3.5](https://github.com/expressjs/cookie-parser) - MIT
+  * [cookie-session@1.3.2](https://github.com/expressjs/cookie-session) - MIT
   * [cookie-signature@1.0.6](https://github.com/visionmedia/node-cookie-signature) - MIT
   * [cookie@0.1.3](https://github.com/jshttp/cookie) - MIT
   * [cookie@0.1.5](https://github.com/jshttp/cookie) - MIT
