@@ -60,12 +60,6 @@ block content
             div.info
               div.info-label Credit Needed
               div.info-value= (card.creditRating || []).join(', ') || 'N/A'
-    footer#prequal-stats-summary.navbar-fixed-bottom
-      i.fa.fa-pie-chart(aria-hidden="true")
-      div.stat-text Loading Stats...
-      div.acknowledgement
-        span.status-text Acknowledging...
-        i.status-icon.fa.fa-circle-o
 
 block modals
   include ./includes/raw-json-modal
@@ -97,29 +91,5 @@ block scripts
         })
         .always(function () {
           $('.acknowledgement .status-icon').removeClass('fa-circle-o').addClass('fa-circle')
-        })
-    })
-    
-    $(function () {
-      function makeStat(title, value) {
-        var stat = $('<div></div>').addClass('stat')
-        stat.append($('<span></span>').addClass('stat-title').html(title + ': '))
-        stat.append($('<span></span>').html(value))
-        return stat
-      }
-    
-      $.getJSON('/offers/summary')
-        .done(function (data) {
-          var parent = $('#prequal-stats-summary .stat-text').html(''),
-              stats = [
-                makeStat('Consumer Cards', data.consumerCardCount),
-                makeStat('Non-PreQualified', data.nonPrequalifiedCount),
-                makeStat('PreQualified', data.prequalifiedCount),
-                makeStat('Total', data.total)
-              ]
-          parent.append(stats)
-        })
-        .fail(function () {
-          $('#prequal-stats-summary .stat-text').html('<span class="error">FAILED to get prequalification summary data!</span>')
         })
     })

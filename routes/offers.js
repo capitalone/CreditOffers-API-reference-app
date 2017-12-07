@@ -26,14 +26,16 @@ var debug = require('debug')('credit-offers:offers')
 var productViewModel = require('../viewmodels').preQualProduct
 var validation = require('../validation')
 
-module.exports = function (client) {
+module.exports = function(client) {
   var router = express.Router()
-  var csrfProtection = csrf({ cookie: true })
+  var csrfProtection = csrf({
+    cookie: true
+  })
 
   // POST customer info to check for offers
   router.post('/',
     csrfProtection,
-    function (req, res, next) {
+    function(req, res, next) {
       // Strip out the CSRF token
       delete req.body._csrf
 
@@ -44,32 +46,40 @@ module.exports = function (client) {
       var errors = req.validationErrors(true)
       if (errors) {
         debug('Validation errors in request body!', util.inspect(errors, false, null))
-        var failSummary = _(errors).map(function (error) {
-          return error.msg
-        }).value().join('; ')
-        next(new Error('Validation failed: ' + failSummary))
-        return
+        if (req.xhr) {
+          return res.status(400).json(errors)
+        } else {
+          var failSummary = _(errors).map(function(error) {
+            return error.msg
+          }).value().join('; ')
+          next(new Error('Validation failed: ' + failSummary))
+          return
+        }
       }
 
       // Strip out empty fields
-      req.body = _.omitBy(req.body, function (value, key) { return value == '' })
+      req.body = _.omitBy(req.body, function(value, key) {
+        return value == ''
+      })
 
       // Custom body sanitizing
       req.sanitizeBody('annualIncome').toInt()
 
       next()
     },
-    function (req, res, next) {
+    function(req, res, next) {
       var customerInfo = getCustomerInfo(req.body)
 
-      client.prequalification.create(customerInfo, function (err, response) {
-        if (err) { return next(err) }
+      client.prequalification.create(customerInfo, function(err, response) {
+        if (err) {
+          return next(err)
+        }
 
         var apiProducts = response.products || []
         var productViewModels = _(apiProducts)
-              .sortBy('priority') // Display in the priority order given by the API
-              .map(productViewModel) // Transform to a view model for easier display
-              .value()
+          .sortBy('priority') // Display in the priority order given by the API
+          .map(productViewModel) // Transform to a view model for easier display
+          .value()
 
         var viewModel = {
           title: 'Credit Offers',
@@ -114,7 +124,7 @@ module.exports = function (client) {
   }
 
   // POST acknowledgement that prequal offers were displayed
-  router.post('/acknowledge/:id', function (req, res, next) {
+  router.post('/acknowledge/:id', function(req, res, next) {
     debug('Received acknowledgement of ' + req.params.id)
     var id = req.params.id
     if (!id) {
@@ -122,28 +132,13 @@ module.exports = function (client) {
       return
     }
 
-    client.prequalification.acknowledge(id, function (err, response) {
+    client.prequalification.acknowledge(id, function(err, response) {
       if (err) {
         debug('Error in API call', err)
         res.status(500).send()
         return
       }
       res.status(200).send()
-    })
-  })
-
-  // GET prequalification summary data for this client
-  router.get('/summary', function (req, res, next) {
-    debug('Getting prequal summary data')
-
-    // Get unfiltered summary
-    client.prequalification.getSummary({}, function (err, response) {
-      if (err) {
-        debug('Error in API call', err)
-        res.status(500).send()
-        return
-      }
-      res.json(response)
     })
   })
 

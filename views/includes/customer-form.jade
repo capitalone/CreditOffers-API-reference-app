@@ -15,16 +15,22 @@
 //- SPDX-License-Identifier: Apache-2.0
 
 //- A re-usable bootstrap text input
+- sandboxEnv = this.process.env.C1_ENV == 'sandbox'
 mixin textinput(name, label, required)
   div.form-group(class={required: required})
     label(for=name)= label
-    input.form-control(type='text', name=name, placeholder=attributes.placeholder, required=required || false)
-
+    input.form-control(type='text', name=name, placeholder=attributes.placeholder, required=required || false, value=sandboxEnv && attributes.default ? attributes.default : '')
 mixin select(name, label, required)
   div.form-group(class={required: required})
     label(for=name)= label
-    select.form-control(name=name)
+    select.form-control(name=name, selected=attributes.selected || '')
       block
+
+mixin taxIdOptions()
+  option(value='555555555') 555555555 (No Prequalification Offer)
+  option(value='666666666') 666666666 (Single Prequalification Offer)
+  option(value='777777777') 777777777 (Multiple Prequalified Offers)
+  option(value='888888888') 888888888 (Max Prequalification Offers)
 
 mixin stateOptions()
   option(value='AL') AL
@@ -52,7 +58,10 @@ mixin stateOptions()
   option(value='ME') ME
   option(value='MH') MH
   option(value='MD') MD
-  option(value='MA') MA
+  if sandboxEnv
+    option(value='MA', selected='selected') MA
+  else
+    option(value='MA') MA
   option(value='MI') MI
   option(value='MN') MN
   option(value='MS') MS
@@ -91,24 +100,28 @@ mixin stateOptions()
   option(value='AE') AE
   option(value='AP') AP
 
-+textinput('firstName', 'First Name', true)
++textinput('firstName', 'First Name', true)(default='Rose')
 +textinput('middleName', 'Middle Name')
-+textinput('lastName', 'Last Name', true)
++textinput('lastName', 'Last Name', true)(default='Dean')
 +textinput('nameSuffix', 'Suffix')(placeholder='E.g. Jr, Sr')
-+textinput('addressLine1', 'Address Line 1', true)
++textinput('addressLine1', 'Address Line 1', true)(default='88 Suffolk St')
 +textinput('addressLine2', 'Address Line 2')
 +textinput('addressLine3', 'Address Line 3')
 +textinput('addressLine4', 'Address Line 4')
-+textinput('city', 'City', true)
++textinput('city', 'City', true)(default='Springfield')
 +select('stateCode', 'State', true)
   +stateOptions()
-+textinput('postalCode', 'Zip Code', true)
++textinput('postalCode', 'Zip Code', true)(default='01109')
 +select('addressType', 'Address Type')
   option(value='')
   option(value='Home') Home
   option(value='Business') Business
-+textinput('taxId', 'Last Four Digits of SSN', true)
-+textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD')
+if sandboxEnv
+  +select('taxId', 'SSN', true)
+    +taxIdOptions()
+else 
+  +textinput('taxId', 'Last Four Digits of SSN', true)
++textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD', default='1964-11-12')
 
 div.form-note The following information is optional. However, it can help us show you offers that might match your needs and circumstances better.
 +textinput('emailAddress', 'Email Address')
