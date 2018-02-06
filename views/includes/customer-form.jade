@@ -15,116 +15,62 @@
 //- SPDX-License-Identifier: Apache-2.0
 
 //- A re-usable bootstrap text input
-- sandboxEnv = this.process.env.C1_ENV == 'sandbox'
+- stateCodes = typeof stateCodes != 'undefined' ? stateCodes : []
+- bankAccountSummaryOptions = typeof bankAccountSummaryOptions != 'undefined' ? bankAccountSummaryOptions : []
+- user = typeof user != 'undefined' ? user : { address : {}}
+- var _default
+
 mixin textinput(name, label, required)
   div.form-group(class={required: required})
     label(for=name)= label
-    input.form-control(type='text', name=name, placeholder=attributes.placeholder, required=required || false, value=sandboxEnv && attributes.default ? attributes.default : '')
+    input.form-control(type='text', name=name, placeholder=attributes.placeholder, required=required || false, value=attributes.default)
+
 mixin select(name, label, required)
   div.form-group(class={required: required})
     label(for=name)= label
-    select.form-control(name=name, selected=attributes.selected || '')
+    select.form-control(name=name)
       block
 
-mixin taxIdOptions()
-  option(value='555555555') 555555555 (No Prequalification Offer)
-  option(value='666666666') 666666666 (Single Prequalification Offer)
-  option(value='777777777') 777777777 (Multiple Prequalified Offers)
-  option(value='888888888') 888888888 (Max Prequalification Offers)
-
 mixin stateOptions()
-  option(value='AL') AL
-  option(value='AK') AK
-  option(value='AS') AS
-  option(value='AZ') AZ
-  option(value='AR') AR
-  option(value='CA') CA
-  option(value='CO') CO
-  option(value='CT') CT
-  option(value='DE') DE
-  option(value='DC') DC
-  option(value='FM') FM
-  option(value='FL') FL
-  option(value='GA') GA
-  option(value='GU') GU
-  option(value='HI') HI
-  option(value='ID') ID
-  option(value='IL') IL
-  option(value='IN') IN
-  option(value='IA') IA
-  option(value='KS') KS
-  option(value='KY') KY
-  option(value='LA') LA
-  option(value='ME') ME
-  option(value='MH') MH
-  option(value='MD') MD
-  if sandboxEnv
-    option(value='MA', selected='selected') MA
-  else
-    option(value='MA') MA
-  option(value='MI') MI
-  option(value='MN') MN
-  option(value='MS') MS
-  option(value='MO') MO
-  option(value='MT') MT
-  option(value='NE') NE
-  option(value='NV') NV
-  option(value='NH') NH
-  option(value='NJ') NJ
-  option(value='NM') NM
-  option(value='NY') NY
-  option(value='NC') NC
-  option(value='ND') ND
-  option(value='MP') MP
-  option(value='OH') OH
-  option(value='OK') OK
-  option(value='OR') OR
-  option(value='PW') PW
-  option(value='PA') PA
-  option(value='PR') PR
-  option(value='RI') RI
-  option(value='SC') SC
-  option(value='SD') SD
-  option(value='TN') TN
-  option(value='TX') TX
-  option(value='UT') UT
-  option(value='VT') VT
-  option(value='VI') VI
-  option(value='VA') VA
-  option(value='WA') WA
-  option(value='WV') WV
-  option(value='WI') WI
-  option(value='WY') WY
-  option(value='DC') DC
-  option(value='AA') AA
-  option(value='AE') AE
-  option(value='AP') AP
+  each stateCode in stateCodes
+    if stateCode == user.address.stateCode
+      option(value=stateCode, selected='selected')= stateCode
+    else 
+      option(value=stateCode)= stateCode
 
-+textinput('firstName', 'First Name', true)(default='Rose')
+mixin bankAccountSummary()
+  if bankAccountSummaryOptions.length
+    +select('bankAccountSummary', 'Type of Bank Accounts')
+      each option in bankAccountSummaryOptions
+        - let value = option.value
+        - let key = option.key
+        if key == user.bankAccountSummary || (option.default && typeof _default != 'undefined')
+          - _default = option
+          option(value=value, selected='selected')= key
+        else
+          option(value=value)= key
+
++textinput('firstName', 'First Name', true)(default=user.firstName)
 +textinput('middleName', 'Middle Name')
-+textinput('lastName', 'Last Name', true)(default='Dean')
++textinput('lastName', 'Last Name', true)(default=user.lastName)
 +textinput('nameSuffix', 'Suffix')(placeholder='E.g. Jr, Sr')
-+textinput('addressLine1', 'Address Line 1', true)(default='88 Suffolk St')
++textinput('addressLine1', 'Address Line 1', true)(default=user.address.addressLine1)
 +textinput('addressLine2', 'Address Line 2')
 +textinput('addressLine3', 'Address Line 3')
 +textinput('addressLine4', 'Address Line 4')
-+textinput('city', 'City', true)(default='Springfield')
++textinput('city', 'City', true)(default=user.address.city)
 +select('stateCode', 'State', true)
   +stateOptions()
-+textinput('postalCode', 'Zip Code', true)(default='01109')
++textinput('postalCode', 'Zip Code', true)(default=user.address.postalCode)
 +select('addressType', 'Address Type')
   option(value='')
   option(value='Home') Home
   option(value='Business') Business
-if sandboxEnv
-  +select('taxId', 'SSN', true)
-    +taxIdOptions()
-else 
-  +textinput('taxId', 'Last Four Digits of SSN', true)
-+textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD', default='1964-11-12')
++textinput('taxId', 'Last Four Digits of SSN', true)
++textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD')
 
 div.form-note The following information is optional. However, it can help us show you offers that might match your needs and circumstances better.
-+textinput('emailAddress', 'Email Address')
++textinput('emailAddress', 'Email Address')(default=user.emailAddress)
 +select('primaryBenefit', 'Most Desired Credit Card Benefit')
   option(value='NotSure') Not sure
   option(value='LowInterest') Low Interest Rate
@@ -134,9 +80,5 @@ div.form-note The following information is optional. However, it can help us sho
   option(value='Excellent') Excellent
   option(value='Average') Average
   option(value='Rebuilding') Rebuilding
-+textinput('annualIncome', 'Annual Income (dollars)')
-+select('bankAccountSummary', 'Type of Bank Accounts')
-  option(value='CheckingAndSavings') Checking &amp; Savings
-  option(value='CheckingOnly') Checking Only
-  option(value='SavingsOnly') Savings Only
-  option(value='Neither', selected) Neither
++textinput('annualIncome', 'Annual Income (dollars)')(default=user.annualIncome)
++bankAccountSummary()
