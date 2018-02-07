@@ -37,7 +37,7 @@ $(function() {
       },
       success: function(data) {
         applicantDetailsKey = data.applicantDetailsKey
-        link += encodeURIComponent(`?applicantDetailsKey=a-${applicantDetailsKey}`)
+        link += encodeURIComponent(`?applicantDetailsKey=${applicantDetailsKey}`)
       },
       error: function(err) {
         $('#prefill-acceptance .text-danger.hidden').removeClass('hidden')
