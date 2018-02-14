@@ -31,25 +31,25 @@ div#prefill-acceptance.modal.fade(tabindex='-1', role='dialog')
                     .col-xs-6
                       | Name (First, Middle, Last & Suffix): 
                     .col-xs-6
-                      !{user.firstName} !{user.middleName} !{user.lastName}
+                      | !{user.firstName} !{user.middleName} !{user.lastName}
                 li.list-group-item
                   .container-fluid
                     .col-xs-2
                       | Address:
                     .col-xs-10 
-                      !{user.address.addressLine1} !{user.address.addressLine2}
+                      | !{user.address.addressLine1} !{user.address.addressLine2}
                       if user.address.addressLine3 || user.address.addressLine4
                         br
-                        !{user.address.addressLine3} !{user.address.addressLine4}
+                        | !{user.address.addressLine3} !{user.address.addressLine4}
                       br
-                      !{user.address.city}, !{user.address.stateCode} !{user.address.postalCode}
+                      | !{user.address.city}, !{user.address.stateCode} !{user.address.postalCode}
                 li.list-group-item 
                   .container-fluid
                     .col-xs-4 Phone Numbers:
                     .col-xs-8
                       if user.telephoneNumbers && user.telephoneNumbers.length
                         each num in user.telephoneNumbers
-                          !{num.phoneNumberType}: !{num.telephoneNumber}
+                          | (!{num.phoneNumberType}) !{num.telephoneNumber}
                           br
                 li.list-group-item 
                   .container-fluid
@@ -57,21 +57,20 @@ div#prefill-acceptance.modal.fade(tabindex='-1', role='dialog')
                     .col-xs-8
                       if user.emailAddresses && user.emailAddresses.length
                         each address in user.emailAddresses
-                          !{address.emailAddress}
+                          | !{address.emailAddress}
                           br
                   
                 li.list-group-item
                   .container-fluid
                     .col-xs-3 Income:
-                    .col-xs-9
-                      !{user.annualIncome}
+                    .col-xs-9 !{user.annualIncome}
                 li.list-group-item 
                   .container-fluid
                     .col-xs-8 Type of Bank Account you may have (if any):
                     .col-xs-4
                       each bankAccountSummary in bankAccountSummaryOptions
                         if bankAccountSummary.value === user.bankAccountSummary
-                          !{bankAccountSummary.key}
+                          | !{bankAccountSummary.key}
                     
             div.modal-footer
               div
