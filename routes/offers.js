@@ -82,12 +82,13 @@ module.exports = function(client) {
           .value()
 
         var viewModel = {
+          csrfToken: req.csrfToken(),
           title: 'Credit Offers',
           isPrequalified: response.isPrequalified,
           prequalificationId: response.prequalificationId,
-          products: productViewModels
+          products: productViewModels,
+          user: req.session.user || { address: {}}
         }
-
         res.render('offers', viewModel)
       })
     })

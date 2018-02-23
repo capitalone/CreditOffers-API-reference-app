@@ -21,9 +21,9 @@ block navbar-custom
     button.btn.btn-md.navbar-btn.btn-success(role='button', data-toggle='modal', data-target='#customer-info')
       i.btn-img.fa.fa-credit-card(aria-hidden="true")
       | Find Pre-Qualified Offers
-    a.btn.btn-md.navbar-btn.btn-success.auth-btn&attributes(user ? { 'class': 'logout-btn', 'href': '/logout' } : { 'data-toggle': 'modal', 'data-target': '#login', 'role': 'button' })
-      i.btn-img.fa(aria-hidden="true", class="#{ user ? fa-sign-out : fa-sign-in }")
-      = user ? 'Sign Out' : 'Sign In' 
+    a.btn.btn-md.navbar-btn.btn-success.auth-btn&attributes(user.firstName ? { 'class': 'logout-btn', 'href': '/logout' } : { 'data-toggle': 'modal', 'data-target': '#login', 'role': 'button' })
+      i.btn-img.fa(aria-hidden="true", class=user.firstName && user.firstName.length ? 'fa-sign-out' : 'fa-sign-in')
+      = user.firstName ? 'Sign Out' : 'Sign In' 
     
 
 block content
