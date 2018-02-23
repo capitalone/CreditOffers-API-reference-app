@@ -6,6 +6,7 @@ module.exports = [{
       "middleName": "G",
       "lastName": "Hubbard",
       "nameSuffix": "Jr.",
+      "dateOfBirth": "1946-11-13",
       "addresses": [{
         "addressLine1": "1230 Duck Fuss Lane",
         "addressLine2": "Apt 15X",
@@ -34,6 +35,7 @@ module.exports = [{
     details: {
       "firstName": "Jane",
       "lastName": "Smith",
+      "dateOfBirth": "1980-05-15",
       "addresses": [{
         "addressLine1": "3828 Piermont Dr",
         "addressLine2": "Unit A",

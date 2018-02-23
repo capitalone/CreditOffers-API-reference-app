@@ -62,7 +62,6 @@ module.exports = function(client) {
       if (err) {
         return next(err)
       }
-
       cards = _.map(_.get(data, 'products', []), productViewModel)
       res.render('index', {
         csrfToken: req.csrfToken(),
@@ -70,7 +69,13 @@ module.exports = function(client) {
         currentCardType: requestedCardType.name,
         cardTypes: cardTypes,
         cards: cards,
-        user: req.session.user
+        user: req.session.user || { address: {}},
+        stateCodes: require('../validation/stateCodes'),
+        bankAccountSummaryOptions:  [
+          { value: 'CheckingAndSavings', key: 'Checking & Savings' },
+          { value: 'CheckingOnly', key: 'Checking Only' },
+          { value: 'SavingsOnly', key: 'Savings Only' },
+          { value: 'Neither', key: 'Neither', default: true }]
       })
     }
 
@@ -86,11 +91,12 @@ module.exports = function(client) {
   })
 
   router.post('/login', csrfProtection, function(req, res, next) {
-    let user = require('../creditoffers/users').find((user) => {
-      return user.username == req.body.username
-    }) || {}
+    let user = require('../creditoffers/users').find((user) => { return user.username == req.body.username }) || {}
     require('bcrypt').compare(req.body.password, user.password, (err, matched) => {
       if (matched) {
+        user = user.details || {}
+        user.address = user.addresses[0] || {}
+        user.emailAddress = (user.emailAddresses[0] || {}).emailAddress
         req.session.user = user
       }
       res.redirect('/')
@@ -103,16 +109,9 @@ module.exports = function(client) {
   })
 
   router.post('/prefill-acceptance', csrfProtection, function(req, res, next) {
-    let user = req.session.user || {}
-    client.products.postPrefillAcceptance(user.details, (err, response) => {
-      if (err || !response.applicantDetailsKey) {
-        res.status(400).send()
-        // res.json({
-        //   applicantDetailsKey: "testKey"
-        // })
-      } else {
-        res.json(response)
-      }
+    client.products.postPrefillAcceptance(req.session.user, (err, response) => {
+      if (err || !response.applicantDetailsKey) res.status(400).send()
+      else res.json(response)
     })
   })
 

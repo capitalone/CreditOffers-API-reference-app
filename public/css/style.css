@@ -226,3 +226,12 @@ footer#prequal-stats-summary {
     background-position: 0; }
   .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus {
     background-color: #1976D2; }
+
+
+#prefill-acceptance [class*="col-"], #prefill-acceptance .container-fluid {
+  padding: 0;
+}
+
+#prefill-acceptance .container-fluid > [class*="col-"]:last-child {
+  text-align: right;
+}

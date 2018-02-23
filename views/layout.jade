@@ -60,7 +60,7 @@ head
     script(src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(src='/js/bootstrap.min.js')
     script(src='/js/creditoffers.js')
-  body
+  body(class=user && user.firstName && user.firstName.length ? 'signed-in' : '')
     nav.navbar.navbar-default.navbar-fixed-top
       div.container
         div.navbar-header

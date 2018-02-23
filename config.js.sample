@@ -18,7 +18,6 @@ See the License for the specific language governing permissions and limitations 
  * config.js should not be under version control since it contains your
  * client_id and client_secret.
  */
-var oauthHost = 'https://api-sandbox.capitalone.com'
 var creditOffersHost = 'https://api-sandbox.capitalone.com'
 
 module.exports = {
@@ -30,7 +29,7 @@ module.exports = {
       apiVersion: 3
     },
     oauth: {
-      tokenURL: oauthHost + '/oauth2/token',
+      tokenURL: creditOffersHost + '/oauth2/token',
       // The clientId and clientSecret you received when registering your app.
       clientID: 'COF_CLIENT_ID',
       clientSecret: 'COF_CLIENT_SECRET'
