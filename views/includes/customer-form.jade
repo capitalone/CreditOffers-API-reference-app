@@ -67,7 +67,7 @@ mixin bankAccountSummary()
   option(value='Home') Home
   option(value='Business') Business
 +textinput('taxId', 'Last Four Digits of SSN', true)
-+textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD')
++textinput('dateOfBirth', 'Birth Date', false)(placeholder='YYYY-MM-DD')(default=user.dateOfBirth)
 
 div.form-note The following information is optional. However, it can help us show you offers that might match your needs and circumstances better.
 +textinput('emailAddress', 'Email Address')(default=user.emailAddress)
