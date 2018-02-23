@@ -32,6 +32,12 @@ div#prefill-acceptance.modal.fade(tabindex='-1', role='dialog')
                       | Name (First, Middle, Last & Suffix): 
                     .col-xs-6
                       | !{user.firstName} !{user.middleName} !{user.lastName}
+                li.list-group-item 
+                  .container-fluid
+                    .col-xs-6
+                      | Date of Birth: 
+                    .col-xs-6
+                      | !{user.dateOfBirth}
                 li.list-group-item
                   .container-fluid
                     .col-xs-2
