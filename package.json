@@ -24,7 +24,6 @@
     "html-entities": "1.2.0",
     "jade": "1.11.0",
     "lodash": "4.1.0",
-    "moment": "2.16.0",
     "morgan": "1.6.1",
     "request": "2.69.0",
     "sanitize-html": "1.13.0",
