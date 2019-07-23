@@ -1,3 +1,5 @@
+# Capital One built this project to help the users of this API. We are no longer actively enhancing this API. We have archived the project as of Jul 23 2019 where it will be available in a read-only state.
+
 # Credit Offers API Reference Application Code
 
 Credit Offers is a card acquisition service that provides prequalified credit offer listings based on end customer provided information. Affiliates are able to provide these offers directly without need of a web redirect.  If a prequalified offer is not available, a default offer is returned by us.
