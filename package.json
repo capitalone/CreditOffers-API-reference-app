@@ -23,7 +23,7 @@
     "helmet": "1.1.0",
     "html-entities": "1.2.0",
     "jade": "1.11.0",
-    "lodash": "4.1.0",
+    "lodash": "4.17.15",
     "moment": "2.16.0",
     "morgan": "1.6.1",
     "request": "2.69.0",
