@@ -1,6 +1,6 @@
 module.exports = [{
     username: "rhubbard",
-    password: "$2a$10$FNWEnW7IR5pusrCtkDpdfeDqhvkGexDOJ3GB9Ae08yHgJGsw0jXIG",
+    password: "XXX",
     details: {
       "firstName": "Ray",
       "middleName": "G",
@@ -31,7 +31,7 @@ module.exports = [{
   },
   {
     username: "jsmith",
-    password: "$2a$10$KVkQGwZ0qNxau0tHBpg16O5rym/g3dfKJEd5kCnQ4nOJn1oOjzKca",
+    password: "XXX",
     details: {
       "firstName": "Jane",
       "lastName": "Smith",
