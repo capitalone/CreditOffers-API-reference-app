@@ -74,9 +74,10 @@ div#prefill-acceptance.modal.fade(tabindex='-1', role='dialog')
                   .container-fluid
                     .col-xs-8 Type of Bank Account you may have (if any):
                     .col-xs-4
-                      each bankAccountSummary in bankAccountSummaryOptions
-                        if bankAccountSummary.value === user.bankAccountSummary
-                          | !{bankAccountSummary.key}
+                      if bankAccountSummaryOptions
+                        each bankAccountSummary in bankAccountSummaryOptions
+                          if bankAccountSummary.value === user.bankAccountSummary
+                            | !{bankAccountSummary.key}
                     
             div.modal-footer
               div

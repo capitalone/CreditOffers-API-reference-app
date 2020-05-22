@@ -18,7 +18,6 @@ SPDX-License-Identifier: Apache-2.0
 
 var request = require('request')
 var debug = require('debug')('credit-offers:api-client')
-var moment = require('moment')
 var _ = require('lodash')
 
 /**

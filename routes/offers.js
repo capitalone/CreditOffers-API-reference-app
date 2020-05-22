@@ -87,7 +87,12 @@ module.exports = function(client) {
           isPrequalified: response.isPrequalified,
           prequalificationId: response.prequalificationId,
           products: productViewModels,
-          user: req.session.user || { address: {}}
+          user: req.session.user || { address: {}},
+          bankAccountSummaryOptions:  [
+            { value: 'CheckingAndSavings', key: 'Checking & Savings' },
+            { value: 'CheckingOnly', key: 'Checking Only' },
+            { value: 'SavingsOnly', key: 'Savings Only' },
+            { value: 'Neither', key: 'Neither', default: true }]
         }
         res.render('offers', viewModel)
       })
